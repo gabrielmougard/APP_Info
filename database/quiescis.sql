@@ -31,7 +31,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `appartement` (
   `idAppartement` int(10) UNSIGNED NOT NULL,
   `adresse` longtext NOT NULL,
-  `superficie` int(10) UNSIGNED NOT NULL
+  `superficie` int(10) UNSIGNED NOT NULL,
+  PRIMARY  KEY (`idAppartement`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -62,7 +63,7 @@ CREATE TABLE `messagerie` (
   `diem` varchar(255) NOT NULL,
   `tempus` int(11) NOT NULL,
   `ouvert` int(11) NOT NULL,
-  `reply` int(11) NOT NULL
+  `reply` int(11) NOT NULL,
   PRIMARY  KEY (`idMessage`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -74,11 +75,12 @@ CREATE TABLE `messagerie` (
 --
 
 CREATE TABLE `catalogue` (
-  `idCatalogue` int(10) UNSIGNED NOT NULL,
+  `idCatalogue` int(10) NOT NULL AUTO_INCREMENT,
   `datasheet` longtext NOT NULL,
   `nom` varchar(50) NOT NULL,
   `prix` int(10) UNSIGNED NOT NULL,
-  `reference` int(10) UNSIGNED NOT NULL
+  `reference` int(10) UNSIGNED NOT NULL,
+  PRIMARY  KEY (`idCatalogue`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -89,7 +91,8 @@ CREATE TABLE `catalogue` (
 
 CREATE TABLE `categorie` (
   `idCategorie` int(10) UNSIGNED NOT NULL,
-  `categorie` varchar(200) NOT NULL
+  `categorie` varchar(200) NOT NULL,
+  PRIMARY  KEY (`idCategorie`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -99,9 +102,10 @@ CREATE TABLE `categorie` (
 --
 
 CREATE TABLE `cemac` (
-  `idCemac` int(11) NOT NULL,
+  `idCemac` int(11) NOT NULL AUTO_INCREMENT,
   `numeroSerie` int(11) DEFAULT NULL,
-  `idPiece` int(11) DEFAULT NULL
+  `idPiece` int(11) DEFAULT NULL,
+  PRIMARY  KEY (`idCemac`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -119,12 +123,13 @@ INSERT INTO `cemac` (`idCemac`, `numeroSerie`, `idPiece`) VALUES
 --
 
 CREATE TABLE `composant` (
-  `idComposant` int(11) NOT NULL,
+  `idComposant` int(11) NOT NULL AUTO_INCREMENT,
   `etatComposant` tinyint(1) DEFAULT '0',
   `numComposant` int(11) DEFAULT NULL,
   `idCemac` int(11) DEFAULT NULL,
   `idCatalogue` int(11) DEFAULT NULL,
-  `idTypeCapteur` int(11) DEFAULT NULL
+  `idTypeCapteur` int(11) DEFAULT NULL,
+  PRIMARY  KEY (`idComposant`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -145,8 +150,9 @@ INSERT INTO `composant` (`idComposant`, `etatComposant`, `numComposant`, `idCema
 --
 
 CREATE TABLE `controlechauffage` (
-  `idUser` int(11) NOT NULL,
-  `idChauffage` int(11) NOT NULL
+  `idUser` int(11) NOT NULL AUTO_INCREMENT,
+  `idChauffage` int(11) NOT NULL,
+  PRIMARY  KEY (`idUser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -156,9 +162,10 @@ CREATE TABLE `controlechauffage` (
 --
 
 CREATE TABLE `parametre du site` (
-  `idParametre` int(10) UNSIGNED NOT NULL,
+  `idParametre` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) NOT NULL,
-  `valeur` text NOT NULL
+  `valeur` text NOT NULL,
+  PRIMARY  KEY (`idParametre`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -168,9 +175,10 @@ CREATE TABLE `parametre du site` (
 --
 
 CREATE TABLE `piece` (
-  `idPiece` int(11) NOT NULL,
+  `idPiece` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) DEFAULT NULL,
-  `idAppart` int(11) DEFAULT NULL
+  `idAppart` int(11) DEFAULT NULL,
+  PRIMARY  KEY (`idPiece`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -191,11 +199,12 @@ INSERT INTO `piece` (`idPiece`, `nom`, `idAppart`) VALUES
 --
 
 CREATE TABLE `role` (
-  `idRole` int(11) NOT NULL,
+  `idRole` int(11) NOT NULL AUTO_INCREMENT,
   `principal` tinyint(1) DEFAULT '1',
   `secondaire` tinyint(1) DEFAULT '0',
   `idAppart` int(11) DEFAULT NULL,
-  `idUser` int(11) DEFAULT NULL
+  `idUser` int(11) DEFAULT NULL,
+  PRIMARY  KEY (`idRole`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -212,10 +221,11 @@ INSERT INTO `role` (`idRole`, `principal`, `secondaire`, `idAppart`, `idUser`) V
 --
 
 CREATE TABLE `systeme chauffage` (
-  `idChauffage` int(10) UNSIGNED NOT NULL,
+  `idChauffage` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `tempMaxGestionnaire` int(10) UNSIGNED NOT NULL,
   `tempMaxUtilisateur` int(10) UNSIGNED NOT NULL,
-  `droitActivation` tinyint(1) DEFAULT NULL
+  `droitActivation` tinyint(1) DEFAULT NULL,
+  PRIMARY  KEY (`idChauffage`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -225,13 +235,14 @@ CREATE TABLE `systeme chauffage` (
 --
 
 CREATE TABLE `trameenvoi` (
-  `idEnvoi` int(11) NOT NULL,
+  `idEnvoi` int(11) NOT NULL AUTO_INCREMENT,
   `val` int(11) DEFAULT NULL,
   `tim` int(11) DEFAULT NULL,
   `req` varchar(50) DEFAULT NULL,
   `num` int(11) DEFAULT NULL,
   `chk` varchar(20) DEFAULT NULL,
-  `idComposant` int(11) DEFAULT NULL
+  `idComposant` int(11) DEFAULT NULL,
+  PRIMARY  KEY (`idEnvoi`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -251,12 +262,13 @@ INSERT INTO `trameenvoi` (`idEnvoi`, `val`, `tim`, `req`, `num`, `chk`, `idCompo
 --
 
 CREATE TABLE `trameretour` (
-  `idRetour` int(11) NOT NULL,
+  `idRetour` int(11) NOT NULL AUTO_INCREMENT,
   `ans` int(11) DEFAULT NULL,
   `req` varchar(50) DEFAULT NULL,
   `num` int(11) DEFAULT NULL,
   `chk` varchar(20) DEFAULT NULL,
-  `idComposant` int(11) DEFAULT NULL
+  `idComposant` int(11) DEFAULT NULL,
+  PRIMARY  KEY (`idRetour`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -285,10 +297,11 @@ INSERT INTO `trameretour` (`idRetour`, `ans`, `req`, `num`, `chk`, `idComposant`
 --
 
 CREATE TABLE `typecapteur` (
-  `idTypeCapteur` int(11) NOT NULL,
+  `idTypeCapteur` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) DEFAULT NULL,
   `valeur` varchar(10) DEFAULT NULL,
-  `grandeurPhysique` varchar(10) DEFAULT NULL
+  `grandeurPhysique` varchar(10) DEFAULT NULL,
+  PRIMARY  KEY (`idTypeCapteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -307,8 +320,9 @@ INSERT INTO `typecapteur` (`idTypeCapteur`, `nom`, `valeur`, `grandeurPhysique`)
 --
 
 CREATE TABLE `type utilisateur` (
-  `idType` int(10) UNSIGNED NOT NULL,
-  `type` varchar(50) NOT NULL
+  `idType` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type` varchar(50) NOT NULL,
+  PRIMARY  KEY (`idType`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -325,7 +339,7 @@ INSERT INTO `type utilisateur` (`idType`, `type`) VALUES
 --
 
 CREATE TABLE `utilisateurs` (
-  `idUtilisateur` int(11) NOT NULL,
+  `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT,
   `idSession` int(11) DEFAULT NULL,
   `tokenCookie` varchar(100) DEFAULT NULL,
   `passwordHash` varchar(60) DEFAULT NULL,
@@ -339,7 +353,8 @@ CREATE TABLE `utilisateurs` (
   `emailTemporaire` varchar(50) DEFAULT NULL,
   `tokenEmailTemporaire` varchar(50) DEFAULT NULL,
   `photoProfil` varchar(100) DEFAULT NULL,
-  `idType` int(11) DEFAULT NULL
+  `idType` int(11) DEFAULT NULL,
+  PRIMARY  KEY (`idUtilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -353,59 +368,7 @@ INSERT INTO `utilisateurs` (`idUtilisateur`, `idSession`, `tokenCookie`, `passwo
 -- Index pour les tables déchargées
 --
 
---
--- Index pour la table `appartement`
---
-ALTER TABLE `appartement`
-  ADD PRIMARY KEY (`idAppartement`);
 
---
--- Index pour la table `catalogue`
---
-ALTER TABLE `catalogue`
-  ADD PRIMARY KEY (`idCatalogue`);
-
---
--- Index pour la table `categorie`
---
-ALTER TABLE `categorie`
-  ADD PRIMARY KEY (`idCategorie`);
-
---
--- Index pour la table `cemac`
---
-ALTER TABLE `cemac`
-  ADD PRIMARY KEY (`idCemac`);
-
---
--- Index pour la table `composant`
---
-ALTER TABLE `composant`
-  ADD PRIMARY KEY (`idComposant`);
-
---
--- Index pour la table `controlechauffage`
---
-ALTER TABLE `controlechauffage`
-  ADD PRIMARY KEY (`idUser`,`idChauffage`);
-
---
--- Index pour la table `role`
---
-ALTER TABLE `role`
-  ADD PRIMARY KEY (`idRole`);
-
---
--- Index pour la table `utilisateurs`
---
-ALTER TABLE `utilisateurs`
-  ADD PRIMARY KEY (`idUtilisateur`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
 -- AUTO_INCREMENT pour la table `appartement`
 --
 ALTER TABLE `appartement`
@@ -415,14 +378,7 @@ ALTER TABLE `appartement`
 ALTER TABLE `trameenvoi`
   CHANGE COLUMN `tim` `tim` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP;   
 
-ALTER TABLE `messagerie`
-  ADD PRIMARY KEY (`idMessage`);
---
--- AUTO_INCREMENT pour la table `role`
---
-ALTER TABLE `role`
-  MODIFY `idRole` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
