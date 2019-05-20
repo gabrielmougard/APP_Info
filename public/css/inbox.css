@@ -1,0 +1,231 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:100,300,500);
+
+body {
+    margin:0 auto;
+    padding:0;
+    height:100%;
+    font-weight:300;
+    font-size:16px;
+    font-family: 'Roboto';
+}
+
+h3 {
+    margin:5% auto;
+    text-align:center;
+    font-size:42px;
+    font-weight:100;
+    color:#fff;
+}
+
+a {
+    color:#6c9b5cff;
+    text-decoration:none;
+}
+
+.btn {
+    padding:6px 10px;
+    background:#6c9b5cff;
+    color:#fff;
+    font-size:12px;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -webkit-transition:0.1s ease all;
+    -moz-transition:0.1s ease all;
+    -ms-transition:0.1s ease all;
+    -o-transition:0.1s ease all;
+    transition:0.1s ease all;
+}
+
+.danger {
+    background:#e74c3c;
+}
+
+.danger:hover{
+    background:#c0392b;
+}
+
+.danger:active {
+    background:#b53529;
+    box-shadow:inset 0 0 10px rgba(0,0,0,0.3);
+    -webkit-box-shadow:inset 0 0 10px rgba(0,0,0,0.3);
+}
+
+.active, .active:hover, .active:active {
+    background:#cbd0d3 !important;
+    color:#777 !important;
+    cursor:auto !important;
+    box-shadow:none !important;
+}
+
+#loading {
+    position:fixed;
+    z-index:2000;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+}
+
+#loading img {
+    position:absolute;
+    padding:10px;
+    top:45%;
+    left:45%;
+    width:24px;
+    height:24px;
+    background:rgba(0,0,0,0.6);
+    border-radius:5px;
+    -webkit-border-radius:5px;
+}
+
+#inbox, #msg {
+    display:none;
+    margin:1% auto 0 auto;
+    padding:0;
+    width:900px;
+    height:auto;
+    overflow:hidden;
+    background:#b3ff97cd;
+    background:rgba(26, 188, 156, 0.3);
+    box-shadow:0 0 20px #222;
+    border-right:10px solid #6c9b5cff;
+    border-left:10px solid #6c9b5cff;
+    border-top:10px solid #6c9b5cff;
+    border-bottom:10px solid #6c9b5cff;
+}
+
+#inbox table, #inbox table tr {
+    margin:0 auto;
+    padding:0;
+    width:100%;
+}
+
+tr.border_bottom td {
+    border-bottom:2px solid #6c9b5cff;
+}
+
+/*tr:last-child.border_bottom td {
+  border-bottom:none;
+}*/
+
+#inbox table tr th, #inbox table tr td {
+    color:#5b5b5b;
+    font-size:12px;
+}
+
+#inbox table tr th {
+    padding:10px;
+    background:#6c9b5cff;
+}
+
+#inbox table tr td {
+    padding:10px;
+    text-align:center;
+    border-right:1px solid #6c9b5cff;
+    border-left:1px solid #6c9b5cff;
+}
+
+#inbox table tr td a {
+    color:#5b5b5b;
+}
+
+#msg {
+    padding:20px;
+}
+
+#msg table, #pages {
+    margin:20px 10px;
+    padding:0;
+}
+
+#msg table tr {
+    width:100%;
+}
+
+#msg table tr td {
+    margin-right:10px;
+    padding:5px;
+    background:#6c9b5cff;
+    color:#fff;
+    font-size:12px;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+}
+
+#msg pre {
+    margin:0 0 20px;
+    padding:10px;
+    float:left;
+    color:#5b5b5b;
+    font-family: 'Roboto';
+    font-size:12px;
+    line-height:18px;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.remove {
+    margin:0 0 0 10px;
+}
+
+#pages a {
+    margin:0 10px 0 0;
+    -webkit-transition:0.1s ease all;
+    -moz-transition:0.1s ease all;
+    -ms-transition:0.1s ease all;
+    -o-transition:0.1s ease all;
+    transition:0.1s ease all;
+}
+
+#pages a:hover {
+    background:#138e76;
+}
+
+#pages a:active {
+    background:#12826b;
+    box-shadow:inset 0 0 10px rgba(0,0,0,0.3);
+    -webkit-box-shadow:inset 0 0 10px rgba(0,0,0,0.3);
+}
+
+.round-button {
+    width:4%;
+    margin-left: auto;
+    margin-right: auto;
+
+
+}
+.round-button-circle {
+
+    width: 100%;
+    height:0;
+    padding-bottom: 100%;
+    border-radius: 50%;
+    margin-top : 100%;
+    border:10px solid #cfdcec;
+    overflow:hidden;
+
+    background: #12826b;
+    box-shadow: 0 0 3px gray;
+}
+.round-button-circle:hover {
+    background:#6c9b5cff;
+}
+.round-button a {
+    display:block;
+    float:left;
+    width:100%;
+    padding-top:50%;
+    padding-bottom:50%;
+    line-height:1em;
+    margin-top:-0.5em;
+
+    text-align:center;
+    color:#e2eaf3;
+    font-family:Verdana;
+    font-size:1.2em;
+    font-weight:bold;
+    text-decoration:none;
+}

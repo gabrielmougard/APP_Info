@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Quiescis">
+    <meta name="author" content="Quiescis">
+
+    <title>Quiescis</title>
+
+        <!-- stylesheets -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="css/sb-admin-2.css" type="text/css">
+
+        <style>
+            body { background: #ffffff url("img/backgrounds/background.png") no-repeat fixed left top;}
+        </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <div class="pull-right">
+                        <button id="link-register" class="btn btn-success btn-xs"> Créer mon compte</button>
+                    </div>
+                    <h3 class="panel-title">Connexion</h3>
+                </div>
+                <div class="panel-body">
+
+                    <form id="form-login" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <input type="email" name="email" class="form-control" required placeholder="Email" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" class="form-control" required placeholder="Mot de passe">
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="remember_me" type="checkbox" value="rememberme">Se souvenir de moi
+                                </label>
+                            </div>
+                            
+                            
+						    <div class="form-group form-actions text-right">
+                                <button type="submit" name="submit" value="submit" class="btn btn-sm btn-success">
+								    Login
+							    </button>
+                            </div>			   
+                            <div class="form-group">
+							    Forgot your password? <a id="link-forgot-password" href="javascript:void(0)">Restore it</a>
+                            </div>
+                        </fieldset>
+                    </form>
+
+                    <form id="form-forgot-password" method="post">
+
+                        <fieldset>
+                            <div class="form-group">
+                                <input type="email" name="email" class="form-control" required placeholder="Email" autofocus >
+                            </div>
+                            
+                            <div class="form-group form-actions text-right">
+                                <button type="submit" name="submit" value="submit" class="btn btn-sm btn-success">
+									Envoyer
+								</button>
+                            </div>
+                            <div class="form-group">
+								Vous vous souvenez de votre mot de passe ? <a id="link-login" href="javascript:void(0)">Connexion</a>
+                            </div>
+                        </fieldset>
+                    </form>
+
+                    
+				    <form id="form-register" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Nom d'utilisateur" required name="name" type="text" autofocus >
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Email" required name="email" type="email">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Mot de passe" required name="password" type="password">
+                                <p class="help-block">(N.B : rentrez un mot de passe suffisamment complexe.)</p>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Mot de passe (Confirmation)" required name="confirm_password" type="password">
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="csrf_token" value="<?= Session::generateCsrfToken(); ?>" />
+                            </div>
+                            <div class="form-group form-actions text-right">
+                                <button type="submit" name="submit" value="submit" class="btn btn-sm btn-success">
+								   S'enregistrer !
+							    </button>
+                            </div>
+                            <div class="form-group">
+							    Vous avez un compte ? <a id="link-login" href="javascript:void(0)">Connexion</a>
+                            </div>
+                        </fieldset>
+                    </form>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../public/js/bootstrap.min.js"></script>
+<script src="../../public/js/sb-admin-2.js"></script>
+
+
+    </body>
+</html>

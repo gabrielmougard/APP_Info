@@ -1,0 +1,156 @@
+.conteneur_cemac{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: stretch;
+    margin-top: 2%;
+    text-decoration: none;
+    margin-bottom: 5%;
+}
+.Composant{
+    border: solid 2px #8eca78;
+    border-radius: 20%;
+    width: 30%;
+    height: auto;
+    background-color: #ffffff;
+    text-decoration: none;
+}
+
+.Composant:hover{
+    background-color: #8eca78;
+}
+
+.maison {
+    border: solid 1px #666666;
+    margin-left: 10%;
+    width: 80%;
+    height: auto;
+    margin-bottom: 3%;
+    margin-top: auto;
+}
+
+h1{ /*Adresse*/
+    font-family: 'Lato';
+    font-weight: 600;
+    font-size: 30px;
+    text-align: center;
+    color: #666666;
+    margin-bottom: 10%;
+}
+
+.Composant nav * {
+    display: block;
+    text-decoration: none;
+    list-style-type: none;
+    overflow: hidden;
+    font-family: 'Open Sans';
+    font-size: 20px;
+    font-weight: 600;
+    color: #666666;
+}
+
+input{     /* check box cachee */
+    display:none;
+}
+
+.Composant nav {
+    width: 0;
+    height: 0;
+}
+
+.Composant :checked + label nav{
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+li {/*texte "Piece"*/
+    width: 87%;
+    border-bottom: solid 1px #666666;
+    margin-bottom: 2%;
+}
+
+a:hover{ /*Lors du passage de la souris sur le texte "Piece"*/
+    color: #ffffff;
+}
+
+
+/*Taille telephone*/
+@media screen and (max-width:480px){
+    .menu #burger:checked + label nav{
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+{box-sizing: border-box;}
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+    background-color: #555;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+    width: 280px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text] {
+    display:block;
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus{
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+    background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+}

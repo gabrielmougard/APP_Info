@@ -1,0 +1,136 @@
+.confirm {
+    background-color: #8eca78ff;
+    padding: 10px 20px;
+    width: 300px;
+    height: 75px;
+    font-family: Lato, sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: #f1f1f1;
+    border: 4px outset #8eca78ff;
+    border-radius: 20px;
+    cursor: pointer;
+
+}
+
+.confirm:hover {
+    background-color: #6c9b5cff;
+}
+
+.confirm:active {
+    border: inset #8eca78ff;
+    width: 295px;
+    height: 72px;
+    box-shadow: 2px 2px 2px inset;
+}
+
+.confirm:focus {
+    outline: 0;
+}
+
+.annuler {
+    background-color: #ffffff;
+    padding: 10px 20px;
+    width: 300px;
+    height: 75px;
+    font-family: Lato, sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: #8eca78ff;
+    border: none;
+    border-radius: 20px;
+    border-color: #8eca78ff;
+    cursor: pointer;
+}
+
+.annuler:focus {
+    outline: 0;
+}
+
+.poubelle {
+    color: darkred;
+}
+
+.poubelle:hover {
+    color: red;
+}
+
+.ajouter {
+    color: #8eca78ff;
+}
+
+.ajouter:hover {
+    color: #6c9b5cff;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;  /*imbrique slider et switch*/
+    width: 140px; /*taille de l'interrupteur*/
+    height: 80px;
+}
+.switch input {     /*suppression du visuel de la checkbox*/
+    display: none;
+
+}
+.slider {   /*constitution de base de l'interrupteur*/
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(ellipse at center, #131862 0%, 	#2e4482 50%, #546bab 100%);
+    transition: .4s;
+    box-shadow: 2px 2px 5px black;
+    border-radius: 40px;
+}
+/* Tentative d'animation
+input:not(checked)+.slider
+@keyframes goaway {
+    0%  {background:radial-gradient(ellipse at center,  #131862 0%, skyblue 50%, lightskyblue 100%);}
+    50%   {background:radial-gradient(ellipse at center, #131862 0%, 	#2e4482 50%, lightskyblue 100%);}
+    50%  {background:radial-gradient(ellipse at center,  #131862 0%, 	#2e4482 50%, #546bab 100%);}
+
+}
+*/
+
+.slider:before {    /*éteint. Before désigne la bille dans le slider*/
+    position: absolute;
+    content: "OFF";
+    font-family: Lato, sans-serif;
+    text-align: center;
+    color: black;
+    height: 40px;
+    width: 40px;
+    left: 20px;
+    bottom: 20px;
+    background-image: radial-gradient(ellipse at center, #F5F3CE 0%, 	#7E7C6A 50%, #34322B 100%);
+    background-size: 68px 60px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    transition: .4s;
+}
+
+
+input:checked + .slider {   /*changement du fond lors de l'activation*/
+    background-image: radial-gradient(ellipse at center, deepskyblue 0%, 	skyblue 50%, lightskyblue 100%);
+    /*: goaway 0.3s linear;*/
+}
+
+input:checked + .slider:before {    /*changement du slider*/
+    content: "ON";
+    color: white;
+    background-image: radial-gradient(ellipse at center, orangered 0%, darkorange 50%,orange 100%);
+    transform: translateX(60px); /*distance de translation de la bille*/
+}
+/*
+@keyframes goaway {
+    20%   {background:radial-gradient(ellipse at center, deepskyblue 0%,#2e4482 50%, #546bab 100%);}
+    50%  {background:radial-gradient(ellipse at center,  deepskyblue 0%, skyblue 50%,#546bab 100%);}
+    100%  {background:radial-gradient(ellipse at center,  deepskyblue 0%, skyblue 50%, lightskyblue 100%);}
+}
+*/
+
+

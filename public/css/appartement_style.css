@@ -1,0 +1,55 @@
+
+.Conteneur {
+//background: #b3ff97cd;/*vert clair*/
+    float: left;
+}
+
+a{
+    text-decoration: none;
+}
+
+.Conteneur ul{
+    margin: 0;
+}
+.Conteneur ul a{
+    display: block;
+    float: left;
+    width: 150px;
+    padding: 10px 20px;
+}
+.Conteneur ul a:hover{
+    background:#666666ff;
+}
+.Conteneur ul li{
+    display: block;
+    float:left;/*level 1s sont affichés en ligne*/
+    position: relative;/* pour que le position absolute marche correctement*/
+}
+.Conteneur ul li ul{
+    display: none;/*rend les level 2s invisibles*/
+    position: absolute;/*relatif par rapport à la liste nav ul li (level1) dont elle dépend*/
+    background: #b3ff97cd;
+    margin:0;
+    padding:0;
+    top: 38px;
+}
+.Conteneur li:hover>ul{
+    display: block; /*rend les level 2s visibles lorsqu'on passe la souris*/
+}
+.Conteneur ul li ul li{
+    float: none;/*les level 2s sont affichés en colonnes*/
+    position:relative;
+    height:42px;
+}
+
+.Conteneur li li:hover>ul{
+    display:block;
+}
+.Conteneur ul ul ul {
+    top:0;
+    left: 190px;
+    display: none;/*rend les level 2s invisibles*/
+    background: #b3ff97cd;
+}
+
+

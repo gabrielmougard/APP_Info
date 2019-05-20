@@ -1,0 +1,71 @@
+/*----------------------------------------------------*/
+/*
+Principe de la barre de navigation latétale:
+Par défaut: Checkbox non checked et taille de
+<nav> = 0x0
+Lorsqu'on check la checkbox: on met une taille adapté au
+<nav>
+*/
+/*----------------------------------------------------*/
+
+.menu nav *{ /*Selectionne tout dans le nav*/
+    font:bold 0.5em/1em Arial, Helvetica, sans-serif;
+    display: block;
+    color: #666666ff;
+    background-color:#ffffff;
+    text-decoration:none;
+    list-style-type: none;
+    margin:0;
+    padding:0;
+    font-size: 15px;
+    overflow: hidden;
+}
+/*Couleur de base de l'hamburger*/
+.menu label {
+    color: #666666;
+}
+/*Couleur de l'hamburger après avoir validé la checkbox*/
+.menu #burger:checked + label {
+    color: #8eca78;
+}
+/*Supprimer la checkbox*/
+#burger{
+    display: none;
+}
+/*Par défaut Le nav est caché*/
+.menu nav {
+    width: 0;
+    height: 0;
+}
+/*Quand on coche la checkbox, on affiche le menu*/
+.menu #burger:checked + label nav {
+    background-color: #8eca78ff; /*test*/
+    position:relative; /*le menu navigationnel s'affiche sur tout*/
+    height: 90%; /*% de la taille vertical de l'écran*/
+    width: 200px; /*% de la taille horizontale de l'écran*/
+    left:0; /*On décale le menu à gauche*/
+    bottom:0;
+}
+/*Mise en page des liens*/
+.menu a{
+    border: 1px solid #8eca78ff;
+    padding:10px 10px;
+    width: inherit;
+    height: inherit;
+}
+/*----------------------------------------------------*/
+/*Lorsqu'on passe dessus avec la souris*/
+
+.menu nav a:hover{
+    color:#fff;
+    background:#8eca78ff;
+}
+/*Gestion taille écran*/
+/*----------------------------------------------------*/
+/*Taille telephone*/
+@media screen and (max-width:480px){
+    .menu #burger:checked + label nav{
+        width: 100%;
+        text-align: center;
+    }
+}

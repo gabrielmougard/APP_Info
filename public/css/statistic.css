@@ -1,0 +1,101 @@
+.piece button{
+    width: 100px;
+    height: 100px;
+    color: #8eca78;
+    border-radius: 20px;
+}
+.conteneur_comp button{
+    width: 100px;
+    height: 100px;
+    color: #b52b27;
+    border-radius: 20px;
+}
+.conteneur_stat2  button{
+    width: 150px;
+    height: 100px;
+    color: #2e4482;
+    border-radius: 20px;
+}
+.conteneur_stat{
+    display: flex ;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    flex-wrap: wrap;
+}
+.conteneur_stat2{
+    display: flex;
+    justify-content: space-around;
+}
+
+.conteneur_stat2_1{
+    justify-content: space-around;
+}
+.conteneur_stat2_2{
+    justify-content: space-around;
+}
+
+.conteneur_comp{
+    display: flex ;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    flex-wrap: wrap;
+}
+
+.bloc1{
+    margin: 1%;
+
+}
+
+.bloc1:nth-child(1){
+
+
+}
+#releve{
+
+    border-bottom: #8eca78 solid;
+
+}
+
+.bloc1:nth-child(2){
+    margin-top: 0;
+    background-color: #ffffff;
+}
+
+.bloc1:nth-child(3){
+
+    text-align: center;
+
+}
+
+.piece{
+    justify-content: left;
+}
+
+h1{
+    font-family: 'Lato';
+    font-weight: 300;
+    color: #666666;
+
+}
+h2{
+    font-family:'Lato';
+    font-weight: 400;
+    font-size: 50px;
+    color: #8eca78;
+
+}
+h3{
+    margin-left: 10px;
+    font-family:'Lato';
+    font-weight: 400;
+    font-size: 30px;
+    color: #8eca78
+
+}
+p{
+    font-weight: 300;
+    color: #666666;
+}
+

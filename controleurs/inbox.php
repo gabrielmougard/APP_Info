@@ -1,0 +1,103 @@
+<?php
+
+/**
+ * Le contrôleur :
+ * - définit le contenu des variables à afficher
+ * - identifie et appelle la vue
+ */
+
+/**
+ * Contrôleur de de la boîte mail utilisateur
+ */
+
+// on inclut le fichier modèle contenant les appels à la BDD
+include('modeles/requetes.inbox.php');
+
+// si la fonction n'est pas définie, on choisit d'afficher l'accueil
+if (!isset($_GET['fonction']) || empty($_GET['fonction'])) {
+
+    $function = "accueil";
+} else {
+    $function = $_GET['fonction'];
+}
+session_start();
+
+$switch=false;
+
+switch ($function) {
+
+    case 'mails':
+        //affiche la liste des fils (page d'accueil de la inbox)
+        // on récupère l'ID de l'utilisateur connecté (stocké dans la SESSION)
+        // pour lui afficher ses Mails
+
+        //1) appel au modèle
+        $res = retrieveMails($bdd,$_GET["uid"],$_GET["p"]);
+        $_SESSION["threadList"] = $res[0];
+        $_SESSION["maxPages"] = $res[1];
+        $_SESSION["limit"] = $res[2];
+        $vue = "Mails/mails";
+
+        break;
+
+
+    case 'thread':
+
+
+        $id = $_GET["idUser"];
+
+        $vue = "Mails/thread";
+        break;
+
+    case 'msg':
+        //soit pour démarrer un nouveau fil soit pour répondre à un fil actuel
+
+
+        $new = $_GET["new"];
+        $_SESSION["new"] = $new;
+
+        $vue = "Mails/writeMessage";
+        break;
+
+    case 'remove':
+        // efface un mail dans les discussions
+
+        break;
+
+    case 'add':
+        //add a message (when clicked to send in the form)
+        $data["idUser"] = $_SESSION["userId"];
+        $data["newMessage"] = $_POST["newMessage"];
+        $data["emailUser"] = $_SESSION["email"];
+        $data["content"] = $_POST["content"];
+        $data["subject"] = $_POST["subject"];
+
+
+        //model stuff
+        $res = writeMessage($bdd,$data,$_GET["newMessage"]);
+        //vue Mails/mails.php : with an alert saying that it has been sent
+
+        if($res) {
+            $vue = "Mails/mails";
+        }
+        else {
+            $vue = "Mails/writeMessage";
+        }
+
+    // si aucune fonction ne correspond au paramètre function passé en GET
+    //$vue = "erreur404";
+    //$title = "error404";
+    //$message = "Erreur 404 : la page recherchée n'existe pas.";
+}
+if(!$switch){
+    $vue='error404';
+    $alerte="Erreur 404 : la page recherchée n'existe pas.";
+    echo $alerte;
+}
+// si aucune fonction ne correspond au paramètre function passé en GET
+//$vue = "erreur404";
+//$title = "error404";
+//$message = "Erreur 404 : la page recherchée n'existe pas.";
+//include('vues/templates/header.php');
+include 'vues/' . $vue . '.php';
+//include('vues/templates/footer.php');

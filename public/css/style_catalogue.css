@@ -1,0 +1,85 @@
+.conteneur_catalogue{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: stretch;
+    margin-top: 2%;
+    text-decoration: none;
+    margin-bottom: 5%;
+}
+.catalogue{
+    border: solid 2px #8eca78;
+    border-radius: 20%;
+    width: 30%;
+    height: auto;
+    background-color: #ffffff;
+    text-decoration: none;
+}
+
+.catalogue:hover{
+    background-color: #8eca78;
+}
+
+.capteur {
+    border: solid 1px #666666;
+    margin-left: 10%;
+    width: 80%;
+    height: auto;
+    margin-bottom: 3%;
+    margin-top: auto;
+}
+
+h1{
+    font-family: 'Lato';
+    font-weight: 600;
+    font-size: 30px;
+    text-align: center;
+    color: #666666;
+    margin-bottom: 10%;
+}
+
+
+li .prix {
+    display: block;
+    text-align: center;
+    width: 87%;
+    border-bottom: solid 1px #666666;
+    margin-bottom: 2%;
+}
+
+a{
+    background-color: #8eca78ff;
+    padding: 10px 20px;
+    width: 300px;
+    height: 75px;
+    font-family: Lato, sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: #f1f1f1;
+    border: 4px outset #8eca78ff;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+a:hover{
+    color: #ffffff;
+    background-color: #6c9b5cff;
+
+}
+
+a:active {
+    border: inset #8eca78ff;
+    width: 295px;
+    height: 72px;
+    box-shadow: 2px 2px 2px inset;
+}
+
+
+/*Taille telephone*/
+@media screen and (max-width:480px){
+    .menu #burger:checked + label nav{
+        width: 100%;
+        text-align: center;
+    }
+}
+

@@ -1,0 +1,37 @@
+.conteneur {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.bloc1{
+    height: auto;
+    width: auto;
+    margin: 0;
+}
+
+.bloc1:nth-child(1){
+    margin: 0;
+    display: flex;
+}
+
+.imageAccueil{
+    height: 500px;
+    margin: 2% auto 2% auto;
+}
+
+.bloc1:nth-child(2){
+    font-family: 'Lato';
+    background-color: #ffffff;
+    text-align: center;
+}
+
+h1{
+    font-weight: 600;
+    color: #8eca78;
+}
+h2{
+    font-weight: 300;
+    color: #666666;
+}
