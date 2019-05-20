@@ -24,54 +24,58 @@ $switch=false;
 
 switch ($function) {
     case 'appartementPiece':
-    $switch = true;
-        if (isset ($_GET['idComposant'])){
+            $switch = true;
 
-        }
-        else{
-            $switch=true;
-            //$piece = piecesAppartement($bdd,);
-            //$appartement = appartementProprietaire($bdd, $_COOKIE['idUser']);     //BESOIN DU COOKIE ID USER
-            //$piece = piecesAppartement($bdd,1); //1 = test
+            if (isset ($_POST['supprIdAppart'])){
+                supprAppartement($bdd,$_POST['supprIdAppart']);
+            }
+            if(isset($_POST['supprIdPiece'])){
+                supprPiece($bdd,$_POST['supprIdPiece']);
+            }
+            if(isset($_POST['adresse'])&& isset($_POST['superficie'])){
+                ajouterAppartement($bdd,$_POST['adresse'],$_POST['superficie'],1); // Remplacer 1
+            }
+            if(isset($_POST['nom'])&& isset($_POST['idAppartement'])&& isset($_POST['numSerie'])){
+                ajouterPiece($bdd,$_POST['nom'],$_POST['idAppartement'],$_POST['numSerie']);
+            }
+
             $_SESSION['id'] = $_GET['id'];
             $appartement = appartementProprietaire($bdd, $_GET['id']); 
             $idAppartUser = recupIdAppartUser($bdd, $_GET['id']); 
             $piece =[];
+
             for ($i=0;$i<count($appartement);$i++){
                 $piece[] =  piecesAppartement($bdd, $idAppartUser[$i][0]);
             }
-        }
 
-        $vue='DashBoard/appartement_liste.php';
-        break;
+            $vue='DashBoard/appartement_liste.php';
+            break;
 
     case 'capteurs':
         $switch=true;
         // On a l'id de la piece en variable
-        //$piece[] =  piecesAppartement($bdd, $idAppartUser[$i][0]);
         if (isset ($_GET['idComposant'])) {
             supprComposant($bdd, $_GET['idComposant']);
-            $cemac = recupIdCemacs($bdd, $_GET['idPiece']);
-            $composants = recupIdComposants($bdd, $cemac[0][0]);
-            $valeurs = [];
-            $infosType = [];
-            for ($i = 0; $i < count($composants); $i++) { //Pour chaque composants on va chercher chercher
-                $valeurs[] = recupValHexaCapteur($bdd, $composants[$i][0][0]); //Sa valeur en héxa
-                $infosType[] = recupInfoComplementaire($bdd, $composants[$i][0][0]); // Ainsi que des information sur le composant(unité/grandeur physique)
-            }
-            $valeurs = parcourirValeurs($valeurs, $infosType);
         }
-        else {
+        if(isset($_GET['idPiece'])){
             $cemac = recupIdCemacs($bdd, $_GET['idPiece']);
-            $composants = recupIdComposants($bdd, $cemac[0][0]);
-            $valeurs = [];
-            $infosType = [];
-            for ($i = 0; $i < count($composants); $i++) { //Pour chaque composants on va chercher chercher
-                $valeurs[] = recupValHexaCapteur($bdd, $composants[$i][0][0]); //Sa valeur en héxa
-                $infosType[] = recupInfoComplementaire($bdd, $composants[$i][0][0]); // Ainsi que des information sur le composant(unité/grandeur physique)
+            if ($cemac!=[]){
+                $composants = recupIdComposants($bdd, $cemac[0][0]);
+                $valeurs = [];
+                $infosType = [];
+                for ($i = 0; $i < count($composants); $i++) { //Pour chaque composants on va chercher chercher
+                    $valeurs[] = recupValHexaCapteur($bdd, $composants[$i][0][0]); //Sa valeur en héxa
+                    $infosType[] = recupInfoComplementaire($bdd, $composants[$i][0][0]); // Ainsi que des information sur le composant(unité/grandeur physique)
+                }
+                $valeurs = parcourirValeurs($valeurs, $infosType);
             }
-            $valeurs = parcourirValeurs($valeurs, $infosType);
+            else{
+                $composants=[];
             }
+        }
+
+
+
         $vue='DashBoard/capteurs.php';
         break;
     case 'login':
@@ -132,9 +136,8 @@ switch ($function) {
                 foreach ($composants as $key=>$values){
                     $trameTemp=array($values[1]);
                     $trameTemp=array_merge($trameTemp,recupTrameFromComposant($bdd,$values[0]));
-
                     $trame=array_merge($trame,[$trameTemp]);
-                    //var_dump($trameTemp);
+
 
                 }
 
@@ -142,8 +145,6 @@ switch ($function) {
         }
 
 
-
-        var_dump($trame);
         $vue='Statistic/statistic.php';
 
         break;
