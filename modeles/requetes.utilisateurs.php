@@ -739,11 +739,10 @@ function resetEmailVerificationToken($bdd,$email, $isValid){
  * @param  integer $IdUtilisateur
  *
  */
-function logOut(){
+function logOut($emailUser){
     Session::remove();
     setcookie("email", $emailUser, time()-3600);
-    setcookie("random_password", $random_password, time()-3600);
-    setcookie("random_selector", $random_selector, time()-3600);
+    header("Location: http://localhost/APP_Info-master/index.php?cible=authentificattion&fonction=connexion");
 }
 
 /**
@@ -842,6 +841,40 @@ function connexionWithoutHash($bdd,$email,$passwordWithHash,$rememberMe){
     $res["id"] = $idUtilisateur;
     return $res;
 
+}
+
+function recupNom($idUser, $bdd){
+    $statement = $bdd->prepare('SELECT nom FROM utilisateurs
+    WHERE idUtilisateur=' . $idUser);
+    $statement->execute();
+    return $statement->fetchAll();
+}
+
+function recupPrenom($idUser, $bdd){
+    $statement = $bdd->prepare('SELECT prenom FROM utilisateurs
+    WHERE idUtilisateur=' . $idUser);
+    $statement->execute();
+    return $statement->fetchAll();
+}
+
+function recupEmail($idUser, $bdd){
+    $statement = $bdd->prepare('SELECT email FROM utilisateurs
+    WHERE idUtilisateur=' . $idUser);
+    $statement->execute();
+    return $statement->fetchAll();
+}
+
+function update($idUser, $bdd, $nom, $prenom, $email){
+    $sth = $bdd->prepare('UPDATE utilisateurs SET nom = :nom ,prenom = :prenom, email = :email WHERE idUtilisateur='.$idUser );
+
+    $sth->bindValue(':nom', $nom);
+    $sth->bindValue(':prenom', $prenom);
+    $sth->bindValue(':email', $email);
+
+    $resultat = $sth->execute();
+    if(!$resultat) {
+        throw new Exception("Le token du mot de passe ne peut pas être réinitialisé");
+    }
 }
 
 

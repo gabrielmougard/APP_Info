@@ -151,14 +151,74 @@ switch ($function) {
     case 'compte':
 
         $vue = 'Compte/compte';
+        $nom=recupNom(1, $bdd);
+        $prenom=recupPrenom(1,$bdd);
+        $email=recupEmail(1,$bdd);
+        $switch=true;
+
+        $vue = 'Compte/compte';
         break;
+
+    case 'modifCompte':
+        $nom=recupNom(1, $bdd);
+        $prenom=recupPrenom(1,$bdd);
+        $email=recupEmail(1,$bdd);
+        $etat = true;
+
+        if (isset($_POST['nom']) and isset($_POST['prenom']) and isset($_POST['email'])) {
+
+            //Verification des donnees rentree
+            /*  if($_POST['password'] !== $password){
+                  $etat = false;
+                  $alerte = "Ce n'est pas votre mot de passe actuel";
+                  echo $alerte;
+              }
+
+              if (!estUnMotDePasse($_POST['newpassword'])) {
+                  $etat = false;
+                  $alerte = "Ce n'est pas un mot de passe";
+                  echo $alerte;
+
+              }
+              if ($_POST['newpassword'] !== $_POST['confirmPassword']) {
+                  $etat = false;
+                  $alerte = "Mot de passe non similaires";
+                  echo $alerte;
+              }
+*/
+            //Email
+            if (!email($_POST['email'])) {
+                $etat = false;
+                $alerte = "Email invalide";
+                echo $alerte;
+            }
+
+            $retour = false;
+
+            if ($etat) {
+                echo "etat true";
+                update(1, $bdd, $_POST['nom'], $_POST['prenom'], $_POST['email']);
+                $retour = true;
+            }
+
+            if ($retour) {
+                echo "Modifications réussies";
+                header("Location: http://localhost:63342/APP_Info/index.php?cible=dashboard&fonction=compte");
+            } else {
+                echo "Les modifications n'ont pas fonctionnées";
+                $vue = 'Compte/modifCompte';
+            }
+        }
+        $switch=true;
+        $vue = 'Compte/modifCompte.php';
+        break;
+
     case 'communaute':
         break;
     
     case 'statistic':
         $vue = 'Statistic/statistic';
         break;
-
 
 
 }
