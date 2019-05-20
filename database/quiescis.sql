@@ -62,7 +62,7 @@ CREATE TABLE `messagerie` (
   `diem` varchar(255) NOT NULL,
   `tempus` int(11) NOT NULL,
   `ouvert` int(11) NOT NULL,
-  `reply` int(11) NOT NULL
+  `reply` int(11) NOT NULL,
   PRIMARY  KEY (`idMessage`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

@@ -10,50 +10,58 @@
 
 <div class="conteneur_appart">
     <?php
-    for ($i = 0; $i < count($appartement); $i++) { ?>
-
+    for ($i = 0; $i < count($appartement); $i++) {?>
         <div class="appart">
-        <?php
-            echo'<input id="'.$i.'" type="checkbox">';
+            <?php
+            echo'<input class="checkbox" id="'.$i.'" type="checkbox">';
             echo'<label for="'.$i.'">';
             ?>
-                <h1><?php echo $appartement[$i][1]?></h1>
-                <img src="public/images/maison1.jpg" class="maison">
-                <nav class="liste_piece">
-                    <ul class ="liste_piece">
-                        <?php
-                        for ($j = 0; $j < count($piece[$i]); $j++) {
-                            echo '<li>
-                            <a href="index.php?cible=dashboard&fonction=capteurs&idPiece=' . $piece[$i][$j][0] . '">'
-                                . $piece[$i][$j][1] . '</a></li>';
-                        }
-                        ?>
-                    </ul>
-                </nav>
-            </label>
-</div><?php }?>
-
-
-<!--
-<div class="Conteneur">
-    <ul class="clearfix">
-        <?php
-/*
-        for ($i = 0; $i < count($appartement); $i++) {
-            echo '<li class="1stLevel"><a href="">' . $appartement[$i][1] . '</a>'; //$appartement[$i][0] = id appart
-                echo '<ul>';
+            <form action="index.php?cible=dashboard&fonction=appartementPiece" method="post" >
+                <input type="hidden" name="supprIdAppart" value="<?php echo($appartement[$i]['idAppartement'])?>">
+                <button class="croix">X</button>
+            </form>
+            <h1><?php echo $appartement[$i][1]?></h1>
+            <img src="public/images/maison1.jpg" class="maison">
+            <nav class="liste_piece">
+                <ul class ="liste_piece">
+                    <?php
                     for ($j = 0; $j < count($piece[$i]); $j++) {
-                        //echo '<li class="2ndLevel"><a href="http://localhost/APP_Info/plateformeV3/index.php?cible=dashboard&amp;fonction=capteur&amp;idAppartement='.$appartement[$i][0].'&amp;idPiece='.$piece[$i][$j][0].'">'. $piece[$i][$j][1] .'</a></li>';
-                        echo '<li class="2ndLevel"><a href="index.php?cible=dashboard&fonction=capteurs&idPiece=' . $piece[$i][$j][0] . '">' . $piece[$i][$j][1] . '</a></li>';
+
+                        echo '<li>
+                            <a href="index.php?cible=dashboard&fonction=capteurs&idPiece=' . $piece[$i][$j][0] . '">'  . $piece[$i][$j][1] . '</a>';?>
+                        <form action="index.php?cible=dashboard&fonction=appartementPiece" method="post" >
+                            <input type="hidden" name="supprIdPiece" value="<?php echo($piece[$i][$j]['idPiece'])?>">
+                            <button class="croix">X</button>
+                        </form>
+                        <?php '</li>';
                     }
-                echo '</ul>';
-            echo '</li>';
-        }
-*/
-?>
-    </ul>
-</div>
--->
+                    ?>
+                    <li>
+                        <h2>Ajouter une Piece</h2>
+                        <form action="index.php?cible=dashboard&fonction=appartementPiece" method="post">
+                            Nom de la piece:<br>
+                            <input type="text" name="nom"><br>
+                            Numéro de série Cemac:<br>
+                            <input type="text" name="numSerie"><br>
+                            <input type="hidden" name="idAppartement" value="<?php echo($appartement[$i]['idAppartement']);?>">
+                            <input type="submit" value="Valider">
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+            </label>
+        </div>
+    <?php }?>
+    <div>
+        <h1>Ajouter un Appartement</h1>
+        <form action="index.php?cible=dashboard&fonction=appartementPiece" method="post">
+            Adresse:<br>
+            <input type="text" name="adresse"><br>
+            Superficie:<br>
+            <input type="number" name="superficie">
+            <input type="submit" value="Valider">
+        </form>
+    </div>
 </body>
 
 <?php include "vues/templates/Footer.php" ?>

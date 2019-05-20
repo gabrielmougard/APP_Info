@@ -9,6 +9,22 @@ include("connexion.php");
 
 // Todo: Mettre bien en commentaire les paramètre des fonction, ce qu'elle retourne et tout ca, on comprend r la
 
+/*ATTENTION
+
+
+Il faut remplacer le "1" ligne 288 par idUser
+
+cemac il faut ajouter auto incré
+
+
+
+
+*/
+
+
+
+
+
 
 // REQUETE POUR APPARTEMENT_LISTE
 
@@ -19,8 +35,7 @@ include("connexion.php");
  * @return array[][][] les différentes lignes et colonnes
  */
 function appartementProprietaire(PDO $bdd, $idUser){ //Retourne un tableau contenant les Propriétés d'un appartement
-                                                            //de l'UTILISATEUR donné en argument
-
+    //de l'UTILISATEUR donné en argument
     $statement = $bdd->prepare('SELECT * FROM appartement 
             INNER JOIN role ON appartement.idAppartement=role.idAppart 
             INNER JOIN utilisateurs ON role.idUser=utilisateurs.idUtilisateur
@@ -36,7 +51,7 @@ function appartementProprietaire(PDO $bdd, $idUser){ //Retourne un tableau conte
  * @return array
  */
 function piecesAppartement(PDO $bdd, $idAppartementCourant){ //Retourne un tableau contenant les PIECES
-                                                            //des appartement d'un UUILISATEUR donné en argument
+    //des appartement d'un UUILISATEUR donné en argument
     $statement = $bdd->prepare('SELECT * FROM ' . 'piece' .
         ' WHERE ' . 'piece.idAppart=' . $idAppartementCourant);
     $statement->execute();
@@ -49,7 +64,7 @@ function piecesAppartement(PDO $bdd, $idAppartementCourant){ //Retourne un table
  * @param $idUser
  * @return array
  */
-function recupIdAppartUser(PDO $bdd, $idUser)
+function recupIdAppart1user(PDO $bdd, $idUser)
 { //Retourne un tableau contenant les idAppartement de l'UTILISATEUR donné en argument
 
     $statement = $bdd->prepare('SELECT DISTINCT idAppartement FROM appartement 
@@ -73,7 +88,7 @@ function recupIdCemacs(PDO $bdd, $idPiece){ // Retourne Toute les ids cemacs d'u
     $statement = $bdd->prepare('
     SELECT idCemac FROM cemac
     INNER JOIN piece ON piece.idPiece=cemac.idPiece
-    WHERE piece.idPiece='.$idPiece);
+    WHERE piece.idPiece='.$idPiecer);
     $statement->execute();
     return $statement->fetchAll();
 }
@@ -135,21 +150,21 @@ function recupInfoComplementaire(PDO $bdd, $idComposant){ //Retourne le nom, cl�
  */
 function convertir($valeur,$type){
     $valeur=hexdec($valeur);
-   switch($type){
-       case 'a1':
-           $valeur=$valeur*80/1023;
-           break;
-       case 'b2':
-           $valeur=$valeur*70/1023;
-           break;
-       case 'c3':
-           $valeur=(1/$valeur)*34009;
-           break;
-       default:
-           $valeur="Null";
-           break;
-   }
-   return $valeur;
+    switch($type){
+        case 'a1':
+            $valeur=$valeur*80/1023;
+            break;
+        case 'b2':
+            $valeur=$valeur*70/1023;
+            break;
+        case 'c3':
+            $valeur=(1/$valeur)*34009;
+            break;
+        default:
+            $valeur="Null";
+            break;
+    }
+    return $valeur;
 }
 /*
 @valeur=un array de valeurs valeur en hexa
@@ -195,13 +210,116 @@ function supprComposant(PDO $bdd, $idComposant){ //Supprime un composant
 }
 
 function supprAppartement(PDO $bdd, $idAppartement){ //Supprime un appartement (mais aussi ses pieces)
-    $statement = $bdd->prepare('DELETE FROM `appartement` WHERE `appartement`.`idAppartement` = '.$idAppartement);
+    $statement = $bdd->prepare('SELECT idComposant 
+                                          FROM composant 
+                                          INNER JOIN cemac ON composant.idCemac = cemac.idCemac 
+                                          INNER JOIN piece ON piece.idPiece = cemac.idPiece 
+                                          INNER JOIN appartement ON piece.idAppart = appartement.idAppartement 
+                                          WHERE appartement.idAppartement='.$idAppartement); //Selectionne tout les idComposant de l'appartement
+    $statement->execute();
+    $idsComposant= $statement->fetchAll();
+    for($i=0 ; $i<count($idsComposant); $i++){ // Supprime l'idCemac des composants
+        $statement = $bdd->prepare('SELECT trameenvoi.idEnvoi FROM trameenvoi WHERE trameenvoi.idComposant='. $idsComposant[$i]['idComposant']);//Recupere tout les idEnvoi d'un composant
+        $statement->execute();
+        $idsTrameenvoi = $statement->fetchAll();
+        for($j = 0 ; $j< count($idsTrameenvoi);$j++){
+            $statement = $bdd->prepare('DELETE FROM `trameenvoi` WHERE `trameenvoi`.`idEnvoi`='.$idsTrameenvoi[$j]['idEnvoi']);//Supprime la trame
+            $statement->execute();
+        }
+        $statement = $bdd->prepare('UPDATE `composant` SET `idCemac` = NULL WHERE `composant`.`idComposant` =  '.$idsComposant[$i]['idComposant']);
+        $statement->execute();
+    }
+    $statement = $bdd->prepare('SELECT idCemac 
+                                          FROM cemac 
+                                          INNER JOIN piece ON piece.idPiece=cemac.idPiece 
+                                          INNER JOIN appartement ON appartement.idAppartement=piece.idAppart 
+                                          WHERE appartement.idAppartement='.$idAppartement);//Selectionne tout les idCemac de l'appartement
+    $statement->execute();
+    $idsCemac= $statement->fetchAll();
+    for($i=0 ; $i<count($idsCemac); $i++){ // Supprime l'idCemac des composants
+        $statement = $bdd->prepare('DELETE FROM `cemac` WHERE cemac.idCemac='.$idsCemac[$i]['idCemac']); // Supprime la/les Cemac liée à l'appartement
+        $statement->execute();
+    }
+    $statement = $bdd->prepare('DELETE FROM `piece` WHERE `piece`.`idAppart` = '.$idAppartement);// Supprime les pieces
+    $statement->execute();
+    $statement = $bdd->prepare('DELETE FROM `appartement` WHERE `appartement`.`idAppartement` = '.$idAppartement);// Supprime l'appartement
+    $statement->execute();
+    $statement = $bdd->prepare('DELETE FROM `role` WHERE `role`.`idAppart` ='.$idAppartement); //Supprime le role lié à l'appartemeent
     $statement->execute();
 }
 
 function supprPiece(PDO $bdd, $idPiece){
-    $statement = $bdd->prepare('DELETE FROM `piece` WHERE `composant`.`idComposant` = '.$idPiece);
+    $statement = $bdd->prepare('SELECT idComposant 
+                                          FROM composant 
+                                          INNER JOIN cemac ON composant.idCemac = cemac.idCemac 
+                                          INNER JOIN piece ON piece.idPiece = cemac.idPiece 
+                                          WHERE piece.idPiece = '. $idPiece);
+    $statement->execute(); //Selectionne tout les idComposant de la pièce
+    $idsComposant= $statement->fetchAll();
+    for($i=0 ; $i<count($idsComposant); $i++){
+        $statement = $bdd->prepare('SELECT trameenvoi.idEnvoi FROM trameenvoi WHERE trameenvoi.idComposant='. $idsComposant[$i]['idComposant']);//Recupere tout les idEnvoi d'un composant
+        $statement->execute();
+        $idsTrameenvoi = $statement->fetchAll();
+        for($j = 0 ; $j<count($idsTrameenvoi);$j++){
+            $statement = $bdd->prepare('DELETE FROM `trameenvoi` WHERE `trameenvoi`.`idEnvoi`='.$idsTrameenvoi[$j]['idEnvoi']);//Supprime la trame
+            $statement->execute();
+        }
+        $statement = $bdd->prepare('UPDATE `composant` SET `idCemac` = NULL WHERE `composant`.`idComposant` =  '.$idsComposant[$i]['idComposant']);// Supprime l'idCemac de tout les composants
+        $statement->execute();
+    }
+    $statement = $bdd->prepare('DELETE FROM `cemac` WHERE `cemac`.`idPiece` = '.$idPiece); // Supprime la/les Cemac liée à l'appartement
+    $statement->execute();
+    $statement = $bdd->prepare('DELETE FROM `piece` WHERE `piece`.`idPiece`='.$idPiece);//Suppr piece
     $statement->execute();
 }
+
+function ajouterAppartement(PDO $bdd, $adresse,$superficie,$idUser){ //Ajoute une ligne Appartement et role
+    $idAppartement = affecterIdAppartement($bdd);
+    $statement = $bdd->prepare('INSERT INTO `appartement` (`idAppartement`, `adresse`, `superficie`) VALUES ("'.$idAppartement.'","'.$adresse.'","'.$superficie.'" ) ');
+    $statement->execute();
+    $statement = $bdd->prepare(' INSERT INTO `role` (`idRole`, `principal`, `secondaire`, `idAppart`, `idUser`) VALUES (Null, 1, 0,"'.$idAppartement.'","'.$idUser.'" )    ');
+    $statement->execute();
+} //Soit on met l'id Appartement directement dans role soit on va chercher le dernier idAppartement
+
+function affecterIdAppartement(PDO $bdd){ //On créer un idAppartement et on vérifie qu'il n'existe pas
+    $statement = $bdd->prepare('SELECT idAppartement FROM appartement ');
+    $statement->execute();
+    $tab =$statement->fetchAll();
+    while ($a=1){
+        $val = rand();
+
+        if(in_array($val,$tab)){
+        }
+        else{
+            return $val;
+            $a=2;
+        }
+    }
+}
+
+
+function ajouterPiece(PDO $bdd, $nom, $idAppartement,$numSerie){ //Ajoute piece et cemac
+    $idPiece= affecterIdPiece($bdd);
+    $statement = $bdd->prepare('   INSERT INTO `piece` (`idPiece`, `nom`, `idAppart`) VALUES ("'.$idPiece.'", "'.$nom.'","'.$idAppartement.'")    ');
+    $statement->execute();;
+    $statement = $bdd->prepare('   INSERT INTO `cemac` (`idCemac`, `numeroSerie`, `idPiece`) VALUES (Null,"'.$numSerie.'","'.$idPiece.'")    ');
+    $statement->execute();
+}
+function affecterIdPiece(PDO $bdd){ //On créer un idAppartement et on vérifie qu'il n'existe pas
+    $statement = $bdd->prepare('SELECT idPiece FROM piece ');
+    $statement->execute();
+    $tab =$statement->fetchAll();
+    while ($a=1){
+        $val = rand();
+
+        if(in_array($val,$tab)){
+        }
+        else{
+            return $val;
+            $a=2;
+        }
+    }
+}
+
 
 ?>
