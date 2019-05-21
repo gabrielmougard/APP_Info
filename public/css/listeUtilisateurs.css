@@ -55,7 +55,7 @@
 }
 
 table {
-    border:3px solid #6495ed;
+    border:3px solid #8eca78ff;
     border-collapse:collapse;
     width:90%;
     margin:auto;
@@ -63,15 +63,15 @@ table {
 thead, tfoot {
     background-color:#D0E3FA;
     background-image:url(sky.jpg);
-    border:1px solid #6495ed;
+    border:1px solid #8eca78ff;
 }
 tbody {
     background-color:#FFFFFF;
-    border:1px solid #6495ed;
+    border:1px solid #8eca78ff;
 }
 th {
     font-family:monospace;
-    border:1px dotted #6495ed;
+    border:1px dotted #8eca78ff;
     padding:5px;
     background-color:#EFF6FF;
     width:25%;
@@ -79,7 +79,7 @@ th {
 td {
     font-family:sans-serif;
     font-size:80%;
-    border:1px solid #6495ed;
+    border:1px solid #8eca78ff;
     padding:5px;
     text-align:left;
 }
