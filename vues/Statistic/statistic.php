@@ -37,7 +37,7 @@
     <div class="conteneur_stat2_2">
         <?php
         foreach($appart as $key=>$value) {
-            echo '<a href="http://localhost/APP_Info/index.php?cible=dashboard&fonction=statistiques&appartSelect='.$value[0].'"><button>' . $value[1] . '</button></a>';
+            echo '<a href="http://localhost/APP_Info-master/index.php?cible=dashboard&fonction=statistiques&appartSelect='.$value[0].'"><button>' . $value[1] . '</button></a>';
         }
         ?>
     </div>
@@ -52,7 +52,7 @@
     <?php
 
     foreach($piece as $key=>$value) {
-        echo '<a href="http://localhost/APP_Info/index.php?cible=dashboard&fonction=statistiques&appartSelect='.$_GET['appartSelect'].'&pieceSelect='.$value[0].'"><button >' . $value[1] . '</button></a>';
+        echo '<a href="http://localhost/APP_Info-master/index.php?cible=dashboard&fonction=statistiques&appartSelect='.$_GET['appartSelect'].'&pieceSelect='.$value[0].'"><button >' . $value[1] . '</button></a>';
     }
 
     ?>
@@ -96,7 +96,7 @@
                     },
                     yaxis:{
                         title:{
-                            text: '°C',
+                            text: '',
                             font: {
                                 family: 'Lato',
                                 size: 18,

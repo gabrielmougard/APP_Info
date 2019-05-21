@@ -56,10 +56,11 @@
         <h1>Ajouter un Appartement</h1>
         <form action="index.php?cible=dashboard&fonction=appartementPiece" method="post">
             Adresse:<br>
-            <input type="text" name="adresse"><br>
-            Superficie:<br>
-            <input type="number" name="superficie">
-            <input type="submit" value="Valider">
+            <input class="blockAppartement" type="text" name="adresse">
+            Superficie :<br>
+            <input class="blockAppartement" type="number" name="superficie"/>
+            <br>
+            <input class="blockAppartement" type="submit" value="Valider">
         </form>
     </div>
 </body>

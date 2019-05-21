@@ -166,6 +166,8 @@ switch ($function) {
             if ($retour) {
 
                 $_SESSION['id'] = $conn["id"];
+                $_SESSION['email'] = $conn["email"];
+
                 header("Location: http://localhost/APP_Info-master/index.php?cible=dashboard&fonction=appartementPiece&id=".$conn["id"]);
 
 

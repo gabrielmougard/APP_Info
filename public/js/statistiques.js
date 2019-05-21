@@ -12,7 +12,7 @@ function trameComposant(arrayTrame,composant){
                 insideLong=arrayTrame[i].length;
                 for (j = 1; j < insideLong; j++) {
                     val = parseInt(arrayTrame[i][j][0], 10);
-                    time = parseInt(arrayTrame[i][j][1], 10);
+                    time = arrayTrame[i][j][1];
                     arrayTemp = [val,time];
                     result.push(arrayTemp);
                     comp+=1;
@@ -69,7 +69,7 @@ function changer(composant) {
         },
         yaxis:{
             title:{
-                text: '°C',
+                text: '',
                 font: {
                     family: 'Lato',
                     size: 18,

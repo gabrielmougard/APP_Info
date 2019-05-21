@@ -39,9 +39,9 @@ switch ($function) {
                 ajouterPiece($bdd,$_POST['nom'],$_POST['idAppartement'],$_POST['numSerie']);
             }
 
-            $_SESSION['id'] = $_GET['id'];
-            $appartement = appartementProprietaire($bdd, $_GET['id']); 
-            $idAppartUser = recupIdAppartUser($bdd, $_GET['id']); 
+
+            $appartement = appartementProprietaire($bdd, $_SESSION['id']);
+            $idAppartUser = recupIdAppartUser($bdd, $_SESSION['id']);
             $piece =[];
 
             for ($i=0;$i<count($appartement);$i++){
@@ -114,35 +114,29 @@ switch ($function) {
         $switch=true;
         include('modeles/requetes.statistiques.php');
 
-        if(isset($_SESSION['email']) OR isset($_COOKIE['email'])){
-            if(!empty($_SESSION['email']) ){
-                $composants=recupComposant();
-                foreach ($composants as $key=>$values){
+        if(isset($_SESSION['id'])){
+            if(!empty($_SESSION['id']) ){
+                $appart=recupAppartementFromId($bdd,$_SESSION['id']);
+                $piece=array();
+                $composants=array();
+                $trame=array();
+                if(isset($_GET['appartSelect']) & !empty($_GET['appartSelect'])) {
+                    $piece=recupPieceFromAppart($bdd,$_GET['appartSelect']);
+                    if (isset($_GET['pieceSelect']) & !empty($_GET['pieceSelect'])) {
+                        $composants=recupComposantFromPiece($bdd,$_GET['pieceSelect']);
+                        foreach ($composants as $key=>$values){
+                            $trameTemp=array($values[1]);
+                            $trameTemp=array_merge($trameTemp,recupTrameFromComposant($bdd,$values[0]));
+                            $trame=array_merge($trame,[$trameTemp]);
 
+
+                        }
+
+                    }
                 }
             }
-            if(!empty($_COOKIE['email']) ){
-
-            }
         }
-        $appart=recupAppartementFromEmail($bdd,'reljgrljerg@gmail.com');
-        $piece=array();
-        $composants=array();
-        $trame=array();
-        if(isset($_GET['appartSelect']) & !empty($_GET['appartSelect'])) {
-            $piece=recupPieceFromAppart($bdd,$_GET['appartSelect']);
-            if (isset($_GET['pieceSelect']) & !empty($_GET['pieceSelect'])) {
-                $composants=recupComposantFromPiece($bdd,$_GET['pieceSelect']);
-                foreach ($composants as $key=>$values){
-                    $trameTemp=array($values[1]);
-                    $trameTemp=array_merge($trameTemp,recupTrameFromComposant($bdd,$values[0]));
-                    $trame=array_merge($trame,[$trameTemp]);
 
-
-                }
-
-            }
-        }
 
 
         $vue='Statistic/statistic.php';

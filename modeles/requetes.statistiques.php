@@ -22,16 +22,13 @@ INNER JOIN appartement ON piece.idAppart=:idAppartement');
  * @param varchar $email
  * @return array
  */
-function recupAppartementFromEmail(PDO $bdd, $email){ //Retourne un tableau contenant les Propriétés d'un appartement
-    $sth=$bdd->prepare('SELECT idUtilisateur FROM utilisateurs WHERE email=:email');
-    $sth->bindValue(':email',$email);
-    $sth->execute();
-    $idUtilisateur=$sth->fetch();
+function recupAppartementFromId(PDO $bdd, $id){ //Retourne un tableau contenant les Propriétés d'un appartement
+
 
     $statement = $bdd->prepare('SELECT DISTINCT idAppartement,adresse FROM appartement 
             INNER JOIN role ON appartement.idAppartement=role.idAppart 
-            INNER JOIN personne ON role.idUser=:idUtilisateur');
-    $statement->bindValue(':idUtilisateur',$idUtilisateur[0][0]);
+            INNER JOIN utilisateurs ON role.idUser=:idUtilisateur');
+    $statement->bindValue(':idUtilisateur',$id);
     $statement->execute();
     return $statement->fetchAll();
 }

@@ -23,9 +23,6 @@ cemac il faut ajouter auto incré
 
 
 
-
-
-
 // REQUETE POUR APPARTEMENT_LISTE
 
 /**
@@ -64,7 +61,7 @@ function piecesAppartement(PDO $bdd, $idAppartementCourant){ //Retourne un table
  * @param $idUser
  * @return array
  */
-function recupIdAppart1user(PDO $bdd, $idUser)
+function recupIdAppartuser(PDO $bdd, $idUser)
 { //Retourne un tableau contenant les idAppartement de l'UTILISATEUR donné en argument
 
     $statement = $bdd->prepare('SELECT DISTINCT idAppartement FROM appartement 
@@ -88,7 +85,7 @@ function recupIdCemacs(PDO $bdd, $idPiece){ // Retourne Toute les ids cemacs d'u
     $statement = $bdd->prepare('
     SELECT idCemac FROM cemac
     INNER JOIN piece ON piece.idPiece=cemac.idPiece
-    WHERE piece.idPiece='.$idPiecer);
+    WHERE piece.idPiece='.$idPiece);
     $statement->execute();
     return $statement->fetchAll();
 }

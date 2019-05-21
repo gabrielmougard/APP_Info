@@ -27,21 +27,7 @@ function inscription($bdd,$nom,$email,$password,$CGU) {
     if(!$CGU) {
         return false;
     }
-    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-    $bdd->beginTransaction();
-    $query = "INSERT INTO utilisateurs (nom, email, role, passwordHash, derniereVerificationEmail) ".
-        "VALUES (:nom, :email, :role,:passwordHash, :derniereVerificationEmail)";
 
-    $sth=$bdd->prepare($query);
-    $sth->bindValue(':nom', $nom, PDO::PARAM_STR);
-    $sth->bindValue(':email', $email,PDO::PARAM_STR);
-    $sth->bindValue(':role', "user",PDO::PARAM_STR);
-    $sth->bindValue(':passwordHash', $passwordHash,PDO::PARAM_STR);
-
-
-    $sth->bindValue(':derniereVerificationEmail', time(),PDO::PARAM_INT);
-    $sth->execute();
-    $bdd->commit();
 
     $token = sha1(uniqid(mt_rand(), true));
 
@@ -279,6 +265,21 @@ EX;
     }
     else
     {
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        $bdd->beginTransaction();
+        $query = "INSERT INTO utilisateurs (nom, email, role, passwordHash, derniereVerificationEmail) ".
+            "VALUES (:nom, :email, :role,:passwordHash, :derniereVerificationEmail)";
+
+        $sth=$bdd->prepare($query);
+        $sth->bindValue(':nom', $nom, PDO::PARAM_STR);
+        $sth->bindValue(':email', $email,PDO::PARAM_STR);
+        $sth->bindValue(':role', "user",PDO::PARAM_STR);
+        $sth->bindValue(':passwordHash', $passwordHash,PDO::PARAM_STR);
+
+
+        $sth->bindValue(':derniereVerificationEmail', time(),PDO::PARAM_INT);
+        $sth->execute();
+        $bdd->commit();
         
         //sauvegarde du token
 

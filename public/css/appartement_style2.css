@@ -53,6 +53,10 @@ input{     /* check box cachee */
     display:none;
 }
 
+.blockAppartement {
+    display: block;
+}
+
 .appart nav {
     width: 0;
     height: 0;
