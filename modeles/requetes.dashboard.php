@@ -321,5 +321,26 @@ function affecterIdPiece(PDO $bdd){ //On créer un idAppartement et on vérifie 
     }
 }
 
+function recupUtilisateurs(PDO $bdd){
+    $statement = $bdd->prepare('SELECT utilisateurs.nom,utilisateurs.prenom,utilisateurs.email,typeutilisateur.type 
+                                          FROM utilisateurs 
+                                          INNER JOIN typeutilisateur ON utilisateurs.idType=typeutilisateur.idType');
+    $statement->execute();
+    return $statement->fetchAll();
+}
+
+function estUnAdministrateur(PDO $bdd,$idUser){
+    $statement = $bdd->prepare('SELECT utilisateurs.idType
+                                          FROM utilisateurs
+                                          WHERE idUtilisateur='.$idUser);
+    $statement->execute();
+    $val = $statement->fetchAll();
+    if ($val[0]['idType'] === "0"){
+        return true;
+    }
+    return false;
+}
+
+
 
 ?>

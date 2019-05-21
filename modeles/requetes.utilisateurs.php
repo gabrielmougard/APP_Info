@@ -318,7 +318,6 @@ function connexion($bdd,$email,$password,$rememberMe){
     $sth->bindValue(':email', $email);
     $sth->execute();
     $utilisateur = $sth->fetchAll();
-
     $idUtilisateur = isset($utilisateur[0]["idUtilisateur"]) ? $utilisateur[0]["idUtilisateur"] : null;
     $passwordHash = isset($utilisateur[0]["passwordHash"]) ? $utilisateur[0]["passwordHash"] : null;
 

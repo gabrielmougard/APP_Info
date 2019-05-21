@@ -49,7 +49,7 @@ h1{ /*Adresse*/
     color: #666666;
 }
 
-input{     /* check box cachee */
+.checkbox{     /* check box cachee */
     display:none;
 }
 

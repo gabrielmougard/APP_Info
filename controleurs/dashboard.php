@@ -13,6 +13,7 @@
 
 include('modeles/requetes.dashboard.php');
 
+
 if (!isset($_GET['fonction']) || empty($_GET['fonction'])) {
 
     $function = "accueil";
@@ -219,8 +220,13 @@ switch ($function) {
     case 'statistic':
         $vue = 'Statistic/statistic';
         break;
-
-
+    case 'listeUtilisateurs':
+        if (estUnAdministrateur($bdd,1)) { // Test
+            $switch = true;
+        }
+        $utilisateurs=recupUtilisateurs($bdd);
+        $vue = 'admin/listeUtilisateurs.php';
+        break;
 }
 
 if(!$switch){
