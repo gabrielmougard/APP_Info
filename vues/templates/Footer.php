@@ -11,6 +11,7 @@
 
 
 <footer>
+
     <img src="public/images/logoWhite.png" alt="logoQuiescisBlanc" /><br />
     <a href="mentionsLegales.html">Mentions Légales</a><br />
     <a href="CGU.html">Conditions Générales d'Utilisation</a><br />

@@ -25,7 +25,7 @@
 
         <div class="bloc">
             <a href="#" class="m-link"><i class="fa fa-envelope" aria-hidden="true"></i> Messagerie </a>
-            <a href="index.php?cible=dashboard&fonction=compte" class="m-link"><i class="fa fa-user-circle" aria-hidden="true"></i> Mon compte </a>
+            <a href="index.php?cible=dashboard&fonction=logout" class="m-link"><i class="fas fa-sign-out-alt"></i> Se déconnecter </a>
         </div>
     </div>
 </header>
