@@ -33,7 +33,8 @@
     *********
 </p>
 
-<a class="modif" href="index.php?cible=dashboard&fonction=modifCompte"> Modifier </a>
+<a class="modif" href="index.php?cible=dashboard&fonction=modifCompte"> Modifier ses informations </a>
+<a class="modif" href="index.php?cible=dashboard&fonction=modifMdp"> Modifier son mot de passe</a>
 
 
 </body>

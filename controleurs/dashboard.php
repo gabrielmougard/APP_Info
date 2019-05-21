@@ -12,6 +12,7 @@
  */
 
 include('modeles/requetes.dashboard.php');
+include ('modeles/requetes.utilisateurs.php');
 
 
 if (!isset($_GET['fonction']) || empty($_GET['fonction'])) {
@@ -145,42 +146,29 @@ switch ($function) {
         break;
     case 'compte':
 
-        $vue = 'Compte/compte';
-        $nom=recupNom(1, $bdd);
-        $prenom=recupPrenom(1,$bdd);
-        $email=recupEmail(1,$bdd);
+        $nom=recupNom(4, $bdd);
+        $prenom=recupPrenom(4,$bdd);
+        $email=recupEmail(4,$bdd);
         $switch=true;
 
-        $vue = 'Compte/compte';
+        $vue = 'Compte/compte.php';
         break;
 
     case 'modifCompte':
-        $nom=recupNom(1, $bdd);
-        $prenom=recupPrenom(1,$bdd);
-        $email=recupEmail(1,$bdd);
+        $nom=recupNom(4, $bdd);
+        $prenom=recupPrenom(4,$bdd);
+        $email=recupEmail(4,$bdd);
         $etat = true;
 
-        if (isset($_POST['nom']) and isset($_POST['prenom']) and isset($_POST['email'])) {
 
-            //Verification des donnees rentree
-            /*  if($_POST['password'] !== $password){
-                  $etat = false;
-                  $alerte = "Ce n'est pas votre mot de passe actuel";
-                  echo $alerte;
-              }
+       if (isset($_POST['nom']) and isset($_POST['prenom']) and isset($_POST['email'])) {
 
-              if (!estUnMotDePasse($_POST['newpassword'])) {
-                  $etat = false;
-                  $alerte = "Ce n'est pas un mot de passe";
-                  echo $alerte;
+         if (empty($_POST['nom']) or empty($_POST['prenom']) or empty($_POST['email'])){
+                $etat = false;
+                $alerte = "Renseigner les champs vides";
+                echo $alerte;
+            }
 
-              }
-              if ($_POST['newpassword'] !== $_POST['confirmPassword']) {
-                  $etat = false;
-                  $alerte = "Mot de passe non similaires";
-                  echo $alerte;
-              }
-*/
             //Email
             if (!email($_POST['email'])) {
                 $etat = false;
@@ -189,10 +177,53 @@ switch ($function) {
             }
 
             $retour = false;
-
             if ($etat) {
                 echo "etat true";
-                update(1, $bdd, $_POST['nom'], $_POST['prenom'], $_POST['email']);
+                update(4, $bdd, $_POST['nom'], $_POST['prenom'], $_POST['email']);
+                $retour = true;
+            }
+
+            if ($retour) {
+                echo "Modifications réussies";
+               header("Location: http://localhost:63342/APP_Info/index.php?cible=dashboard&fonction=compte");
+            } else {
+                echo "Les modifications n'ont pas fonctionnées";
+                $vue = 'Compte/modifCompte.php';
+            }
+        }
+
+        $switch=true;
+        $vue = 'Compte/modifCompte.php';
+        break;
+
+
+    case 'modifMdp':
+
+        $etat = true;
+        if (!empty($_POST['newPassword']) and !empty($_POST['confirmPassword'])) {
+
+            if (!password($_POST['newPassword'])) {
+                $etat = false;
+                $alerte = "Mot de passe incorrect ";
+                echo $alerte;
+            }
+
+            if (!estUnMotDePasse($_POST['newPassword'])) {
+                $etat = false;
+                $alerte = "Ce n'est pas un mot de passe";
+                echo $alerte;
+            }
+
+            if ($_POST['newPassword'] !== $_POST['confirmPassword']) {
+                $etat = false;
+                $alerte = "Mot de passe non similaires";
+                echo $alerte;
+            }
+
+            $retour = false;
+            if ($etat) {
+                echo "etat true";
+                updatePassword(4, $bdd, $_POST['newPassword']);
                 $retour = true;
             }
 
@@ -201,12 +232,14 @@ switch ($function) {
                 header("Location: http://localhost:63342/APP_Info/index.php?cible=dashboard&fonction=compte");
             } else {
                 echo "Les modifications n'ont pas fonctionnées";
-                $vue = 'Compte/modifCompte';
+                $vue = 'Compte/modifCompte.php';
             }
         }
+
         $switch=true;
-        $vue = 'Compte/modifCompte.php';
+        $vue = 'Compte/modifMdp.php';
         break;
+
 
     case 'communaute':
         break;
@@ -215,7 +248,7 @@ switch ($function) {
         $vue = 'Statistic/statistic';
         break;
     case 'listeUtilisateurs':
-        if (estUnAdministrateur($bdd,1)) { // Test
+        if (estUnAdministrateur($bdd,4)) { // Test
             $switch = true;
         }
         $utilisateurs=recupUtilisateurs($bdd);

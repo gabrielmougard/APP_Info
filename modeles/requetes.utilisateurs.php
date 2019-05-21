@@ -878,5 +878,15 @@ function update($idUser, $bdd, $nom, $prenom, $email){
 }
 
 
+function updatePassword($idUser, $bdd, $newPassword){
+    $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
 
+    $sth = $bdd->prepare('UPDATE utilisateurs SET passwordHash = :newPasswordHash WHERE idUtilisateur='.$idUser );
+    $sth->bindValue(':newPasswordHash', $newPasswordHash);
+    $resultat = $sth->execute();
+
+    if(!$resultat) {
+        throw new Exception("Le token du mot de passe ne peut pas être réinitialisé");
+    }
+}
 ?>
