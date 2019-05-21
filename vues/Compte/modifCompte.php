@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Mon Compte</title>
+    <title>Modifier son compte</title>
     <link rel="stylesheet" href="public/css/compte.css">
 </head>
 
@@ -26,21 +26,7 @@
         <input type="email" name="email" class="form-control" value="<?php echo $email[0][0]?>" style="border: none;">
     </p>
 
-    <!--   <h2>Mot de passe actuel</h2>
-       <p class="ActuelMdp">
-           <input type="password" name="password" class="form-control" required placeholder="Mot de passe actuel" style="border:none;">
-       </p>
 
-       <h2>Nouveau mot de passe</h2>
-       <p class="nvMdp">
-           <input type="password" name="newPassword" class="form-control" required placeholder="Nouveau mot de passe"style="border:none;">
-       </p>
-
-       <h2>Répéter le mot de passe</h2>
-       <p class="remdp">
-           <input type="password" name="confirmPassword" class="form-control" required placeholder="Répéter le mot de passe"style="border:none;">
-       </p>
-   -->
     <button type="submit"> Confirmer les modifications </button> <!--mettre un bouton -->
 </form>
 
