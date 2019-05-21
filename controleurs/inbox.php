@@ -82,7 +82,7 @@ switch ($function) {
         //vue Mails/mails.php : with an alert saying that it has been sent
 
         if($res) {
-            $vue = "Mails/mails";
+            header('Location: http://localhost/APP_Info-master/index.php?cible=inbox&fonction=mails&uid='.$_SESSION['id'].'&p=1');
         }
         else {
             $vue = "Mails/writeMessage";

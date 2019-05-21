@@ -59,7 +59,7 @@ $(window).load(function(){
             $row = array_pop($rows);
             $id = $row["idMessage"];
             $idTicket = $row["idTicket"];
-            $email = $row["email"];
+            $email = $row["emailUser"];
 
             if(strlen($row["subject"]) >= 50){
                 $subject = substr($row["subject"],0,50)."..";
@@ -68,8 +68,7 @@ $(window).load(function(){
             }
 
             $message = $row['contenu'];
-            $date = $row['diem'];
-            $time = time_passed($row['tempus']);
+
 
             if($row['ouvert'] == '1'){
                 $open = '<img src="img/open.png" alt="Opened" title="Opened" />';
