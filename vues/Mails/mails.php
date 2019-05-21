@@ -9,11 +9,6 @@
 // Ignore Warnings
 error_reporting(E_ALL & ~E_NOTICE & ~8192);
 
-// Connect to Database
-require_once "inc/config.php";
-
-// Days,Hours,Minutes Time Format
-require_once "inc/time.php";
 
 ?>
 
@@ -41,7 +36,7 @@ $(window).load(function(){
 </script>
 
 <!-- button for sending new email to the admin community -->
-<div class="round-button"><div class="round-button-circle"><a href="index.php?cible=inbox&fonction=msg&new=true&idUser=<?php $_SESSION["userId"]?>" class="round-button"><i class="far fa-comment-dots"></i></a></div></div>
+<div class="round-button"><div class="round-button-circle"><a href="index.php?cible=inbox&fonction=msg&new=true&idUser=<?php echo $_SESSION["id"]?>" class="round-button"><i class="far fa-comment-dots"></i></a></div></div>
 
 <div id="inbox">
 

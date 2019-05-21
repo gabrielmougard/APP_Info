@@ -17,7 +17,7 @@ function retrieveMails($bdd,$idUtilisateur,$p) {
     }
 
     //explaination : We want the first message of the different ticket started by the specified user
-    $sth = $bdd->prepare("SELECT * FROM messagerie LIMIT :offset, :lim WHERE idUser = :idUtilisateur GROUP BY idTicket HAVING reply = 1");
+    $sth = $bdd->prepare("SELECT * FROM messagerie WHERE idUser = :idUtilisateur GROUP BY idTicket HAVING reply = 1 LIMIT :offset, :lim");
     $sth->bindValue(":offset",$offset, PDO::PARAM_INT);
     $sth->bindValue(":lim",$limit, PDO::PARAM_INT);
     $sth->bindValue(":idUtilisateur", $idUtilisateur);
@@ -62,12 +62,19 @@ function removeMessage($bdd,$idMessage) {
  * @param $data array containing content data
  * @param $newMessage boolean true if it's starting a new discussion thread, false if not.
  */
-function writeMessage($bdd,$data,$newMessage) {
+function writeMessage($bdd,$data) {
 
     $idTicket = 0;
     $reply = 0;
 
-    if ($newMessage) {
+
+    //get the usermail with $data['id']
+    $sth = $bdd->prepare("SELECT email FROM utilisateurs WHERE idUtilisateur = :id");
+    $sth->bindValue(":id",$data['idUser']);
+    $sth->execute();
+    $emailUtilisateur = $sth->fetchAll();
+
+    if ($data["newMessage"] == "true") {
         $sth = $bdd->prepare("SELECT COUNT(*) FROM messagerie");
         $sth->execute();
         $res = $sth->fetchAll();
@@ -89,16 +96,14 @@ function writeMessage($bdd,$data,$newMessage) {
 
     }
 
-    $sth = $bdd->prepare("INSERT INTO messages (idUser,idTicket,emailUser,content,diem,tempus,ouvert,reply,subject ) VALUES (':idUser',':idTicket',':emailUser',':content',':diem',':tempus',':ouvert',':reply',':subject')");
-    $sth->bindValue(":idUser",$data["idUser"]);
-    $sth->bindValue(":subject",$data["subject"]);
-    $sth->bindValue(":idTicket",$idTicket);
-    $sth->bindValue(":emailUser",$data["emailUser"]);
-    $sth->bindValue(":content",$data["content"]);
-    $sth->bindValue(":diem",$data["diem"]);
-    $sth->bindValue(":tempus",$data["tempus"]);
-    $sth->bindValue(":ouvert",$data["ouvert"]);
-    $sth->bindValue(":reply",$reply);
+    $sth = $bdd->prepare("INSERT INTO messagerie (idUser,idTicket,emailUser,contenu,ouvert,reply,subject ) VALUES (:idUser,:idTicket,:emailUser,:content,:ouvert,:reply,:subject)");
+    $sth->bindValue(':idUser',$data["idUser"]);
+    $sth->bindValue(':subject',$data["subject"]);
+    $sth->bindValue(':idTicket',$idTicket);
+    $sth->bindValue(':emailUser',$emailUtilisateur[0]["email"]);
+    $sth->bindValue(':content',$data["content"]);
+    $sth->bindValue(':ouvert',$data["ouvert"]);
+    $sth->bindValue(':reply',$reply);
 
     $res = $sth->execute();
     return $res;

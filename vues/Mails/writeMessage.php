@@ -19,7 +19,7 @@
 <body>
 
 <div class="container">
-    <form id="contact" action="index.php?cible=inbox&fonction=add&idUser=<?php $_SESSION["userId"]?>&new=<?php $_SESSION["new"]?>" method="post">
+    <form id="contact" action="index.php?cible=inbox&fonction=add&idUser=<?php $_SESSION["id"]?>" method="post">
         <h3>Démarrer un fil de discussion</h3>
         <h4>Nous vous répondons dans les 24h !</h4>
         <textarea style="height: 40px" name="subject" placeholder="Entrez l'objet de la plainte..." tabindex="2" required></textarea>
@@ -28,6 +28,7 @@
         <fieldset>
             <button name="submit" type="submit" id="contact-submit" data-submit="...Envoie">Envoyer</button>
         </fieldset>
+        <input type="hidden" name="new" value=<?php echo $new?> />
     </form>
 
 

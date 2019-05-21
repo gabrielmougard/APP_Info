@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  mar. 21 mai 2019 à 13:16
+-- Généré le :  mar. 21 mai 2019 à 16:08
 -- Version du serveur :  10.1.37-MariaDB
 -- Version de PHP :  7.3.1
 
@@ -60,7 +60,8 @@ INSERT INTO `appartement` (`idAppartement`, `adresse`, `superficie`) VALUES
 (595853817, 'efz', 0),
 (9453696, 'adresse 5', 54),
 (476658401, 'adresse 5', 54),
-(2053000747, 'adresse 5', 173);
+(2053000747, 'adresse 5', 173),
+(2053000748, 'adresse 6', 182);
 
 -- --------------------------------------------------------
 
@@ -106,7 +107,8 @@ CREATE TABLE `cemac` (
 INSERT INTO `cemac` (`idCemac`, `numeroSerie`, `idPiece`) VALUES
 (1, 50, 1),
 (2, 51, 0),
-(3, 12345, 2049881344);
+(3, 12345, 2049881344),
+(4, 0, 1779740570);
 
 -- --------------------------------------------------------
 
@@ -158,8 +160,6 @@ CREATE TABLE `messagerie` (
   `contenu` longtext NOT NULL,
   `emailUser` varchar(50) NOT NULL,
   `idUser` int(11) DEFAULT NULL,
-  `diem` varchar(255) NOT NULL,
-  `tempus` int(11) NOT NULL,
   `ouvert` int(11) NOT NULL,
   `reply` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -198,6 +198,7 @@ INSERT INTO `piece` (`idPiece`, `nom`, `idAppart`) VALUES
 (4, 'Salle du trone', 3),
 (5, 'Salle de sport', 3),
 (6, 'Piece à la con', 1),
+(1779740570, 'gabriel', 9),
 (2049881344, 'Cuisine', 8);
 
 -- --------------------------------------------------------
@@ -235,7 +236,8 @@ INSERT INTO `role` (`idRole`, `principal`, `secondaire`, `idAppart`, `idUser`) V
 (22, 1, 0, 595853817, 1),
 (23, 1, 0, 9453696, 1),
 (24, 1, 0, 476658401, 1),
-(25, 1, 0, 2053000747, 5);
+(25, 1, 0, 2053000747, 5),
+(26, 1, 0, 2053000748, 6);
 
 -- --------------------------------------------------------
 
@@ -379,8 +381,8 @@ CREATE TABLE `utilisateurs` (
 --
 
 INSERT INTO `utilisateurs` (`idUtilisateur`, `idSession`, `tokenCookie`, `passwordHash`, `nom`, `prenom`, `email`, `role`, `emailActive`, `emailToken`, `derniereVerificationEmail`, `emailTemporaire`, `tokenEmailTemporaire`, `photoProfil`, `idType`) VALUES
-(4, NULL, NULL, '$2y$10$wDIGNH6cVrXzIb.z/Lx7oO9wlyWV4aPnqNXQvSGjNzyUUQ8TKoLOW', 'Test', NULL, 'vicosinge@gmail.com', 'user', 1, 'd8c484b83e1f3e916998ce462980baa3294277fb', NULL, NULL, NULL, NULL, NULL),
-(5, NULL, NULL, '$2y$10$1oiK9yakYh5IW/fagNG7n.Kpo7.0j4Vuw6c3yo1mWxOwEKrb/D.xe', 'gab', NULL, 'gabriel.mougard@gmail.com', 'user', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+(4, NULL, NULL, '$2y$10$wDIGNH6cVrXzIb.z/Lx7oO9wlyWV4aPnqNXQvSGjNzyUUQ8TKoLOW', 'Test', NULL, 'vicosinge@gmail.com', 'user', 1, '97d1d035ff4851a458789c5877200b1a10316fd4', NULL, NULL, NULL, NULL, NULL),
+(6, NULL, NULL, '$2y$10$QQCEd0v2/NVEf563ROMVuem0x/3SGk06z8xwEH6M3y.o/jVNF7jhq', 'gab', NULL, 'gabriel.mougard@gmail.com', 'user', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Index pour les tables déchargées
@@ -490,7 +492,7 @@ ALTER TABLE `utilisateurs`
 -- AUTO_INCREMENT pour la table `appartement`
 --
 ALTER TABLE `appartement`
-  MODIFY `idAppartement` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2053000748;
+  MODIFY `idAppartement` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2053000749;
 
 --
 -- AUTO_INCREMENT pour la table `catalogue`
@@ -502,7 +504,7 @@ ALTER TABLE `catalogue`
 -- AUTO_INCREMENT pour la table `cemac`
 --
 ALTER TABLE `cemac`
-  MODIFY `idCemac` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idCemac` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `composant`
@@ -538,7 +540,7 @@ ALTER TABLE `piece`
 -- AUTO_INCREMENT pour la table `role`
 --
 ALTER TABLE `role`
-  MODIFY `idRole` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idRole` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT pour la table `systeme_chauffage`
@@ -574,7 +576,7 @@ ALTER TABLE `type_utilisateur`
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

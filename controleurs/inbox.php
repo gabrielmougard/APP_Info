@@ -27,6 +27,7 @@ $switch=false;
 switch ($function) {
 
     case 'mails':
+        $switch = true;
         //affiche la liste des fils (page d'accueil de la inbox)
         // on récupère l'ID de l'utilisateur connecté (stocké dans la SESSION)
         // pour lui afficher ses Mails
@@ -42,7 +43,7 @@ switch ($function) {
 
 
     case 'thread':
-
+        $switch = true;
 
         $id = $_GET["idUser"];
 
@@ -51,30 +52,33 @@ switch ($function) {
 
     case 'msg':
         //soit pour démarrer un nouveau fil soit pour répondre à un fil actuel
-
+        $switch = true;
 
         $new = $_GET["new"];
-        $_SESSION["new"] = $new;
+        //$_SESSION["new"] = $new;
 
         $vue = "Mails/writeMessage";
+
         break;
 
     case 'remove':
         // efface un mail dans les discussions
+        $switch = true;
 
         break;
 
     case 'add':
+        $switch = true;
         //add a message (when clicked to send in the form)
-        $data["idUser"] = $_SESSION["userId"];
-        $data["newMessage"] = $_POST["newMessage"];
-        $data["emailUser"] = $_SESSION["email"];
+        $data["idUser"] = $_SESSION["id"];
+        $data["newMessage"] = $_POST["new"];
         $data["content"] = $_POST["content"];
         $data["subject"] = $_POST["subject"];
+        $data["ouvert"] = '0';
 
 
         //model stuff
-        $res = writeMessage($bdd,$data,$_GET["newMessage"]);
+        $res = writeMessage($bdd,$data);
         //vue Mails/mails.php : with an alert saying that it has been sent
 
         if($res) {
