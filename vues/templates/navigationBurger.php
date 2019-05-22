@@ -20,7 +20,7 @@
                 <li id="nav-Statistiques"><a href="index.php?cible=dashboard&fonction=statistiques">Statistiques</a></li>
                 <li id="nav-Catalogue"><a href="index.php?cible=catalogue&fonction=catalogue">Catalogue</a></li>
                 <li id="nav-MonCompte"><a href="index.php?cible=dashboard&fonction=compte">Mon compte</a></li>
-                <li id="nav-Communaute"><a href="communaute.html">Communauté</a></li>
+                <li id="nav-FAQ"><a href="#">FAQ</a></li>
             </ul>
         </nav>
     </label>

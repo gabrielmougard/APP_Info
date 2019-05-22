@@ -742,9 +742,8 @@ function resetEmailVerificationToken($bdd,$email, $isValid){
  *
  */
 function logOut($emailUser){
-    Session::remove();
     setcookie("email", $emailUser, time()-3600);
-    header("Location: http://localhost/APP_Info-master/index.php?cible=authentificattion&fonction=connexion");
+    header("Location: http://localhost/APP_Info-master/index.php?cible=authentification&fonction=accueil");
 }
 
 /**

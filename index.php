@@ -28,3 +28,4 @@ if(isset($_GET['cible']) && !empty($_GET['cible'])) {
 
 // On appelle le contrôleur
 include('controleurs/' . $url . '.php');
+

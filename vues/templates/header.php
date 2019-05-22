@@ -24,9 +24,8 @@
         </div>
 
         <div class="bloc">
-
             <a href="index.php?cible=inbox&fonction=mails&p=1&uid=<?php echo $_SESSION['id']?>" class="m-link"><i class="fa fa-envelope" aria-hidden="true"></i> Messagerie </a>
-            <a href="index.php?cible=dashboard&fonction=logout" class="m-link"><i class="fas fa-sign-out-alt"></i> Se déconnecter </a>
+            <a href="index.php?cible=authentification&fonction=logout" class="m-link"><i class="fas fa-sign-out-alt"></i> Se déconnecter </a>
         </div>
     </div>
 </header>

@@ -20,7 +20,7 @@
     background-color: #8eca78;
 }
 
-.capteur {
+.capteur{
     border: solid 1px #666666;
     margin-left: 10%;
     width: 80%;
@@ -39,8 +39,8 @@ h1{
 }
 
 
-li .prix {
-    display: block;
+.prix{
+   display: block;
     text-align: center;
     width: 87%;
     border-bottom: solid 1px #666666;
@@ -48,6 +48,13 @@ li .prix {
 }
 
 a{
+    text-decoration: none;
+    color: #f1f1f1;
+
+}
+
+.info{
+    display: block;
     background-color: #8eca78ff;
     padding: 10px 20px;
     width: 300px;
@@ -55,19 +62,18 @@ a{
     font-family: Lato, sans-serif;
     font-size: 30px;
     font-weight: bold;
-    color: #f1f1f1;
     border: 4px outset #8eca78ff;
     border-radius: 20px;
     cursor: pointer;
 }
 
-a:hover{
+.info:hover{
     color: #ffffff;
     background-color: #6c9b5cff;
 
 }
 
-a:active {
+.info:active {
     border: inset #8eca78ff;
     width: 295px;
     height: 72px;
@@ -82,4 +88,3 @@ a:active {
         text-align: center;
     }
 }
-

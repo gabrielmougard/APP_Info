@@ -2,7 +2,9 @@
     <meta charset="UTF-8">
     <title>Catalogue</title>
     <link rel="stylesheet" href="public/css/style.css">
-    <link rel="stylesheet" href="public/css/style_catalogue.css">
+    <link rel="stylesheet" href="public/css/catalogue.css">
+    <link rel="stylesheet" href="public/css/header.css">
+    <link rel="stylesheet" href="public/css/Footer.css">
 </head>
 
 <?php include "vues/templates/header.php" ?>
@@ -44,7 +46,7 @@
                     echo '<li class="prix"> '. $produits[$i][1] . '€</li>'; //prix
 
 
-                    echo '<li><a href="index.php?cible=catalogue&fonction=datasheet&reference='.$infosProduit[0][1].'">Voir la fiche technique</a></li>'
+                    echo '<li class="info"><a  href="index.php?cible=catalogue&fonction=datasheet&reference='.$infosProduit[0][1].'">Voir la fiche technique</a></li>'
                     ?>
                 </ul>
 
