@@ -7,13 +7,14 @@ include('modeles/requetes.generiques.php');
  * Inscription de l'utilisateur
  * @param PDO $bdd
  * @param string $nom
+ * @param string $prenom
  * @param string $email
  * @param string $password
  * @param string $confirmPassword
  * @param Captcha $captcha
  * @return boolean
  */
-function inscription($bdd,$nom,$email,$password,$CGU) {
+function inscription($bdd,$nom,$prenom,$email,$password,$CGU) {
 
 
 /*
@@ -267,11 +268,12 @@ EX;
     {
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         $bdd->beginTransaction();
-        $query = "INSERT INTO utilisateurs (nom, email, role, passwordHash, derniereVerificationEmail) ".
-            "VALUES (:nom, :email, :role,:passwordHash, :derniereVerificationEmail)";
+        $query = "INSERT INTO utilisateurs (nom, prenom, email, role, passwordHash, derniereVerificationEmail) ".
+            "VALUES (:nom, :prenom, :email, :role,:passwordHash, :derniereVerificationEmail)";
 
         $sth=$bdd->prepare($query);
         $sth->bindValue(':nom', $nom, PDO::PARAM_STR);
+        $sth->bindValue(':prenom', $prenom, PDO::PARAM_STR);
         $sth->bindValue(':email', $email,PDO::PARAM_STR);
         $sth->bindValue(':role', "user",PDO::PARAM_STR);
         $sth->bindValue(':passwordHash', $passwordHash,PDO::PARAM_STR);

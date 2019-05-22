@@ -33,15 +33,22 @@ switch ($function) {
         $switch = true;
         $etat = true;
         // Cette partie du code est appelée si le formulaire a été posté
-        if (isset($_POST['username']) and isset($_POST['password']) and isset($_POST['confirmPassword']) and isset($_POST['email'])) {
+        if (isset($_POST['name']) and isset($_POST['firstname']) and isset($_POST['password']) and isset($_POST['confirmPassword']) and isset($_POST['email'])) {
 
             //Username
-            if (empty($_POST['username'])) {
+            if (empty($_POST['name'])) {
                 $etat = false;
                 $alerte = "Indiquez votre Nom";
                 echo $alerte;
 
             }
+            if (empty($_POST['firstname'])) {
+                $etat = false;
+                $alerte = "Indiquez votre Prenom";
+                echo $alerte;
+
+            }
+
             //Mot de passe
             if (empty($_POST['password']) or !password($_POST['password'])) {
                 $etat = false;
@@ -86,7 +93,7 @@ switch ($function) {
 
             if ($etat) {
 
-                $retour = inscription($bdd, $_POST['username'], $_POST['email'], $_POST['password'], true);
+                $retour = inscription($bdd, $_POST['name'], $_POST['firstname'], $_POST['email'], $_POST['password'], true);
             }
             if ($retour) {
                 $inscrit = "Inscription réussie";

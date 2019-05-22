@@ -27,7 +27,6 @@
 <body>
     
 
-
 <h1 class=bienvenue>Bienvenue sur Quiescis !</h1>
 <h2 classe=creer_compte>Créez votre compte Quiescis gratuitement pour commencer</h2>
 
@@ -36,8 +35,12 @@
 
 
     	<p class="nom">
-    		<input type="Nom d'utilisateur" name="username" class="form-control" required placeholder="Nom d'utilisateur" autofocus style="border:none;">
+    		<input type="nom" name="name" class="form-control" required placeholder="Nom" autofocus style="border:none;">
     	</p>
+
+        <p class="prenom">
+            <input type="prenom" name="firstname" class="form-control" required placeholder="Prenom" autofocus style="border:none;">
+        </p>
 
     	<p class="email">
     		<input type="email" name="email" class="form-control" required placeholder="E-mail" style="border: none;">
