@@ -146,18 +146,20 @@ switch ($function) {
         break;
     case 'compte':
 
-        $nom=recupNom(4, $bdd);
-        $prenom=recupPrenom(4,$bdd);
-        $email=recupEmail(4,$bdd);
+        if(isset($_SESSION['id'])) {
+            $nom = recupNom($_SESSION['id'], $bdd);
+            $prenom = recupPrenom($_SESSION['id'], $bdd);
+            $email = recupEmail($_SESSION['id'], $bdd);
+        }
         $switch=true;
 
         $vue = 'Compte/compte.php';
         break;
 
     case 'modifCompte':
-        $nom=recupNom(4, $bdd);
-        $prenom=recupPrenom(4,$bdd);
-        $email=recupEmail(4,$bdd);
+        $nom=recupNom($_SESSION['id'], $bdd);
+        $prenom=recupPrenom($_SESSION['id'],$bdd);
+        $email=recupEmail($_SESSION['id'],$bdd);
         $etat = true;
 
 
@@ -179,7 +181,7 @@ switch ($function) {
             $retour = false;
             if ($etat) {
                 echo "etat true";
-                update(4, $bdd, $_POST['nom'], $_POST['prenom'], $_POST['email']);
+                update($_SESSION['id'], $bdd, $_POST['nom'], $_POST['prenom'], $_POST['email']);
                 $retour = true;
             }
 
@@ -223,7 +225,7 @@ switch ($function) {
             $retour = false;
             if ($etat) {
                 echo "etat true";
-                updatePassword(4, $bdd, $_POST['newPassword']);
+                updatePassword($_SESSION['id'], $bdd, $_POST['newPassword']);
                 $retour = true;
             }
 

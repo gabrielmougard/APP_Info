@@ -39,7 +39,7 @@ function inscription($bdd,$nom,$prenom,$email,$password,$CGU) {
     require('PHPMailer/src/POP3.php');
     $mail = new PHPMailer\PHPMailer\PHPMailer();
     $mail->SMTPAuth = true;
-    //$mail->SMTPDebug = 4;
+    $mail->SMTPDebug = 4;
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->Username = 'quiescisteam@gmail.com';

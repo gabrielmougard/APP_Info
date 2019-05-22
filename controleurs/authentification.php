@@ -258,6 +258,11 @@ switch ($function) {
         $vue = 'authentification/accueil';
         break;
 
+
+    case 'politiqueEntreprise':
+        $switch = true;
+        $vue = 'authentification/politiqueEntreprise';
+
 }
 
 

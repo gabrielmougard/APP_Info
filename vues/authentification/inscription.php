@@ -55,7 +55,7 @@
         </p>
 
     	<p class="accepte">
-            <input type="checkbox" name="CGU" value="true" >J'ai lu et j'accepte la politique de l'entreprise
+            <input type="checkbox" name="CGU" value="true" >J'ai lu et j'accepte <a type="polEntreprise" href="index.php?cible=authentification&fonction=politiqueEntreprise" target="_blank" > la politique de l'entreprise</a>
         </p>
 
     	<p class="inscrire"> <button type="submit"> S'inscrire</button></p> <!--mettre un bouton -->
