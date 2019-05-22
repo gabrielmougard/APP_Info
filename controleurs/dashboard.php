@@ -185,7 +185,7 @@ switch ($function) {
 
             if ($retour) {
                 echo "Modifications réussies";
-               header("Location: http://localhost:63342/APP_Info/index.php?cible=dashboard&fonction=compte");
+               header("Location: http://localhost/APP_Info-master/index.php?cible=dashboard&fonction=compte");
             } else {
                 echo "Les modifications n'ont pas fonctionnées";
                 $vue = 'Compte/modifCompte.php';
