@@ -13,24 +13,26 @@
     for ($i = 0; $i < count($composants); $i++) { //Faire un conteneur pour chaque composant ?>
 
         <div class="Composant">
-        <?php
-        echo'<input id="'.$i.'" type="checkbox">';
-        echo'<label for="'.$i.'">';
-        ?>
+            <a href="./index.php?cible=dashboard&fonction=capteurs&idPiece=<?php echo $_GET['idPiece']?>&idComposant=<?php echo $composants[$i][0] ?>"><button class="croix">X</button></a>
+            <input id="<?php echo $i;?>" type="checkbox">
+            <label for="<?php echo $i;?>">
 
         <h1><?php echo $infosType[$i][0][0] // ?></h1>
-            <a href="./index.php?cible=dashboard&fonction=capteurs&idPiece=<?php echo $_GET['idPiece']?>&idComposant=<?php echo $composants[$i][0] ?>">Supprimer ce Composant</a>
         <img src="public/images/maison1.jpg" class="maison"> <!--A inclure dans le switch pour avoir une image correspondante-->
 
         <?php
         switch ($valeurs[$i][0][0]){
             case "Null": //Cas de l'actionneur?>
+                <nav class="liste_valeurs">
                 <ul>
                     <li><i id = "flechehaut<?php echo $i?>" class="fa fa-arrow-up fa-2x" aria-hidden="true"></i><p>En montée</p></li>
                     <li><i id = "pause<?php echo $i?>" class="fa fa-pause fa-2x" aria-hidden="true"></i><p>A l'arrêt</p></li>
                     <li><i id = "flechebas<?php echo $i?>" class="fa fa-arrow-down fa-2x" aria-hidden="true"></i><p>En decente</p></li>
                 </ul>
+                </nav>
+                </label>
                 </div>
+
             <?php
             break;
             default: //Cas du capteur

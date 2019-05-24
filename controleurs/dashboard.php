@@ -13,6 +13,8 @@
 
 include('modeles/requetes.dashboard.php');
 include ('modeles/requetes.utilisateurs.php');
+include('modeles/requetes.chauffage.php');
+include('modeles/requetes.header.php');
 
 
 if (!isset($_GET['fonction']) || empty($_GET['fonction'])) {
@@ -23,6 +25,24 @@ if (!isset($_GET['fonction']) || empty($_GET['fonction'])) {
 }
 session_start();
 $switch=false;
+
+switch (getTypeUser($bdd,$_SESSION['id'])){
+    default:
+        break;
+    case 0: //Administrateur
+        $nav = "<li id=\"nav-listeUtilisateur\"><a href=\"index.php?cible=dashboard&fonction=listeUtilisateurs\">[ADMIN] Liste Utilisateurs</a></li>
+
+                ";
+    case 1: //Utilisateur = cas par défaut
+        break;
+    case 2: //Gestionnaire
+        $nav = "<li id=\"nav-ChauffageGestionnaire\"><a href=\"index.php?cible=dashboard&fonction=chauffageGestionnaire\">[GESTIONNAIRE] Chauffage</a></li>
+
+                ";
+        break;
+    case 3: //Gestion Stock
+        break;
+}
 
 switch ($function) {
     case 'appartementPiece':
@@ -35,7 +55,7 @@ switch ($function) {
                 supprPiece($bdd,$_POST['supprIdPiece']);
             }
             if(isset($_POST['adresse'])&& isset($_POST['superficie'])){
-                ajouterAppartement($bdd,$_POST['adresse'],$_POST['superficie'],1); // Remplacer 1
+                ajouterAppartement($bdd,$_POST['adresse'],$_POST['superficie'],$_SESSION['id']);
             }
             if(isset($_POST['nom'])&& isset($_POST['idAppartement'])&& isset($_POST['numSerie'])){
                 ajouterPiece($bdd,$_POST['nom'],$_POST['idAppartement'],$_POST['numSerie']);
@@ -250,12 +270,29 @@ switch ($function) {
         $vue = 'Statistic/statistic';
         break;
     case 'listeUtilisateurs':
-        if (estUnAdministrateur($bdd,4)) { // Test
+        if (estUnAdministrateur($bdd,$_SESSION['id'])){ //On verifie que c'est un admin
             $switch = true;
+            $utilisateurs=recupUtilisateurs($bdd);
+            $vue = 'admin/listeUtilisateurs.php';
         }
-        $utilisateurs=recupUtilisateurs($bdd);
-        $vue = 'admin/listeUtilisateurs.php';
         break;
+    case 'chauffage':
+        if (isset ($_POST['modifTempUser'])){
+            modifierTempUser($bdd,$_POST['modifTempUser']);
+        }
+        $switch = true;
+        $tempGest=recupTemperatureMaxGestionnaire($bdd);
+        $tempUser=recupTemperatureMaxUtilisateur($bdd);
+        $vue = 'Chauffage/chauffageUtilisateur.php';
+        break;
+    case 'chauffageGestionnaire':
+        if (isset ($_POST['modifTempGest'])){
+            modifierTempGest($bdd,$_POST['modifTempGest']);
+        }
+        $switch = true;
+        $tempGest=recupTemperatureMaxGestionnaire($bdd);
+        $vue = 'Chauffage/chauffageUtilisateur.php';
+    break;
 }
 
 if(!$switch){

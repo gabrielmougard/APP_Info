@@ -890,4 +890,6 @@ function updatePassword($idUser, $bdd, $newPassword){
         throw new Exception("Le token du mot de passe ne peut pas être réinitialisé");
     }
 }
+
+
 ?>
