@@ -15,6 +15,7 @@ include('modeles/requetes.dashboard.php');
 include ('modeles/requetes.utilisateurs.php');
 include('modeles/requetes.chauffage.php');
 include('modeles/requetes.header.php');
+include('modeles/requetes.gestionStock.php');
 
 
 if (!isset($_GET['fonction']) || empty($_GET['fonction'])) {
@@ -41,6 +42,9 @@ switch (getTypeUser($bdd,$_SESSION['id'])){
                 ";
         break;
     case 3: //Gestion Stock
+        $nav = "<li id=\"nav-GestionStock\"><a href=\"index.php?cible=dashboard&fonction=gestionStock\">[GESTION STOCK] Gestion Stock</a></li>
+
+                ";
         break;
 }
 
@@ -296,7 +300,27 @@ switch ($function) {
         }
     break;
     case 'gestionStock':
+        if (estUnGestionStock($bdd,$_SESSION['id'])){ // On verifie que c'est un un respo
 
+            if (isset ($_POST['datasheet'])&&isset ($_POST['nom']) &&isset ($_POST['prix'])&&isset ($_POST['reference'])){ // Ajout catalogue
+                ajoutCatalogue($bdd,$_POST['datasheet'],$_POST['nom'],$_POST['prix'],$_POST['reference']);
+            }
+            if (isset ($_POST['nomType'])&&isset ($_POST['valeur']) &&isset ($_POST['grandeurPhysique'])){ // Ajout catalogue
+                ajoutTypeCapteur($bdd,$_POST['nomType'],$_POST['valeur'],$_POST['grandeurPhysique']);
+            }
+            if (isset ($_POST['numComposant'])&&isset ($_POST['idCatalogue']) &&isset ($_POST['idTypeCapteur'])){ // Ajout catalogue
+                ajoutTypeCapteur($bdd,$_POST['numComposant'],$_POST['idCatalogue'],$_POST['idTypeCapteur']);
+            }
+
+            $typeComposantsExistant = recupTypeComposantExistant($bdd);
+            //var_dump($typeComposantsExistant);
+            $nomCatalogue = recupNomCatalogue($bdd);
+            //var_dump($nomCatalogue);
+            $composantsExistant = recupComposantExistant($bdd);
+            //var_dump($composantsExistant);
+            $switch = true;
+            $vue = 'GestionStock/GestionStock.php';
+        }
         break;
 
 }

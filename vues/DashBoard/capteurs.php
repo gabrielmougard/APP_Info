@@ -23,13 +23,13 @@
         <?php
         switch ($valeurs[$i][0][0]){
             case "Null": //Cas de l'actionneur?>
-                <nav class="liste_valeurs">
+                <!--<nav class="liste_valeurs">-->
                 <ul>
                     <li><i id = "flechehaut<?php echo $i?>" class="fa fa-arrow-up fa-2x" aria-hidden="true"></i><p>En montée</p></li>
                     <li><i id = "pause<?php echo $i?>" class="fa fa-pause fa-2x" aria-hidden="true"></i><p>A l'arrêt</p></li>
                     <li><i id = "flechebas<?php echo $i?>" class="fa fa-arrow-down fa-2x" aria-hidden="true"></i><p>En decente</p></li>
                 </ul>
-                </nav>
+                <!--</nav>-->
                 </label>
                 </div>
 

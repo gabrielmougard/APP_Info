@@ -36,6 +36,9 @@
                 $image = "public/images/capteurTemperature.jpg";
 
             }
+            else{
+                $image = "public/images/capteurDefaut.jpg";
+            }
             ?>
 
             <?php print '<img src="'.$image.'"/>'; ?>
