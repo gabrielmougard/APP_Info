@@ -26,6 +26,9 @@ if (!isset($_GET['fonction']) || empty($_GET['fonction'])) {
 session_start();
 $switch=false;
 
+var_dump($_COOKIE["password"]);
+var_dump($_COOKIE["email"]);
+
 switch (getTypeUser($bdd,$_SESSION['id'])){
     default:
         break;
