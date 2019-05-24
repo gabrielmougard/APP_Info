@@ -311,6 +311,83 @@ function estUnAdministrateur(PDO $bdd,$idUser){
     return false;
 }
 
+function ajouterComposant($bdd,$numSerie,$idCeMac){
+    //On vérifie si le composant existe
+    $sth = $bdd->prepare("SELECT * FROM composant WHERE composant.numComposant=:num");
+    $sth->bindValue(':num', $numSerie);
+    $sth->execute();
+    $result = $sth->fetchAll();
+    $existeComposant = count($result) ===1;
+    if(!$existeComposant){
+        $reponse=0;//ne correspond pas à un composant;
+        return $reponse;
+    }
+    //On vérifie si le composant n'est affecté à personne.
+    $sth = $bdd->prepare("SELECT * FROM composant WHERE numComposant=:num AND idCemac IS NULL");
+    $sth->bindValue(':num', $numSerie);
+    $sth->execute();
+    $result = $sth->fetchAll();
+    $nonAffecte = count($result) ===1;
+    if(!$nonAffecte){
+        $reponse=1;//déjà pris
+        return $reponse;
+    }
+    //on met à jour la base de données.
+    if ($existeComposant&&$nonAffecte) {
+        $statement = $bdd->prepare('UPDATE composant SET idCemac=:idCeMac WHERE numComposant=:num');
+        $statement->bindValue(':idCeMac', $idCeMac);
+        $statement->bindValue(':num', $numSerie);
+        $statement->execute();
+        $reponse=2;//ok
+        $statement=$bdd->prepare('SELECT composant.idComposant FROM composant WHERE numComposant=:num');
+        $statement->bindValue(':num', $numSerie);
+        $statement->execute();
+        $idComposant=intval($statement->fetchAll()[0][0]);//on récupèle l'idComposant lié au num
+        if(recupInfoComplementaire($bdd, $idComposant)[0][1]!= null){
+            //on teste si la grandeur physique associée au type du capteur est non null, ce qui caractérise un capteur
+            envoieTrameDEnvoiDansBDD($bdd,$numSerie,$idComposant);
+        }
+        return $reponse;
+    }
+    return false;
+}
+
+function recupIdComposantNumSerie($bdd,$numSerie){
+    $sth = $bdd->prepare('SELECT composant.idComposant FROM composant WHERE composant.numComposant=:num');
+    $sth->bindValue(':num', $numSerie);
+    $sth->execute();
+    $result = $sth->fetchAll();
+    return $result;
+}
+
+function envoieTrameDEnvoiDansBDD(PDO $bdd,$num,$idComposant){
+    $statement = $bdd->prepare('INSERT INTO `trameenvoi` (`idEnvoi`, `val`, `tim`, `req`, `num`, `idComposant`) 
+    VALUES (NULL,'."1".', NULL, NULL , '.$num.','.$idComposant.')');
+    $statement->execute();
+}
 
 
+function estUnGestionnaire(PDO $bdd,$idUser){
+    $statement = $bdd->prepare('SELECT utilisateurs.idType
+                                          FROM utilisateurs
+                                          WHERE idUtilisateur='.$idUser);
+    $statement->execute();
+    $val = $statement->fetchAll();
+    if ($val[0]['idType'] === "2"){
+        return true;
+    }
+    return false;
+}
+
+function estUnGestionStock(PDO $bdd,$idUser){
+    $statement = $bdd->prepare('SELECT utilisateurs.idType
+                                          FROM utilisateurs
+                                          WHERE idUtilisateur='.$idUser);
+    $statement->execute();
+    $val = $statement->fetchAll();
+    if ($val[0]['idType'] === "3"){
+        return true;
+    }
+    return false;
+}
 ?>

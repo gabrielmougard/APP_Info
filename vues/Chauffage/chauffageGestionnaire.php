@@ -18,9 +18,9 @@
 
 <div class="conteneur_tempMaxGes">
     <div id="tempGest"> Température Gestionnaire : <?php echo $tempGest?> °C</div>
-    <form action="index.php?cible=dashboard&fonction=chauffage" method="post">
+    <form class="modif" action="index.php?cible=dashboard&fonction=chauffage" method="post">
         Modifier la température Utilisateur:<br>
-        <input type="number" name="modifTempGes"><br><input type="submit" value="Valider" min="15" max="60">
+        <input class="input" type="number" name="modifTempGes"><br><input class="input" type="submit" value="Valider" min="15" max="60">
     </form>
 </div>
 

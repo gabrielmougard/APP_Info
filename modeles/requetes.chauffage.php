@@ -39,9 +39,16 @@ function valeurUtilisateurValide($bdd,$tempUtilisateur){
 }
 
 function modifierTempGest($bdd,$temp){
-    if (valeurUtilisateurValide($bdd,$temp)){
+    $statement = $bdd->prepare('UPDATE `systeme_chauffage` SET `tempMaxGestionnaire` = '.$temp.' WHERE `systeme_chauffage`.`idChauffage` = 1');
+    $statement->execute();
+    $statement = $bdd->prepare('SELECT systeme_chauffage.tempMaxGestionnaire FROM `systeme_chauffage`');
+    $statement->execute();
+    $tempUtil = $statement->fetchAll()[0][0];
+    if ($tempUtil > $temp){
         $statement = $bdd->prepare('UPDATE `systeme_chauffage` SET `tempMaxUtilisateur` = '.$temp.' WHERE `systeme_chauffage`.`idChauffage` = 1');
         $statement->execute();
     }
+
 }
+
 

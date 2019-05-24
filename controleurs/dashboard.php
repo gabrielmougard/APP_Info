@@ -86,8 +86,8 @@ switch ($function) {
                 $valeurs = [];
                 $infosType = [];
                 for ($i = 0; $i < count($composants); $i++) { //Pour chaque composants on va chercher chercher
-                    $valeurs[] = recupValHexaCapteur($bdd, $composants[$i][0][0]); //Sa valeur en héxa
-                    $infosType[] = recupInfoComplementaire($bdd, $composants[$i][0][0]); // Ainsi que des information sur le composant(unité/grandeur physique)
+                    $valeurs[] = recupValHexaCapteur($bdd, $composants[$i][0]); //Sa valeur en héxa
+                    $infosType[] = recupInfoComplementaire($bdd, $composants[$i][0]); // Ainsi que des information sur le composant(unité/grandeur physique)
                 }
                 $valeurs = parcourirValeurs($valeurs, $infosType);
             }
@@ -286,13 +286,19 @@ switch ($function) {
         $vue = 'Chauffage/chauffageUtilisateur.php';
         break;
     case 'chauffageGestionnaire':
-        if (isset ($_POST['modifTempGest'])){
-            modifierTempGest($bdd,$_POST['modifTempGest']);
+        if (estUnGestionnaire($bdd,$_SESSION['id'])){
+            if (isset ($_POST['modifTempGes'])){
+                modifierTempGest($bdd,$_POST['modifTempGes']);
+            }
+            $switch = true;
+            $tempGest=recupTemperatureMaxGestionnaire($bdd);
+            $vue = 'Chauffage/chauffageGestionnaire.php';
         }
-        $switch = true;
-        $tempGest=recupTemperatureMaxGestionnaire($bdd);
-        $vue = 'Chauffage/chauffageUtilisateur.php';
     break;
+    case 'gestionStock':
+
+        break;
+
 }
 
 if(!$switch){

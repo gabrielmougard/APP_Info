@@ -1,0 +1,34 @@
+.modif{
+    border: solid 1px #8eca78;
+    background-color: #ffffff;
+    margin-top: 2%;
+    margin-bottom: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    font-size: 20px;
+    color: #666666;
+    border-radius: 5px;
+}
+
+#tempGest{
+    border: solid 1px #8eca78;
+
+    background-color: #ffffff;
+    margin-top: 2%;
+    margin-bottom: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
+    font-family: 'Open Sans';
+    font-weight: 400;
+    font-size: 20px;
+    color: #666666;
+}
+
+
+.input{
+    margin-left: 2%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}

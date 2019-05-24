@@ -22,7 +22,7 @@
 
         <?php
         switch ($valeurs[$i][0][0]){
-            case "Null": //Cas de l'actionneur?>
+            case null: //Cas de l'actionneur?>
                 <nav class="liste_valeurs">
                 <ul>
                     <li><i id = "flechehaut<?php echo $i?>" class="fa fa-arrow-up fa-2x" aria-hidden="true"></i><p>En montée</p></li>
@@ -40,9 +40,9 @@
                 <nav class="liste_valeurs">
                 <ul class ="liste_valeurs">
                 <?php
-                for ($j = 0; $j < count($valeurs[$i]); $j++) {
-                    echo '<li>'. $valeurs[$i][$j][0] . ' '.$infosType[$i][$j][1].'</li>';
-                }
+                //for ($j = 0; $j < count($valeurs[$i]); $j++) {
+                    echo '<li>'. $valeurs[$i][0][0] . ' '.$infosType[$i][0][1].'</li>';
+                //}
                 ?>
                 </ul>
                 </nav>
@@ -53,7 +53,9 @@
         } //Fin Switch?>
 
         <?php
-    }
+    }?>
+    </div>
+<?php
     include("ajouterComposantPopUp.php")?>
     <script> //Javascript
         <?php
