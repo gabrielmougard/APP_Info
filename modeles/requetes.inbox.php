@@ -45,6 +45,7 @@ function retrieveDiscussionThread($bdd,$idTicket) {
     $req->execute();
 
     $res = $req->fetchAll();
+    return $res;
 
 
 }

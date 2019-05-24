@@ -111,10 +111,15 @@ switch ($function) {
 
     case 'connexion':
 
+
         //cookie identification
         if (isset($_COOKIE["email"]) && isset($_COOKIE["password"])) {
             $conn = connexionWithoutHash($bdd, $_COOKIE["email"], $_COOKIE["password"]);
+            var_dump($conn["connected"]);
+            var_dump($_COOKIE["password"]);
+            var_dump($_COOKIE["email"]);
             if ($conn["connected"]) {
+
                 header("Location: http://localhost/APP_Info-master/index.php?cible=dashboard&fonction=appartementPiece&id=".$conn["id"]);
             }
         }
@@ -160,7 +165,7 @@ switch ($function) {
 
             //RememberME
             $remember = false;
-            if (!isset($_POST['remember_me'])) {
+            if (isset($_POST['remember_me'])) {
                 $remember = true;
             }
 
