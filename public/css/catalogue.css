@@ -57,10 +57,11 @@ a{
     display: block;
     background-color: #8eca78ff;
     padding: 10px 20px;
-    width: 300px;
-    height: 75px;
+    margin-right: 15%;
+    margin-left: 3%;
+    text-align: center;
     font-family: Lato, sans-serif;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
     border: 4px outset #8eca78ff;
     border-radius: 20px;
@@ -75,8 +76,6 @@ a{
 
 .info:active {
     border: inset #8eca78ff;
-    width: 295px;
-    height: 72px;
     box-shadow: 2px 2px 2px inset;
 }
 

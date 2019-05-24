@@ -22,14 +22,12 @@ switch ($function) {
 
     case 'datasheet':
         // On a l'id du produit en variable
-        if (isset($_GET[''])) {
-            $infosProduit = datasheetProduit($bdd, 1);
+        if (isset($_GET['reference'])) {
+            $infosProduit = datasheetProduit($bdd, $_GET['reference']);
             $vue='Catalogue/datasheet_vue.php';
         }
      break;
 
 }
 
-//include('vues/'. $vue);
-
-?>
+include('vues/'. $vue);

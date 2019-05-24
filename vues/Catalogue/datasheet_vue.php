@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title>Catalogue</title>
+    <title>Datasheet</title>
     <link rel="stylesheet" href="public/css/style.css">
     <link rel="stylesheet" href="public/css/style_catalogue.css">
 </head>
@@ -8,10 +8,9 @@
 <?php include "vues/templates/header.php" ?>
 
 <body>
+    <p> <?php echo 'Référence : '?> <br> <?php echo "". $infosProduit[0][1]; ?> </p>
+    <p> <?php echo 'Datasheet : '?> <br> <?php echo "". $infosProduit[0][0]; ?> </p>
 
-    <?php
-    <p> <?php echo 'Datasheet : ' . $infosProduit[0][0]; ?> </p>
-    <p> <?php echo 'Référence : ' . $infosProduit[0][1]; ?> </p>
 
 </body>
 
