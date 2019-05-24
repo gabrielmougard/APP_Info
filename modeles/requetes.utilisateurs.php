@@ -815,7 +815,7 @@ function insertToken($emailUser, $random_password_hash, $random_selector_hash, $
     return $bdd->insert($query, 'ssss', array($emailUser, $random_password_hash, $random_selector_hash, $expiry_date));
 }
 
-function connexionWithoutHash($bdd,$email,$passwordWithHash,$rememberMe){
+function connexionWithoutHash($bdd,$email,$passwordWithHash){
 
 
     $etat=true;

@@ -78,11 +78,11 @@ $(window).load(function(){
 
             echo '<tr class="border_bottom">';
 
-            echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["userId"].'">'.$idTicket.'</a></td>';
-            echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["userId"].'&idMsg='.$id.'">'.$email.'</a></td>';
-            echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["userId"].'&idMsg='.$id.'">'.$subject.'</a></td>';
-            echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["userId"].'&idMsg='.$id.'">'.$date.'-'.$time.'</a></td>';
-            echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["userId"].'&idMsg='.$id.'">'.$open.'</a></td>';
+            echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["id"].'&idMsg='.$id.'&idTicket='.$idTicket.'">'.$idTicket.'</a></td>';
+            echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["id"].'&idMsg='.$id.'&idTicket='.$idTicket.'">'.$email.'</a></td>';
+            echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["id"].'&idMsg='.$id.'&idTicket='.$idTicket.'">'.$subject.'</a></td>';
+            echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["id"].'&idMsg='.$id.'&idTicket='.$idTicket.'">'.$date.'-'.$time.'</a></td>';
+            echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["id"].'&idMsg='.$id.'&idTicket='.$idTicket.'">'.$open.'</a></td>';
 
             echo '</tr>';
 

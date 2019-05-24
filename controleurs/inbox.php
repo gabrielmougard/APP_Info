@@ -46,7 +46,10 @@ switch ($function) {
         $switch = true;
 
         $id = $_GET["idUser"];
-
+        $idTicket = $_GET["idTicket"];
+        //var_dump($idTicket);
+        //var_dump($_GET["idMsg"]);
+        $res = retrieveDiscussionThread($bdd,$idTicket);
         $vue = "Mails/thread";
         break;
 
