@@ -86,8 +86,8 @@ switch ($function) {
                 $valeurs = [];
                 $infosType = [];
                 for ($i = 0; $i < count($composants); $i++) { //Pour chaque composants on va chercher chercher
-                    $valeurs[] = recupValHexaCapteur($bdd, $composants[$i][0][0]); //Sa valeur en héxa
-                    $infosType[] = recupInfoComplementaire($bdd, $composants[$i][0][0]); // Ainsi que des information sur le composant(unité/grandeur physique)
+                    $valeurs[] = recupValHexaCapteur($bdd, $composants[$i][0]); //Sa valeur en héxa
+                    $infosType[] = recupInfoComplementaire($bdd, $composants[$i][0]); // Ainsi que des information sur le composant(unité/grandeur physique)
                 }
                 $valeurs = parcourirValeurs($valeurs, $infosType);
             }
