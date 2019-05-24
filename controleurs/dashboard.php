@@ -35,9 +35,13 @@ switch (getTypeUser($bdd,$_SESSION['id'])){
                 ";
     case 1: //Utilisateur = cas par défaut
         break;
-    case 2:
-        break;
+    case 2: //Gestionnaire
+        $nav = "<li id=\"nav-ChauffageGestionnaire\"><a href=\"index.php?cible=dashboard&fonction=chauffageGestionnaire\">[GESTIONNAIRE] Chauffage</a></li>
 
+                ";
+        break;
+    case 3: //Gestion Stock
+        break;
 }
 
 switch ($function) {
@@ -279,6 +283,14 @@ switch ($function) {
         $switch = true;
         $tempGest=recupTemperatureMaxGestionnaire($bdd);
         $tempUser=recupTemperatureMaxUtilisateur($bdd);
+        $vue = 'Chauffage/chauffageUtilisateur.php';
+        break;
+    case 'chauffageGestionnaire':
+        if (isset ($_POST['modifTempGest'])){
+            modifierTempGest($bdd,$_POST['modifTempGest']);
+        }
+        $switch = true;
+        $tempGest=recupTemperatureMaxGestionnaire($bdd);
         $vue = 'Chauffage/chauffageUtilisateur.php';
     break;
 }
