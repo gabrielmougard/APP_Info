@@ -27,9 +27,6 @@ if (!isset($_GET['fonction']) || empty($_GET['fonction'])) {
 session_start();
 $switch=false;
 
-var_dump($_COOKIE["password"]);
-var_dump($_COOKIE["email"]);
-
 switch (getTypeUser($bdd,$_SESSION['id'])){
     default:
         break;
@@ -304,7 +301,6 @@ switch ($function) {
     break;
     case 'gestionStock':
         if (estUnGestionStock($bdd,$_SESSION['id'])){ // On verifie que c'est un un respo
-
             if (isset ($_POST['datasheet'])&&isset ($_POST['nom']) &&isset ($_POST['prix'])&&isset ($_POST['reference'])){ // Ajout catalogue
                 ajoutCatalogue($bdd,$_POST['datasheet'],$_POST['nom'],$_POST['prix'],$_POST['reference']);
             }
@@ -312,15 +308,13 @@ switch ($function) {
                 ajoutTypeCapteur($bdd,$_POST['nomType'],$_POST['valeur'],$_POST['grandeurPhysique']);
             }
             if (isset ($_POST['numComposant'])&&isset ($_POST['idCatalogue']) &&isset ($_POST['idTypeCapteur'])){ // Ajout catalogue
-                ajoutTypeCapteur($bdd,$_POST['numComposant'],$_POST['idCatalogue'],$_POST['idTypeCapteur']);
+                ajoutComposant($bdd,$_POST['numComposant'],$_POST['idCatalogue'],$_POST['idTypeCapteur']);
             }
 
             $typeComposantsExistant = recupTypeComposantExistant($bdd);
-            //var_dump($typeComposantsExistant);
             $nomCatalogue = recupNomCatalogue($bdd);
-            //var_dump($nomCatalogue);
+            $catalogue = recupCatalogue($bdd);
             $composantsExistant = recupComposantExistant($bdd);
-            //var_dump($composantsExistant);
             $switch = true;
             $vue = 'GestionStock/GestionStock.php';
         }

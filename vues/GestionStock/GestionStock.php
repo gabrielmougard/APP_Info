@@ -44,7 +44,6 @@
         <h1>Ajoute un Type de composant</h1>
         Selectonne le composant dans le catalogue<br>
         <select name="nomType" form="typeCapteur">
-            <option value=""></option>
             <?php
             for($i=0;$i<count($nomCatalogue);$i++){
                 echo '<option value="'.$nomCatalogue[$i]['nom'].'">'.$nomCatalogue[$i]['nom'].'</option>';
@@ -56,7 +55,6 @@
             <input type="text" name="valeur"><br>
             Grandeur physique:<br>
             <input type="text" name="grandeurPhysique"><br>
-            <input type="hidden" name="idAppartement" value="<?php echo($appartement[$i]['idAppartement']);?>">
             <input type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'un type de composant ?')">
         </form>
     </div>
@@ -66,26 +64,24 @@
 
         Selectonne le composant dans le catalogue<br>
         <select name="idCatalogue" form="Composant">
-            <option value=""></option>
             <?php
-            for($i=0;$i<count($nomCatalogue);$i++){
-                echo '<option value="'.$nomCatalogue[$i]['nom'].'">'.$nomCatalogue[$i]['nom'].'</option>';
+            for($i=0;$i<count($catalogue);$i++){
+                echo '<option value="'.$catalogue[$i]['idCatalogue'].'"> Nom:'.$catalogue[$i]['nom'].' | '.$catalogue[$i]['prix'].' € | ref: '.$catalogue[$i]['reference'].'</option>';
             }
             ?>
         </select><br>
-        Selectonne le type de composant:<br>
+        Selectionner le type du composant:<br>
         <select name="idTypeCapteur" form="Composant">
-            <option value=""></option>
             <?php
             for($i=0;$i<count($typeComposantsExistant);$i++){
-                echo '<option value="'.$typeComposantsExistant[$i]['nom'].'">'.$typeComposantsExistant[$i]['nom'].'</option>';
+                echo '<option value="'.$typeComposantsExistant[$i]['idTypeCapteur'].'">'.$typeComposantsExistant[$i]['nom'].' | '.$typeComposantsExistant[$i]['valeur'].' | '.$typeComposantsExistant[$i]['grandeurPhysique'].'</option>';
             }
             ?>
         </select>
         <form action="index.php?cible=dashboard&fonction=gestionStock" method="post" id="Composant">
             Numéro de série du composant:<br>
-            <input type="text" name="numComposant"><br>
-            <input type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'un type de composant ?')">
+            <input type="number" name="numComposant" min="0"><br>
+            <input type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'un composant ?')">
         </form>
 
 
