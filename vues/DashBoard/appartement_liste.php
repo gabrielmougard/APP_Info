@@ -16,7 +16,8 @@
             echo'<input class="checkbox" id="'.$i.'" type="checkbox">';
             echo'<label for="'.$i.'">';
             ?>
-            <form action="index.php?cible=dashboard&fonction=appartementPiece" method="post" >
+            <form action="index.php?cible=dashboard&fonction=appartementPiece" method="post"
+                  onclick="javascript:return confirm('Confirmez vous la suppression de l\'appartement et tout ce qu\'il contient ?')">
                 <input type="hidden" name="supprIdAppart" value="<?php echo($appartement[$i]['idAppartement'])?>">
                 <button class="croix">X</button>
             </form>
@@ -29,7 +30,8 @@
 
                         echo '<li>
                             <a href="index.php?cible=dashboard&fonction=capteurs&idPiece=' . $piece[$i][$j][0] . '">'  . $piece[$i][$j][1] . '</a>';?>
-                        <form action="index.php?cible=dashboard&fonction=appartementPiece" method="post" >
+                        <form action="index.php?cible=dashboard&fonction=appartementPiece" method="post"
+                              onclick="javascript:return confirm('Confirmez vous la suppression de la pièce et tout ce qu\'elle contient ?')">
                             <input type="hidden" name="supprIdPiece" value="<?php echo($piece[$i][$j]['idPiece'])?>">
                             <button class="croix">X</button>
                         </form>
@@ -38,13 +40,13 @@
                     ?>
                     <li>
                         <h2>Ajouter une Piece</h2>
-                        <form action="index.php?cible=dashboard&fonction=appartementPiece" method="post">
+                        <form action="index.php?cible=dashboard&fonction=appartementPiece" method="post" >
                             Nom de la piece:<br>
                             <input type="text" name="nom"><br>
                             Numéro de série Cemac:<br>
                             <input type="text" name="numSerie"><br>
                             <input type="hidden" name="idAppartement" value="<?php echo($appartement[$i]['idAppartement']);?>">
-                            <input type="submit" value="Valider">
+                            <input type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'une pièce ?')">
                         </form>
                     </li>
                 </ul>
@@ -56,11 +58,12 @@
         <h1>Ajouter un Appartement</h1>
         <form action="index.php?cible=dashboard&fonction=appartementPiece" method="post">
             Adresse:<br>
-            <input class="blockAppartement" type="text" name="adresse">
+            <input type="text" name="adresse"><br>
             Superficie :<br>
-            <input class="blockAppartement" type="number" name="superficie"/>
+            <input type="number" name="superficie"min="0">
             <br>
-            <input class="blockAppartement" type="submit" value="Valider">
+            <input type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'un appartement ?')">
+
         </form>
     </div>
 </body>

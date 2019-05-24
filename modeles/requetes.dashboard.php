@@ -271,57 +271,30 @@ function supprPiece(PDO $bdd, $idPiece){
 }
 
 function ajouterAppartement(PDO $bdd, $adresse,$superficie,$idUser){ //Ajoute une ligne Appartement et role
-    $idAppartement = affecterIdAppartement($bdd);
-    $statement = $bdd->prepare('INSERT INTO `appartement` (`idAppartement`, `adresse`, `superficie`) VALUES ("'.$idAppartement.'","'.$adresse.'","'.$superficie.'" ) ');
+    $statement = $bdd->prepare('INSERT INTO `appartement` (`adresse`, `superficie`) VALUES ("'.$adresse.'","'.$superficie.'" ) ');
     $statement->execute();
+    $statement = $bdd->prepare('SELECT appartement.idAppartement FROM `appartement` ORDER BY `idAppartement` DESC LIMIT 1 ');
+    $statement->execute();
+    $idAppartement = $statement->fetchAll()[0][0];
     $statement = $bdd->prepare(' INSERT INTO `role` (`idRole`, `principal`, `secondaire`, `idAppart`, `idUser`) VALUES (Null, 1, 0,"'.$idAppartement.'","'.$idUser.'" )    ');
     $statement->execute();
-} //Soit on met l'id Appartement directement dans role soit on va chercher le dernier idAppartement
-
-function affecterIdAppartement(PDO $bdd){ //On créer un idAppartement et on vérifie qu'il n'existe pas
-    $statement = $bdd->prepare('SELECT idAppartement FROM appartement ');
-    $statement->execute();
-    $tab =$statement->fetchAll();
-    while ($a=1){
-        $val = rand();
-
-        if(in_array($val,$tab)){
-        }
-        else{
-            return $val;
-            $a=2;
-        }
-    }
 }
 
-
 function ajouterPiece(PDO $bdd, $nom, $idAppartement,$numSerie){ //Ajoute piece et cemac
-    $idPiece= affecterIdPiece($bdd);
-    $statement = $bdd->prepare('   INSERT INTO `piece` (`idPiece`, `nom`, `idAppart`) VALUES ("'.$idPiece.'", "'.$nom.'","'.$idAppartement.'")    ');
+    $statement = $bdd->prepare('   INSERT INTO `piece` (`nom`, `idAppart`) VALUES ("'.$nom.'","'.$idAppartement.'")    ');
     $statement->execute();;
+    $statement = $bdd->prepare('   SELECT * FROM `piece` ORDER BY `piece`.`idPiece` DESC LIMIT 1');
+    $statement->execute();
+    $idPiece = $statement->fetchAll()[0][0];
     $statement = $bdd->prepare('   INSERT INTO `cemac` (`idCemac`, `numeroSerie`, `idPiece`) VALUES (Null,"'.$numSerie.'","'.$idPiece.'")    ');
     $statement->execute();
 }
-function affecterIdPiece(PDO $bdd){ //On créer un idAppartement et on vérifie qu'il n'existe pas
-    $statement = $bdd->prepare('SELECT idPiece FROM piece ');
-    $statement->execute();
-    $tab =$statement->fetchAll();
-    while ($a=1){
-        $val = rand();
 
-        if(in_array($val,$tab)){
-        }
-        else{
-            return $val;
-            $a=2;
-        }
-    }
-}
 
 function recupUtilisateurs(PDO $bdd){
-    $statement = $bdd->prepare('SELECT utilisateurs.nom,utilisateurs.prenom,utilisateurs.email,typeutilisateur.type 
+    $statement = $bdd->prepare('SELECT utilisateurs.nom,utilisateurs.prenom,utilisateurs.email,type_utilisateur.type 
                                           FROM utilisateurs 
-                                          INNER JOIN typeutilisateur ON utilisateurs.idType=typeutilisateur.idType');
+                                          INNER JOIN type_utilisateur ON utilisateurs.idType=type_utilisateur.idType');
     $statement->execute();
     return $statement->fetchAll();
 }
