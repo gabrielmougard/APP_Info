@@ -312,5 +312,29 @@ function estUnAdministrateur(PDO $bdd,$idUser){
 }
 
 
+function estUnGestionnaire(PDO $bdd,$idUser){
+    $statement = $bdd->prepare('SELECT utilisateurs.idType
+                                          FROM utilisateurs
+                                          WHERE idUtilisateur='.$idUser);
+    $statement->execute();
+    $val = $statement->fetchAll();
+    if ($val[0]['idType'] === "2"){
+        return true;
+    }
+    return false;
+}
+
+function estUnGestionStock(PDO $bdd,$idUser){
+    $statement = $bdd->prepare('SELECT utilisateurs.idType
+                                          FROM utilisateurs
+                                          WHERE idUtilisateur='.$idUser);
+    $statement->execute();
+    $val = $statement->fetchAll();
+    if ($val[0]['idType'] === "3"){
+        return true;
+    }
+    return false;
+}
+
 
 ?>

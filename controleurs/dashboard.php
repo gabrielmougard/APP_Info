@@ -286,13 +286,19 @@ switch ($function) {
         $vue = 'Chauffage/chauffageUtilisateur.php';
         break;
     case 'chauffageGestionnaire':
-        if (isset ($_POST['modifTempGest'])){
-            modifierTempGest($bdd,$_POST['modifTempGest']);
+        if (estUnGestionnaire($bdd,$_SESSION['id'])){
+            if (isset ($_POST['modifTempGes'])){
+                modifierTempGest($bdd,$_POST['modifTempGes']);
+            }
+            $switch = true;
+            $tempGest=recupTemperatureMaxGestionnaire($bdd);
+            $vue = 'Chauffage/chauffageGestionnaire.php';
         }
-        $switch = true;
-        $tempGest=recupTemperatureMaxGestionnaire($bdd);
-        $vue = 'Chauffage/chauffageUtilisateur.php';
     break;
+    case 'gestionStock':
+
+        break;
+
 }
 
 if(!$switch){
