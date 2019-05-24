@@ -268,8 +268,8 @@ EX;
     {
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         $bdd->beginTransaction();
-        $query = "INSERT INTO utilisateurs (nom, prenom, email, role, passwordHash, derniereVerificationEmail) ".
-            "VALUES (:nom, :prenom, :email, :role,:passwordHash, :derniereVerificationEmail)";
+        $query = "INSERT INTO utilisateurs (nom, prenom, email, role, passwordHash, derniereVerificationEmail, idType) ".
+            "VALUES (:nom, :prenom, :email, :role,:passwordHash, :derniereVerificationEmail,1)";
 
         $sth=$bdd->prepare($query);
         $sth->bindValue(':nom', $nom, PDO::PARAM_STR);

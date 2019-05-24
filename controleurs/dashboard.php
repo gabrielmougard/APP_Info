@@ -273,7 +273,7 @@ switch ($function) {
         if (estUnAdministrateur($bdd,$_SESSION['id'])){ //On verifie que c'est un admin
             $switch = true;
             $utilisateurs=recupUtilisateurs($bdd);
-            $vue = 'admin/listeUtilisateurs.php';
+            $vue = 'Admin/listeUtilisateurs.php';
         }
         break;
     case 'chauffage':
