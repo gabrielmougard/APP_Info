@@ -30,6 +30,6 @@ switch ($function) {
 
 }
 
-include'vues/'. $vue;
+//include('vues/'. $vue);
 
 ?>
