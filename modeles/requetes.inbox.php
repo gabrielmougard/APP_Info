@@ -4,7 +4,7 @@ include('modeles/requetes.generiques.php');
 
 function retrieveMails($bdd,$idUtilisateur,$p) {
 
-    $limit = 5;
+    $limit = 6;
 
     if(!isset($p)){
         $offset = 0;
@@ -17,9 +17,9 @@ function retrieveMails($bdd,$idUtilisateur,$p) {
     }
 
     //explaination : We want the first message of the different ticket started by the specified user
-    $sth = $bdd->prepare("SELECT * FROM messagerie WHERE idUser = :idUtilisateur GROUP BY idTicket HAVING reply = 1 LIMIT :offset, :lim");
+    $sth = $bdd->prepare("SELECT * FROM messagerie WHERE idUser = :idUtilisateur GROUP BY idTicket HAVING reply = 1 LIMIT :offset, 6");
     $sth->bindValue(":offset",$offset, PDO::PARAM_INT);
-    $sth->bindValue(":lim",$limit, PDO::PARAM_INT);
+    //$sth->bindValue(":lim",$limit, PDO::PARAM_INT);
     $sth->bindValue(":idUtilisateur", $idUtilisateur);
     $sth->execute();
 
@@ -78,14 +78,14 @@ function writeMessage($bdd,$data) {
     if ($data["newMessage"] == "true") {
         $sth = $bdd->prepare("SELECT COUNT(*) FROM messagerie");
         $sth->execute();
-        $res = $sth->fetchAll();
+        $res = $sth->fetchAll()[0][0];
         if ($res == 0) { // si il n'y a pas encore de message dans la table
             $idTicket = 0;
         }
         else {
             $sth = $bdd->prepare("SELECT DISTINCT idTicket FROM messagerie");
             $sth->execute();
-            $idTicket = count($sth->fetchAll()); //next idTicket
+            $idTicket = count($sth->fetchAll())+1; //next idTicket
             $reply = 1;
         }
     }

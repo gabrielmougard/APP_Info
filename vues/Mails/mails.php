@@ -103,8 +103,10 @@ $(window).load(function(){
             echo '</tr>';
 
         }
-
-        if ($p == $_SESSION['maxPages'] - 1) {
+        //var_dump($_SESSION['maxPages']);
+        //var_dump($_SESSION['limit']);
+        //var_dump($get_total);
+        if ($p > $_SESSION['maxPages'] - 1) {
             echo '<tr><td width="100%">Il n\'y a plus de messages pour le moment, revenez plus tard !</td></tr>';
         }
 
@@ -113,13 +115,21 @@ $(window).load(function(){
 
     </table>
 
-    <?php if($get_total > $_SESSION["limit"]){ ?>
+    <?php if($get_total >= $_SESSION["limit"]){ ?>
 
         <div id="pages">
 
             <?php
-            for($i=1; $i<$_SESSION["maxPages"]; $i++){
-                echo ($i == $_GET['p']) ? '<a class="btn active">'.$i.'</a>' : '<a class="btn" href="index.php?cible=inbox&fonction=mails&uid='.$_SESSION['userId'].'&p='.$i.'">'.$i.'</a>';
+
+            for($i=1; $i<$_SESSION["maxPages"]+2; $i++){
+
+                if ($i == $_GET['p']) {
+                    echo '<a class="btn active" href="index.php?cible=inbox&fonction=mails&uid='.$_SESSION['id'].'&p='.$i.'">'.$i.'</a>';
+                }
+                else {
+                    echo '<a class="btn" href="index.php?cible=inbox&fonction=mails&uid='.$_SESSION['id'].'&p='.$i.'">'.$i.'</a>';
+                }
+
             }
             ?>
 
