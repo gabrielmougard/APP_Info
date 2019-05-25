@@ -78,6 +78,7 @@ switch ($function) {
         $data["newMessage"] = $_POST["new"];
         $data["content"] = $_POST["content"];
         $data["subject"] = $_POST["subject"];
+        $data["idTicket"] = $_POST["idTicket"];
         $data["ouvert"] = '0';
 
 

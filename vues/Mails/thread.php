@@ -32,7 +32,7 @@
 for ($i = 0; $i < count($res); $i++) {
 
     echo '<div id="msg">';
-    echo '<a href="index.php?cible=inbox&fonction=mails&p=1&uid=">← Boite de Reception</a>';
+    echo '<a href="index.php?cible=inbox&fonction=mails&p=1&uid='.$_GET["idUser"].'">← Boite de Reception</a>';
     echo '<table>';
 	echo '<tr>';
 	echo '<td>De : <strong>'. $res[$i]["emailUser"] .'</strong></td><td>Email : <strong>'. $res[$i]["emailUser"] .'</strong></td><td>Objet : <strong>'. $res[$i]["subject"] .'</strong></td>';
@@ -43,8 +43,9 @@ for ($i = 0; $i < count($res); $i++) {
         //echo substr_count( $res[$i]["contenu"], "\n");
         echo '<br>';
     }
+
     echo '<a class="remove btn danger" href="index.php">Effacer</a>';
-    echo '<a class="remove btn info" href="index.php?cible=inbox&fonction=msg&new=false">Répondre</a>';
+    echo '<a class="remove btn info" href="index.php?cible=inbox&fonction=msg&new=false&idUser='.$_GET['idUser'].'&idTicket='.$_GET["idTicket"].'">Répondre</a>';
     echo '</div>';
 }
 ?>

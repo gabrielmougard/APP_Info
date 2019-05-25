@@ -93,7 +93,9 @@ function writeMessage($bdd,$data) {
         $sth = $bdd->prepare("SELECT COUNT(*) FROM messagerie WHERE idTicket = :idTicket");
         $sth->bindValue(":idTicket", $data["idTicket"]);
         $sth->execute();
-        $reply = $sth->fetchAll()+1; //reply is 1-indexed.
+        $reply = $sth->fetchAll()[0][0]; //reply is 1-indexed.
+        //var_dump($reply);
+        $reply += 1;
 
     }
 
