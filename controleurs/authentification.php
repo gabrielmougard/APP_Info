@@ -111,6 +111,7 @@ switch ($function) {
 
     case 'connexion':
 
+
         //cookie identification
         if (isset($_COOKIE["email"]) && isset($_COOKIE["password"])) {
             $conn = connexionWithoutHash($bdd, $_COOKIE["email"], $_COOKIE["password"]);
@@ -160,7 +161,7 @@ switch ($function) {
 
             //RememberME
             $remember = false;
-            if (!isset($_POST['remember_me'])) {
+            if (isset($_POST['remember_me'])) {
                 $remember = true;
             }
 

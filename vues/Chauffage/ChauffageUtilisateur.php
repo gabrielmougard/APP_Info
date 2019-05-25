@@ -23,9 +23,7 @@
         <input class="input" type="number" name="modifTempUser"><input class="input" type="submit" value="Valider">
     </form>
 </div>
-<div class="conteneur_tempMaxGes">
-    <div id="tempGest"> Température Gestionnaire : <?php echo $tempGest?> °C</div>
-</div>
+
 
 </body>
 

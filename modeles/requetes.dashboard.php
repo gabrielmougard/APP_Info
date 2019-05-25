@@ -146,7 +146,10 @@ function recupInfoComplementaire(PDO $bdd, $idComposant){ //Retourne le nom, cl�
  * @return float|int
  */
 function convertir($valeur,$type){
-    $valeur=hexdec($valeur);
+    if ($valeur != NULL){
+        $valeur=intval($valeur);
+        $valeur=hexdec($valeur);
+    }
     switch($type){
         case 'a1':
             $valeur=$valeur*80/1023;
@@ -157,8 +160,7 @@ function convertir($valeur,$type){
         case 'c3':
             $valeur=(1/$valeur)*34009;
             break;
-        default:
-            $valeur="Null";
+        default:// Par défaut Aucune modification de la valeur en Hexa
             break;
     }
     return $valeur;
@@ -175,10 +177,10 @@ function convertir($valeur,$type){
  */
 function parcourirValeurs($valeur, $type){
     for ($i=0; $i<count($valeur);$i++){
-        $valeur[$i][0][0]=
+        $valeur[$i][0]["Val"]=
             convertir(
-                $valeur[$i][0][0],
-                $type[$i][0][2]);
+                $valeur[$i][0]["Val"],
+                $type[$i][0]["valeur"]);
     }
     return $valeur;
 }
@@ -202,7 +204,11 @@ function envoieTrameDansBDD(PDO $bdd, $ans,$num,$idComposant){
 }
 
 function supprComposant(PDO $bdd, $idComposant){ //Supprime un composant
-    $statement = $bdd->prepare('DELETE FROM `composant` WHERE `composant`.`idComposant` = '.$idComposant);
+    $statement = $bdd->prepare('UPDATE `composant` SET `idCemac` = NULL WHERE `composant`.`idComposant` =  '.$idComposant);// Supprime l'idCemac de tout les composants
+    $statement->execute();
+    $statement = $bdd->prepare('DELETE FROM `trameenvoi` WHERE `trameenvoi`.`idComposant`='.$idComposant);// Supprime l'idCemac de tout les composants
+    $statement->execute();
+    $statement = $bdd->prepare('DELETE FROM `trameretour` WHERE `trameretour`.`idComposant`='.$idComposant);// Supprime l'idCemac de tout les composants
     $statement->execute();
 }
 
@@ -345,7 +351,9 @@ function ajouterComposant($bdd,$numSerie,$idCeMac){
         $idComposant=intval($statement->fetchAll()[0][0]);//on récupèle l'idComposant lié au num
         if(recupInfoComplementaire($bdd, $idComposant)[0][1]!= null){
             //on teste si la grandeur physique associée au type du capteur est non null, ce qui caractérise un capteur
-            envoieTrameDEnvoiDansBDD($bdd,$numSerie,$idComposant);
+            capteurEnvoieTrameDEnvoiDansBDD($bdd,$numSerie,$idComposant);
+        }else{
+            actionneurEnvoieTrameDEnvoiDansBDD($bdd,$numSerie,$idComposant);
         }
         return $reponse;
     }
@@ -360,9 +368,15 @@ function recupIdComposantNumSerie($bdd,$numSerie){
     return $result;
 }
 
-function envoieTrameDEnvoiDansBDD(PDO $bdd,$num,$idComposant){
+function capteurEnvoieTrameDEnvoiDansBDD(PDO $bdd,$num,$idComposant){
     $statement = $bdd->prepare('INSERT INTO `trameenvoi` (`idEnvoi`, `val`, `tim`, `req`, `num`, `idComposant`) 
-    VALUES (NULL,'."1".', NULL, NULL , '.$num.','.$idComposant.')');
+    VALUES (NULL,1, NULL, NULL , '.$num.','.$idComposant.')');
+    $statement->execute();
+}
+
+function actionneurEnvoieTrameDEnvoiDansBDD(PDO $bdd,$num,$idComposant){
+    $statement = $bdd->prepare('INSERT INTO `trameenvoi` (`idEnvoi`, `val`, `tim`, `req`, `num`, `idComposant`) 
+    VALUES (NULL,NULL , NULL, NULL , '.$num.','.$idComposant.')');
     $statement->execute();
 }
 

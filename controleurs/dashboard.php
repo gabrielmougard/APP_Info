@@ -15,6 +15,7 @@ include('modeles/requetes.dashboard.php');
 include ('modeles/requetes.utilisateurs.php');
 include('modeles/requetes.chauffage.php');
 include('modeles/requetes.header.php');
+include('modeles/requetes.gestionStock.php');
 
 
 if (!isset($_GET['fonction']) || empty($_GET['fonction'])) {
@@ -41,6 +42,9 @@ switch (getTypeUser($bdd,$_SESSION['id'])){
                 ";
         break;
     case 3: //Gestion Stock
+        $nav = "<li id=\"nav-GestionStock\"><a href=\"index.php?cible=dashboard&fonction=gestionStock\">[GESTION STOCK] Gestion Stock</a></li>
+
+                ";
         break;
 }
 
@@ -76,20 +80,22 @@ switch ($function) {
     case 'capteurs':
         $switch=true;
         // On a l'id de la piece en variable
-        if (isset ($_GET['idComposant'])) {
-            supprComposant($bdd, $_GET['idComposant']);
+        if (isset ($_GET['sppridComposant'])) {
+            supprComposant($bdd, $_GET['sppridComposant']);
         }
         if(isset($_GET['idPiece'])){
             $cemac = recupIdCemacs($bdd, $_GET['idPiece']);
             if ($cemac!=[]){
-                $composants = recupIdComposants($bdd, $cemac[0][0]);
-                $valeurs = [];
+                $composants = recupIdComposants($bdd, $cemac[0]['idCemac']);
                 $infosType = [];
+                $valeurs = [];
                 for ($i = 0; $i < count($composants); $i++) { //Pour chaque composants on va chercher chercher
-                    $valeurs[] = recupValHexaCapteur($bdd, $composants[$i][0]); //Sa valeur en héxa
+                    $valeurs[] = recupValHexaCapteur($bdd, $composants[$i]['idComposant']); //Sa valeur en héxa
                     $infosType[] = recupInfoComplementaire($bdd, $composants[$i][0]); // Ainsi que des information sur le composant(unité/grandeur physique)
                 }
-                $valeurs = parcourirValeurs($valeurs, $infosType);
+                if($valeurs!=[]){
+                    $valeurs = parcourirValeurs($valeurs, $infosType);
+                }
             }
             else{
                 $composants=[];
@@ -296,7 +302,24 @@ switch ($function) {
         }
     break;
     case 'gestionStock':
+        if (estUnGestionStock($bdd,$_SESSION['id'])){ // On verifie que c'est un un respo
+            if (isset ($_POST['datasheet'])&&isset ($_POST['nom']) &&isset ($_POST['prix'])&&isset ($_POST['reference'])){ // Ajout catalogue
+                ajoutCatalogue($bdd,$_POST['datasheet'],$_POST['nom'],$_POST['prix'],$_POST['reference']);
+            }
+            if (isset ($_POST['nomType'])&&isset ($_POST['valeur']) &&isset ($_POST['grandeurPhysique'])){ // Ajout catalogue
+                ajoutTypeCapteur($bdd,$_POST['nomType'],$_POST['valeur'],$_POST['grandeurPhysique']);
+            }
+            if (isset ($_POST['numComposant'])&&isset ($_POST['idCatalogue']) &&isset ($_POST['idTypeCapteur'])){ // Ajout catalogue
+                ajoutComposant($bdd,$_POST['numComposant'],$_POST['idCatalogue'],$_POST['idTypeCapteur']);
+            }
 
+            $typeComposantsExistant = recupTypeComposantExistant($bdd);
+            $nomCatalogue = recupNomCatalogue($bdd);
+            $catalogue = recupCatalogue($bdd);
+            $composantsExistant = recupComposantExistant($bdd);
+            $switch = true;
+            $vue = 'GestionStock/GestionStock.php';
+        }
         break;
 
 }

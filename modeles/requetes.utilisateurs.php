@@ -337,11 +337,15 @@ function connexion($bdd,$email,$password,$rememberMe){
 
 
     if($rememberMe && $etat){
-
         //sauvegarde des hash dans les cookies
         $cookie_expiration_time = 60*60*24;
-        setcookie("email",$email,$cookie_expiration_time);
-        setcookie("password",password_hash($password, PASSWORD_DEFAULT), $cookie_expiration_time);
+        $newhash=password_hash($password, PASSWORD_DEFAULT);
+        setcookie("email",$email,time()+$cookie_expiration_time);
+        setcookie("password",$newhash,time()+ $cookie_expiration_time);
+        $sth=$bdd->prepare("UPDATE utilisateurs SET hashCookie =:hashCookie WHERE email=:email");
+        $sth->bindValue(':email', $email);
+        $sth->bindValue(':hashCookie', $newhash);
+        $sth->execute();
 
     }
 
@@ -742,7 +746,8 @@ function resetEmailVerificationToken($bdd,$email, $isValid){
  *
  */
 function logOut($emailUser){
-    setcookie("email", $emailUser, time()-3600);
+    setcookie("email", "", time());
+    setcookie("password","",time());
     header("Location: http://localhost/APP_Info-master/index.php?cible=authentification&fonction=accueil");
 }
 
@@ -827,12 +832,12 @@ function connexionWithoutHash($bdd,$email,$passwordWithHash){
     $utilisateur = $sth->fetchAll();
 
     $idUtilisateur = isset($utilisateur[0]["idUtilisateur"]) ? $utilisateur[0]["idUtilisateur"] : null;
-    $passwordHash = isset($utilisateur[0]["passwordHash"]) ? $utilisateur[0]["passwordHash"] : null;
+    $passwordHash = isset($utilisateur[0]["hashCookie"]) ? $utilisateur[0]["hashCookie"] : null;
 
-    if ($passwordHash != $passwordWithHash){
+    if ($passwordHash !== $passwordWithHash){
         $etat=false;
     }
-    if ($email != $utilisateur[0]['email']){
+    if ($email !== $utilisateur[0]['email']){
         $etat=false;
     }
 

@@ -38,16 +38,16 @@
                         <?php '</li>';
                     }
                     ?>
-                    <li>
+                    <li><!--
                         <h2>Ajouter une Piece</h2>
                         <form action="index.php?cible=dashboard&fonction=appartementPiece" method="post" >
                             Nom de la piece:<br>
                             <input type="text" name="nom"><br>
                             Numéro de série Cemac:<br>
-                            <input type="text" name="numSerie"><br>
+                            <input type="number" name="numSerie" min="0"><br>
                             <input type="hidden" name="idAppartement" value="<?php echo($appartement[$i]['idAppartement']);?>">
                             <input type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'une pièce ?')">
-                        </form>
+                        </form>-->
                     </li>
                 </ul>
             </nav>
@@ -63,7 +63,25 @@
             <input type="number" name="superficie"min="0">
             <br>
             <input type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'un appartement ?')">
-
+        </form>
+    </div>
+    <div>
+        <h1>Ajouter une Piece</h1>
+        <form id="ajoutPiece" action="index.php?cible=dashboard&fonction=appartementPiece" method="post" >
+            Adresse de l'ppartement:<br/>
+            <select name="$idAppartement" form="ajoutPiece">
+                <?php
+                for($i=0;$i<count($appartement);$i++){
+                    echo '<option value="'.$appartement[$i]['idAppartement'].'">'.$appartement[$i][1].'</option>';
+                }
+                ?>
+            </select><br>
+            Nom de la piece:<br>
+            <input type="text" name="nom"><br>
+            Numéro de série Cemac:<br>
+            <input type="number" name="numSerie" min="0"><br>
+            <!--<input type="hidden" name="idAppartement" value="<?php // echo($appartement[$i]['idAppartement']);?>">-->
+            <input type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'une pièce ?')">
         </form>
     </div>
 </body>
