@@ -24,6 +24,7 @@ session_start();
 
 $switch=false;
 
+$nav = "";
 switch ($function) {
 
     case 'mails':

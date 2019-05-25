@@ -27,13 +27,12 @@ if (!isset($_GET['fonction']) || empty($_GET['fonction'])) {
 session_start();
 $switch=false;
 
+$nav = "";
 switch (getTypeUser($bdd,$_SESSION['id'])){
     default:
         break;
     case 0: //Administrateur
-        $nav = "<li id=\"nav-listeUtilisateur\"><a href=\"index.php?cible=dashboard&fonction=listeUtilisateurs\">[ADMIN] Liste Utilisateurs</a></li>
-
-                ";
+        $nav = "<li id=\"nav-listeUtilisateur\"><a href=\"index.php?cible=dashboard&fonction=listeUtilisateurs\">[ADMIN] Liste Utilisateurs</a></li>";
     case 1: //Utilisateur = cas par défaut
         $nav = "";
         break;
