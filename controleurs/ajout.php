@@ -56,10 +56,10 @@ if(isset($_GET['numero_serie']) and !empty($_GET['numero_serie'])) {
             ";
                 break;
         } //Fin Switch
-
         ?>
+        <script> //Javascript NE FONCTIONNE PAS
 
-        <script> //Javascript
+
             <?php
             for ($i = 0; $i < $idAfficher; $i++) { //Parcourt de la liste de composants
             if (intval(recupValHexaCapteur($bdd, $idComposant)) !== NULL) { // Si Null on sait que c'est un actionneur et non capteur
@@ -68,7 +68,7 @@ if(isset($_GET['numero_serie']) and !empty($_GET['numero_serie'])) {
             ?>
             var capteurId = <?php echo $composants[$idAfficher]['idComposant'];?>;
             var numComposant = <?php echo $composants[$idAfficher]['numComposant'];?>;
-            <?php echo $idAfficher ?>);
+
             var a = document.getElementById("flechehaut"+<?php echo $idAfficher ?>);
             var b = document.getElementById("pause"+<?php echo $idAfficher ?>);
             var c = document.getElementById("flechebas"+<?php echo $idAfficher ?>);

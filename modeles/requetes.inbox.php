@@ -40,7 +40,7 @@ function retrieveDiscussionThread($bdd,$idTicket) {
     //2) load the discussion thread
     // explanation : we select all the messages in the discussion thread with descending order as
     // we will pop the element and then we need the first message to be at the end of the array
-    $req = $bdd->prepare("SELECT * FROM messagerie WHERE idTicket = :idTicket ORDER BY reply DESC");
+    $req = $bdd->prepare("SELECT * FROM messagerie WHERE idTicket = :idTicket ORDER BY reply ASC");
     $req->bindValue(":idTicket",$idTicket,PDO::PARAM_INT);
     $req->execute();
 
