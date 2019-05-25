@@ -80,20 +80,22 @@ switch ($function) {
     case 'capteurs':
         $switch=true;
         // On a l'id de la piece en variable
-        if (isset ($_GET['idComposant'])) {
-            supprComposant($bdd, $_GET['idComposant']);
+        if (isset ($_GET['sppridComposant'])) {
+            supprComposant($bdd, $_GET['sppridComposant']);
         }
         if(isset($_GET['idPiece'])){
             $cemac = recupIdCemacs($bdd, $_GET['idPiece']);
             if ($cemac!=[]){
-                $composants = recupIdComposants($bdd, $cemac[0][0]);
-                $valeurs = [];
+                $composants = recupIdComposants($bdd, $cemac[0]['idCemac']);
                 $infosType = [];
+                $valeurs = [];
                 for ($i = 0; $i < count($composants); $i++) { //Pour chaque composants on va chercher chercher
-                    $valeurs[] = recupValHexaCapteur($bdd, $composants[$i][0]); //Sa valeur en héxa
+                    $valeurs[] = recupValHexaCapteur($bdd, $composants[$i]['idComposant']); //Sa valeur en héxa
                     $infosType[] = recupInfoComplementaire($bdd, $composants[$i][0]); // Ainsi que des information sur le composant(unité/grandeur physique)
                 }
-                $valeurs = parcourirValeurs($valeurs, $infosType);
+                if($valeurs!=[]){
+                    $valeurs = parcourirValeurs($valeurs, $infosType);
+                }
             }
             else{
                 $composants=[];

@@ -10,19 +10,19 @@
 
 <div class="conteneur_Cemac">
     <?php
-    for ($i = 0; $i < count($composants); $i++) { //Faire un conteneur pour chaque composant ?>
+    for ($i = 0; $i < count($composants); $i++) { //Faire un conteneur pour chaque composant?>
 
         <div class="Composant">
-            <a href="./index.php?cible=dashboard&fonction=capteurs&idPiece=<?php echo $_GET['idPiece']?>&idComposant=<?php echo $composants[$i][0] ?>"><button class="croix">X</button></a>
+            <a href="./index.php?cible=dashboard&fonction=capteurs&idPiece=<?php echo $_GET['idPiece']?>&sppridComposant=<?php echo $composants[$i][0] ?>"><button class="croix">X</button></a>
             <input id="<?php echo $i;?>" type="checkbox">
             <label for="<?php echo $i;?>">
 
-        <h1><?php echo $infosType[$i][0][0] // ?></h1>
-        <img src="public/images/maison1.jpg" class="maison"> <!--A inclure dans le switch pour avoir une image correspondante-->
+        <h1><?php echo $infosType[$i][0][0] //Nom du capteur ?></h1>
+        <img src="public/images/CapteurDefaut.jpg" class="maison"> <!--A inclure dans le switch pour avoir une image correspondante-->
 
         <?php
         switch ($valeurs[$i][0][0]){
-            case null: //Cas de l'actionneur?>
+            case NULL: //Cas de l'actionneur?>
                 <!--<nav class="liste_valeurs">-->
                 <ul>
                     <li><i id = "flechehaut<?php echo $i?>" class="fa fa-arrow-up fa-2x" aria-hidden="true"></i><p>En montée</p></li>
@@ -41,7 +41,7 @@
                 <ul class ="liste_valeurs">
                 <?php
                 //for ($j = 0; $j < count($valeurs[$i]); $j++) {
-                    echo '<li>'. $valeurs[$i][0][0] . ' '.$infosType[$i][0][1].'</li>';
+                    echo '<li>'. $valeurs[$i][0]["Val"] . ' '.$infosType[$i][0][1].'</li>';
                 //}
                 ?>
                 </ul>
@@ -60,7 +60,7 @@
     <script> //Javascript
         <?php
         for ($i = 0; $i < count($composants); $i++) { //Parcourt de la liste de composants
-            if ($valeurs[$i][0][0] !== 'Null') { // Si Null on sait que c'est un actionneur et non capteur
+            if ($valeurs[$i][0][0] !== NULL) { // Si Null on sait que c'est un actionneur et non capteur
                 continue;
             }
             ?>
