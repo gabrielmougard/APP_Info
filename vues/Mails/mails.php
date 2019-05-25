@@ -20,6 +20,9 @@ error_reporting(E_ALL & ~E_NOTICE & ~8192);
 <title>Inbox System</title>
 <link rel="stylesheet" type="text/css" href="public/css/inbox.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="public/css/header.css">
+    <link rel="stylesheet" href="public/css/navigationBurger2.css" />
+
 <script type="text/javascript" src="public/js/jquery.js"></script>
 </head>
 
@@ -35,6 +38,21 @@ $(window).load(function(){
 
 </script>
 
+<div class="conteneur_header">
+    <div class="bloc">
+        <?php include "vues/templates/navigationBurger.php"?>
+    </div>
+    <div class="bloc">
+        <img src="public/images/background.png" alt="logo" class="logo">
+    </div>
+
+    <div class="bloc">
+        <a href="index.php?cible=inbox&fonction=mails&p=1&uid=<?php echo $_SESSION['id']?>" class="m-link"><i class="fa fa-envelope" aria-hidden="true"></i> Messagerie </a>
+        <a href="index.php?cible=authentification&fonction=logout" class="m-link"><i class="fas fa-sign-out-alt"></i> Se déconnecter </a>
+    </div>
+</div>
+
+
 <!-- button for sending new email to the admin community -->
 <div class="round-button"><div class="round-button-circle"><a href="index.php?cible=inbox&fonction=msg&new=true&idUser=<?php echo $_SESSION["id"]?>" class="round-button"><i class="far fa-comment-dots"></i></a></div></div>
 
@@ -46,7 +64,6 @@ $(window).load(function(){
             <th>N° Ticket</th>
             <th>Email</th>
             <th>Objet</th>
-            <th>Envoyé</th>
             <th>Vu</th>
 
         </tr>
@@ -71,9 +88,9 @@ $(window).load(function(){
 
 
             if($row['ouvert'] == '1'){
-                $open = '<img src="img/open.png" alt="Opened" title="Opened" />';
+                $open = '<img src="public/images/open.png" alt="Opened" title="Opened" />';
             }else {
-                $open = '<img src="img/not_open.png" alt="Opened" title="Opened" />';
+                $open = '<img src="public/images/not_open.png" alt="Opened" title="Opened" />';
             }
 
             echo '<tr class="border_bottom">';
@@ -81,7 +98,6 @@ $(window).load(function(){
             echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["id"].'&idMsg='.$id.'&idTicket='.$idTicket.'">'.$idTicket.'</a></td>';
             echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["id"].'&idMsg='.$id.'&idTicket='.$idTicket.'">'.$email.'</a></td>';
             echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["id"].'&idMsg='.$id.'&idTicket='.$idTicket.'">'.$subject.'</a></td>';
-            echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["id"].'&idMsg='.$id.'&idTicket='.$idTicket.'">'.$date.'-'.$time.'</a></td>';
             echo '<td><a href="index.php?cible=inbox&fonction=thread&idUser='.$_SESSION["id"].'&idMsg='.$id.'&idTicket='.$idTicket.'">'.$open.'</a></td>';
 
             echo '</tr>';
