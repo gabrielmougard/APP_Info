@@ -35,6 +35,7 @@ switch (getTypeUser($bdd,$_SESSION['id'])){
 
                 ";
     case 1: //Utilisateur = cas par défaut
+        $nav = "";
         break;
     case 2: //Gestionnaire
         $nav = "<li id=\"nav-ChauffageGestionnaire\"><a href=\"index.php?cible=dashboard&fonction=chauffageGestionnaire\">[GESTIONNAIRE] Chauffage</a></li>

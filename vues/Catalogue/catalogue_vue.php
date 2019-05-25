@@ -24,15 +24,13 @@
                 $image = "public/images/capteurLuminosite.jpg";
 
             }
-            ?>
-            <?php
-            if ($infosProduit[0][0] == 789456) {
+
+            else if ($infosProduit[0][0] == 789456) {
                 $image = "public/images/capteurIR.jpg";
 
             }
-            ?>
-            <?php
-            if ($infosProduit[0][0] == 654987) {
+
+            else if ($infosProduit[0][0] == 654987) {
                 $image = "public/images/capteurTemperature.jpg";
 
             }
@@ -41,7 +39,7 @@
             }
             ?>
 
-            <?php print '<img src="'.$image.'"/>'; ?>
+            <?php print '<img src="'.$image.'" width="480" height="480"/>'; ?>
 
             <nav class="liste_produits">
                 <ul>
