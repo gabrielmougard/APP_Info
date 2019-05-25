@@ -16,7 +16,7 @@
 <?php include "vues/templates/header.php" ?>
 
 <body>
-    <div>
+    <div class="blocs">
         <h1>Ajout dans le catalogue</h1>
         <!--<label for="">Selectonne le type de composant:</label>
         <select>
@@ -34,13 +34,13 @@
             <input type="text" name="datasheet"><br>
             Prix:<br>
             <input type="number" name="prix" min="0"><br>
-            reference:<br>
+            Réference:<br>
             <input type="text" name="reference"><br>
-            <input type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'un composant dans le catalogue ?')">
+            <input class="bouton" type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'un composant dans le catalogue ?')">
         </form>
     </div>
 
-    <div>
+    <div class="blocs">
         <h1>Ajoute un Type de composant</h1>
         Selectonne le composant dans le catalogue<br>
         <select name="nomType" form="typeCapteur">
@@ -55,11 +55,11 @@
             <input type="text" name="valeur"><br>
             Grandeur physique:<br>
             <input type="text" name="grandeurPhysique"><br>
-            <input type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'un type de composant ?')">
+            <input class="bouton" type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'un type de composant ?')">
         </form>
     </div>
 
-    <div>
+    <div class="blocs">
         <h1>Ajoute un composant</h1>
 
         Selectonne le composant dans le catalogue<br>
@@ -81,7 +81,7 @@
         <form action="index.php?cible=dashboard&fonction=gestionStock" method="post" id="Composant">
             Numéro de série du composant:<br>
             <input type="number" name="numComposant" min="0"><br>
-            <input type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'un composant ?')">
+            <input class="bouton" type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'un composant ?')">
         </form>
 
 

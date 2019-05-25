@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,500,600');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,500,600');
+
+
+body {
+    text-align: center;
+    background-color: #f1f1f1
+}
+
+h1 {
+    color: #8eca78;
+    font-size: 2.5em;
+    font-family: 'Lato';
+    font-weight: 500;
+    margin-top: 20px;
+    text-align: center;
+}
+
+
+.blocs {
+    font-family: 'Open Sans';
+    font-size: 1em;
+    color: #666666ff;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+    padding:7px 7px 7px 7px;
+    border:1px solid #8eca78ff;
+    border-radius: 7px;
+    background-color: #ffffffff
+}
+
+.bouton{
+    font-family: 'Open Sans';
+    font-size: 1em;
+    margin-top: 10px;
+    color: #666666;
+    border:1px solid #8eca78ff;
+    border-radius: 7px;
+    background-color: #FFFFFF;
+}
+.bouton:hover{
+    background-color: #8eca78;
+}
