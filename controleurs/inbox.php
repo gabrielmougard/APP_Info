@@ -34,7 +34,12 @@ switch ($function) {
         // pour lui afficher ses Mails
 
         //1) appel au modèle
-        $res = retrieveMails($bdd,$_GET["uid"],$_GET["p"]);
+        if (estUnAdministrateur($bdd,$_GET["uid"])) {
+            $res = retrieveMailsAdmin($bdd,$_GET["p"]);
+        }else {
+            $res = retrieveMails($bdd,$_GET["uid"],$_GET["p"]);
+        }
+
         $_SESSION["threadList"] = $res[0];
         $_SESSION["maxPages"] = $res[1];
         $_SESSION["limit"] = $res[2];
@@ -86,7 +91,7 @@ switch ($function) {
         $data["idTicket"] = $_POST["idTicket"];
         $data["ouvert"] = '0';
 
-
+        var_dump($data["idTicket"]);
         //model stuff
         $res = writeMessage($bdd,$data);
         //vue Mails/mails.php : with an alert saying that it has been sent
