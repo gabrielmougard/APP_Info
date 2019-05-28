@@ -225,7 +225,7 @@ switch ($function) {
                 echo "Modifications réussies";
                header("Location: http://localhost/APP_Info-master/index.php?cible=dashboard&fonction=compte");
             } else {
-                echo "Les modifications n'ont pas fonctionnées";
+                echo "Les modifications n'ont pas fonctionné";
                 $vue = 'Compte/modifCompte.php';
             }
         }

@@ -69,6 +69,11 @@ switch ($function) {
         // efface un mail dans les discussions
         $switch = true;
 
+        $state = removeMessage($bdd, $_GET["idMessage"]);
+        if ($state) {
+            $vue = "Mails/mails";
+        }
+
         break;
 
     case 'add':

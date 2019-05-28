@@ -50,7 +50,7 @@ function retrieveDiscussionThread($bdd,$idTicket) {
 
 }
 function removeMessage($bdd,$idMessage) {
-    $sth = $bdd->prepare("DELETE FROM messagerie WHERE id = :idMessage");
+    $sth = $bdd->prepare("DELETE FROM messagerie WHERE idMessage = :idMessage");
     $sth->bindValue(':idMessage',$idMessage);
     $remove = $sth->execute();
 
