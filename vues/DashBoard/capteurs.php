@@ -56,7 +56,9 @@
     }?>
     </div>
 <?php
-    include("ajouterComposantPopUp.php")?>
+include "vues/templates/Footer.php";
+    include("ajouterComposantPopUp.php");
+     ?>
     <script> //Javascript
         <?php
         for ($i = 0; $i < count($composants); $i++) { //Parcourt de la liste de composants
@@ -100,6 +102,6 @@
     </script>
 </body>
 
-<?php include "vues/templates/Footer.php" ?>
+
 
 </html>

@@ -28,7 +28,6 @@
             let request;
             request = new XMLHttpRequest();
             request.onreadystatechange = function () {
-                alert(request.responseText)//applique la fonction défini après lorsque le changement s'opère
                 if (this.readyState === 4 && this.status === 200) {// 4 = reponse prete / 200 = Ok
                     document.getElementsByClassName("conteneur_Cemac")[0].innerHTML += this.responseText;
                 }
