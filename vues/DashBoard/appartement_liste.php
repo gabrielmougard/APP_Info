@@ -69,7 +69,7 @@
         <h1>Ajouter une Piece</h1>
         <form id="ajoutPiece" action="index.php?cible=dashboard&fonction=appartementPiece" method="post" >
             Adresse de l'ppartement:<br/>
-            <select name="$idAppartement" form="ajoutPiece">
+            <select name="idAppartement" form="ajoutPiece">
                 <?php
                 for($i=0;$i<count($appartement);$i++){
                     echo '<option value="'.$appartement[$i]['idAppartement'].'">'.$appartement[$i][1].'</option>';

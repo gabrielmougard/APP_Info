@@ -9,6 +9,7 @@ if (!isset($_GET['fonction']) || empty($_GET['fonction'])) {
 }
 session_start();
 $switch=false;
+$nav="";
 
 switch ($function) {
     case 'catalogue':

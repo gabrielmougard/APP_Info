@@ -50,7 +50,7 @@ function retrieveDiscussionThread($bdd,$idTicket) {
 
 }
 function removeMessage($bdd,$idMessage) {
-    $sth = $bdd->prepare("DELETE FROM messagerie WHERE id = :idMessage");
+    $sth = $bdd->prepare("DELETE FROM messagerie WHERE idMessage = :idMessage");
     $sth->bindValue(':idMessage',$idMessage);
     $remove = $sth->execute();
 
@@ -74,6 +74,27 @@ function writeMessage($bdd,$data) {
     $sth->bindValue(":id",$data['idUser']);
     $sth->execute();
     $emailUtilisateur = $sth->fetchAll();
+
+    if ($data["idTicket"] == null) {
+        $sth = $bdd->prepare("SELECT MAX(idTicket) FROM messagerie");
+        $sth->execute();
+        $idTicket = $sth->fetchAll()[0][0]+1;
+        var_dump($idTicket);
+        $reply = 1;
+
+        $sth = $bdd->prepare("INSERT INTO messagerie (idUser,idTicket,emailUser,contenu,ouvert,reply,subject ) VALUES (:idUser,:idTicket,:emailUser,:content,:ouvert,:reply,:subject)");
+        $sth->bindValue(':idUser',$data["idUser"]);
+        $sth->bindValue(':subject',$data["subject"]);
+        $sth->bindValue(':idTicket',$idTicket);
+        $sth->bindValue(':emailUser',$emailUtilisateur[0]["email"]);
+        $sth->bindValue(':content',$data["content"]);
+        $sth->bindValue(':ouvert',$data["ouvert"]);
+        $sth->bindValue(':reply',$reply);
+
+        $res = $sth->execute();
+        return $res;
+    }
+
 
     if ($data["newMessage"] == "true") {
         $sth = $bdd->prepare("SELECT COUNT(*) FROM messagerie");
@@ -112,3 +133,41 @@ function writeMessage($bdd,$data) {
     return $res;
 
 }
+
+function retrieveMailsAdmin($bdd,$p) {
+
+    $limit = 6;
+
+    if(!isset($p)){
+        $offset = 0;
+    }else if($p == '1'){
+        $offset = 0;
+    }else if($p <= '0'){
+        $offset = 0;
+    }else {
+        $offset = ($p - 1) * $limit;
+    }
+
+    //explaination : We want the first message of the different ticket started by the specified user
+    $sth = $bdd->prepare("SELECT * FROM messagerie GROUP BY idTicket HAVING reply = 1");
+    $sth->execute();
+
+    $res = $sth->fetchAll();
+
+    //return also the total number of different started tickets divided by the limit (for getting the number of pages)
+    $total = ceil(count($res)/$limit);
+    return array($res,$total,$limit);
+}
+
+function estUnAdministrateur($bdd,$idUser){
+    $statement = $bdd->prepare('SELECT utilisateurs.idType
+                                          FROM utilisateurs
+                                          WHERE idUtilisateur='.$idUser);
+    $statement->execute();
+    $val = $statement->fetchAll();
+    if ($val[0]['idType'] === "0"){
+        return true;
+    }
+    return false;
+}
+

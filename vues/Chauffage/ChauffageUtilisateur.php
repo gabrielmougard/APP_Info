@@ -20,7 +20,7 @@
     <div id="tempUser">Température Utilisateur : <?php echo $tempUser?> °C</div>
     <form class="modif" action="index.php?cible=dashboard&fonction=chauffage" method="post">
         Modifier la température Utilisateur:<br>
-        <input class="input" type="number" name="modifTempUser"><input class="input" type="submit" value="Valider">
+        <input type="number" name="modifTempUser"><input class="input" type="submit" value="Valider">
     </form>
 </div>
 

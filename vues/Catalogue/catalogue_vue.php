@@ -39,7 +39,7 @@
             }
             ?>
 
-            <?php print '<img src="'.$image.'" width="480" height="480"/>'; ?>
+            <?php print '<img src="'.$image.'" width="300" height="300"/>'; ?>
 
             <nav class="liste_produits">
                 <ul>

@@ -9,7 +9,6 @@
 include ("modeles/requetes.dashboard.php");
 $decalage=0;
 if(isset($_GET['numero_serie']) and !empty($_GET['numero_serie'])) {
-
     $idCemac = recupIdCemacs($bdd, $_GET['idPiece'])[0][0];
     $idCemac = intval($idCemac);
     $rep = ajouterComposant($bdd, $_GET['numero_serie'], $idCemac);
@@ -18,7 +17,7 @@ if(isset($_GET['numero_serie']) and !empty($_GET['numero_serie'])) {
     //On définit les variable pour afficher le nouveau composant
     $cemac = recupIdCemacs($bdd, $_GET['idPiece']);
     $composants = recupIdComposants($bdd, $cemac[0][0]);
-    $idComposant = intval(recupIdComposantNumSerie($bdd, $_GET['numero_serie'])[0][0]);
+    $idComposant = intval(recupIdComposantNumSerie($bdd, $_GET['numero_serie'][0][0]));
     $idAfficher = count($composants) + $decalage;
 
     if ($rep === 2) {
@@ -57,7 +56,7 @@ if(isset($_GET['numero_serie']) and !empty($_GET['numero_serie'])) {
                 break;
         } //Fin Switch
         ?>
-        <script> //Javascript NE FONCTIONNE PAS
+        <script>
 
 
             <?php
@@ -102,7 +101,7 @@ if(isset($_GET['numero_serie']) and !empty($_GET['numero_serie'])) {
         <?php
     }//fin if
     else {
-        echo("Le numéro saisi ne correspond à aucun composant valide");
+
     }
 }
 

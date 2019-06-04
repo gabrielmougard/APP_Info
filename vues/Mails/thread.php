@@ -44,7 +44,7 @@ for ($i = 0; $i < count($res); $i++) {
         echo '<br>';
     }
 
-    echo '<a class="remove btn danger" href="index.php?cible=inbox&fonction=remove&idUser='.$_GET['idUser'].'&idTicket='.$_GET["idTicket"].'">Effacer</a>';
+    echo '<a class="remove btn danger" href="index.php?cible=inbox&fonction=remove&idUser='.$_GET['idUser'].'&idMessage='.$res[$i]["idMessage"].'">Effacer</a>';
     echo '<a class="remove btn info" href="index.php?cible=inbox&fonction=msg&new=false&idUser='.$_GET['idUser'].'&idTicket='.$_GET["idTicket"].'">Répondre</a>';
     echo '</div>';
 }

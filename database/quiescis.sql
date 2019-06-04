@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  sam. 25 mai 2019 à 15:31
+-- Généré le :  sam. 25 mai 2019 à 22:17
 -- Version du serveur :  10.1.38-MariaDB
 -- Version de PHP :  7.3.2
 
@@ -166,7 +166,8 @@ INSERT INTO `messagerie` (`idMessage`, `idTicket`, `subject`, `contenu`, `emailU
 (4, 1, 'ghjkl', 'ghjkl', 'victor.martin@isep.fr', 4, '', 0, 1, 1),
 (5, 2, 'problème capteur 2', 'Bonjour,\r\nJ\'ai un problème avec le capteur 2\r\n\r\nCordialement, Victor.', 'victor.martin@isep.fr', 4, '', 0, 1, 1),
 (6, 2, 'probleme capteur 2', 'Bonjour Victor,\r\n\r\nEssayez de débrancher la carte et de la rebrancher.\r\nLa réinitialisation du capteur est peut-être nécessaire.\r\n\r\nCordialement, le support.', 'quiescisteam@gmail.com', 4, '', 0, 1, 1),
-(7, 5, 'problème moteur', 'Bonjour j\'ai un problème de moteur\r\n\r\nCordialement,', 'victor.martin@isep.fr', 5, '', 0, 1, 1);
+(7, 5, 'problème moteur', 'Bonjour j\'ai un problème de moteur\r\n\r\nCordialement,', 'victor.martin@isep.fr', 5, '', 0, 1, 1),
+(8, 0, 'Reponse ', 'Reponse', 'victor.martin@isep.fr', 4, '', 0, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -226,8 +227,8 @@ CREATE TABLE `role` (
 INSERT INTO `role` (`idRole`, `principal`, `secondaire`, `idAppart`, `idUser`) VALUES
 (29, 1, 0, 1, 4),
 (30, 1, 0, 2, 4),
-(31, 1, 0, 3, 5),
-(32, 1, 0, 4, 5);
+(31, 1, 0, 3, 8),
+(32, 1, 0, 4, 8);
 
 -- --------------------------------------------------------
 
@@ -247,7 +248,7 @@ CREATE TABLE `systeme_chauffage` (
 --
 
 INSERT INTO `systeme_chauffage` (`idChauffage`, `tempMaxGestionnaire`, `tempMaxUtilisateur`, `droitActivation`) VALUES
-(1, 20, 17, NULL);
+(1, 20, 14, NULL);
 
 -- --------------------------------------------------------
 
@@ -384,9 +385,9 @@ CREATE TABLE `utilisateurs` (
 --
 
 INSERT INTO `utilisateurs` (`idUtilisateur`, `idSession`, `tokenCookie`, `passwordHash`, `nom`, `prenom`, `email`, `role`, `emailActive`, `emailToken`, `derniereVerificationEmail`, `emailTemporaire`, `tokenEmailTemporaire`, `photoProfil`, `idType`, `hashCookie`) VALUES
-(4, NULL, NULL, '$2y$10$v0aNflak7foc76XsQEpC0uswrApfpdj7N5xUNGc16I8xHV4mzY7eC', 'Test', 'test', 'victor.martin@isep.fr', 'user', 1, '54ac0121c2cff95dae7d09b994ddf3710ed60c74', NULL, NULL, NULL, NULL, 1, '$2y$10$8kG18koV8GSaUvXzNSiNFe0vZ9zqU9OhgX2O/GjDEZoYZh.l.Wv3m'),
-(5, NULL, NULL, '$2y$10$1oiK9yakYh5IW/fagNG7n.Kpo7.0j4Vuw6c3yo1mWxOwEKrb/D.xe', 'gab', NULL, 'gabriel.mougard@gmail.com', 'user', 1, '54ac0121c2cff95dae7d09b994ddf3710ed60c74', NULL, NULL, NULL, NULL, 1, NULL),
-(8, NULL, NULL, '$2y$10$.C36DEEO5gyjb2sn5UX61.3gKDD3SBrRYjHaiiK30KWWyUO/x1Zua', 'Victor', NULL, 'leon.truc@gmail.com', 'admin', 1, NULL, NULL, NULL, NULL, NULL, 0, '$2y$10$bUiAfGE865tjhozjD285iuCAYmcgn0fO4LTmurAgPKcEfTZVwa8U.');
+(4, NULL, NULL, '$2y$10$v0aNflak7foc76XsQEpC0uswrApfpdj7N5xUNGc16I8xHV4mzY7eC', 'Test', 'test', 'victor.martin@isep.fr', 'user', 1, '54ac0121c2cff95dae7d09b994ddf3710ed60c74', NULL, NULL, NULL, NULL, 1, '$2y$10$WC.kMOsOJJ04iQtsnOBzOOn5cVE.Fi4XjIXCtna5trqe7pdi9B4sa'),
+(8, NULL, NULL, '$2y$10$.C36DEEO5gyjb2sn5UX61.3gKDD3SBrRYjHaiiK30KWWyUO/x1Zua', 'Victor', NULL, 'leon.truc@gmail.com', 'admin', 1, NULL, NULL, NULL, NULL, NULL, 0, ''),
+(9, NULL, NULL, '$2y$10$.C36DEEO5gyjb2sn5UX61.3gKDD3SBrRYjHaiiK30KWWyUO/x1Zua', 'Gestionnaire', NULL, 'gestionnaire@gmail.com', 'gestionnaire', 1, NULL, NULL, NULL, NULL, NULL, 2, '');
 
 --
 -- Index pour les tables déchargées
@@ -496,7 +497,7 @@ ALTER TABLE `utilisateurs`
 -- AUTO_INCREMENT pour la table `appartement`
 --
 ALTER TABLE `appartement`
-  MODIFY `idAppartement` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2053000754;
+  MODIFY `idAppartement` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2053000755;
 
 --
 -- AUTO_INCREMENT pour la table `catalogue`
@@ -508,7 +509,7 @@ ALTER TABLE `catalogue`
 -- AUTO_INCREMENT pour la table `cemac`
 --
 ALTER TABLE `cemac`
-  MODIFY `idCemac` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idCemac` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `composant`
@@ -526,7 +527,7 @@ ALTER TABLE `controlechauffage`
 -- AUTO_INCREMENT pour la table `messagerie`
 --
 ALTER TABLE `messagerie`
-  MODIFY `idMessage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idMessage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `parametre_du_site`
@@ -538,13 +539,13 @@ ALTER TABLE `parametre_du_site`
 -- AUTO_INCREMENT pour la table `piece`
 --
 ALTER TABLE `piece`
-  MODIFY `idPiece` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idPiece` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `role`
 --
 ALTER TABLE `role`
-  MODIFY `idRole` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `idRole` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT pour la table `systeme_chauffage`
@@ -580,7 +581,7 @@ ALTER TABLE `type_utilisateur`
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

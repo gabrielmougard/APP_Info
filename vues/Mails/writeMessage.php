@@ -19,7 +19,7 @@
 <body>
 <?php
 
-var_dump($_SESSION["id"])
+var_dump($new);
 
 ?>
 
@@ -34,7 +34,11 @@ var_dump($_SESSION["id"])
             <button name="submit" type="submit" id="contact-submit" data-submit="...Envoie">Envoyer</button>
         </fieldset>
         <input type="hidden" name="new" value=<?php echo $new?> />
-        <input type="hidden" name="idTicket" value=<?php $_GET["idTicket"]?> />
+        <?php
+        if(isset($_GET["idTicket"])) {
+            echo '<input type="hidden" name="idTicket" value='.$_GET["idTicket"].'/>';
+        }
+        ?>
     </form>
 
 
