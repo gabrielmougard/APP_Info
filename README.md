@@ -1,12 +1,10 @@
-﻿# APP_Info
+# APP_Info
 
-## TODO /!\
-* lien pour faire la fonctionnalité de mdpOublié : https://www.codexworld.com/login-system-forgot-password-recovery-email-php-mysql/
-* Tester l'inscription et le login.
-* Install Captcha dependencies (Gregwar\Captcha) for registration !
-* Ajouter la classe Config.php dans `util/`
+## TODO (INTEGRATION)
+* modifier le controller `dashboard/statistiques` pour qu'il ne renvoie que la $
+* En ce qui concerne les requêtes passerelles : il faut récupérer uniquement le$
+* Les appels CURL se feront toute les 0.5s pour éviter de polluer la BDD (les v$
+* Voir comment la fonction CURL peut s'exécuter en parallèle de toute le reste $
 
-
-Link: https://quiescis.000webhostapp.com
 
 
