@@ -16,6 +16,7 @@ include ('modeles/requetes.utilisateurs.php');
 include('modeles/requetes.chauffage.php');
 include('modeles/requetes.header.php');
 include('modeles/requetes.gestionStock.php');
+include('modeles/requetes.logs.php');
 
 
 if (!isset($_GET['fonction']) || empty($_GET['fonction'])) {
@@ -59,6 +60,11 @@ switch (getTypeUser($bdd,$_SESSION['id'])){
 }
 
 switch ($function) {
+    case 'testLogs':
+        $data=recupLogsBrut();
+        $data_tab=decoupeLogsBrut($data);
+
+        break;
     case 'appartementPiece':
             $switch = true;
 
