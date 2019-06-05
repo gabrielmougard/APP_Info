@@ -46,13 +46,67 @@ function supprTrameDoublons($bdd,$data){
 
 }
 
-function creerTrameEnvoi($bdd,$data_tab){
-    $statement = $bdd->prepare('INSERT INTO `trameenvoi` (`idEnvoi`, `val`, `tim`, `req`, `num`, `chk`, `idComposant`) 
-                                VALUES (NULL, NULL, CURRENT_TIMESTAMP, NULL, NULL, NULL, NULL)');
+function creerTrameEnvoi($bdd,$val,$tim,$num,$idComposant){
+    $statement = $bdd->prepare('INSERT INTO `trameenvoi` (val, tim, num, idComposant) 
+                                VALUES (:val, :tim, :num, :idComposant)');
+    $statement->bindValue(':val', $val);
+    $statement->bindValue(':tim', $tim);
+    $statement->bindValue(':num', $num);
+    $statement->bindValue(':iComposant', $idComposant);
     $statement->execute();
+    $statement->commit();
 }
 
 
+function insertTrame($bdd,$trame){
+    $arraytrame=array();
+    $arraytrame=decodageTrame($trame);
+
+    try{
+        $isUnique=true;
+        $tim = '' . $arraytrame[8] . '-' . $arraytrame[9] . '-' . $arraytrame[10] . ' ' . $arraytrame[11] . ':' . $arraytrame[12] . ':' . $arraytrame[13] . '';
+        $sth = $bdd->prepare("SELECT idCemac FROM cemac WHERE numeroSerie=:cemac");
+        $sth->bindValue(':cemac', $arraytrame[1]);
+        $sth->execute();
+        $result = $sth->fetchAll();
+
+        $cemac = isset($result[0]["idCemac"]) ? $result[0]["idCemac"] : null;
+
+
+        $sth = $bdd->prepare('SELECT DISTINCT idComposant FROM composant 
+INNER JOIN typecapteur ON composant.idTypeCapteur=typecapteur.idTypeCapteur 
+WHERE typecapteur.valeur=:typeCapteur AND composant.idCemac=:cemac AND composant.numComposant=:numComposant');
+        $sth->bindValue(':cemac', $cemac);
+        $sth->bindValue(':typeCapteur', $arraytrame[3]);
+        $sth->bindValue(':numComposant', $arraytrame[4]);
+        $sth->execute();
+        $result = $sth->fetchAll();
+
+        $idComposant = isset($result[0]["idComposant"]) ? $result[0]["idComposant"] : null;
+
+        $sth = $bdd->prepare("SELECT * FROM trameenvoi WHERE tim=:tim");
+        $sth->bindValue(':tim', $tim);
+        $sth->execute();
+        $result = $sth->fetchAll();
+
+        $trameBdd=isset($result[0]) ? $result[0] : null;
+        if($trameBdd==null OR empty($trameBdd)){
+            $isUnique=false;
+        }
+
+        if($isUnique) {
+
+            creerTrameEnvoi($bdd, $arraytrame[5], $tim, $arraytrame[4], $idComposant);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }catch (Exception $e) {
+        return false;
+    }
+
+}
 
 
 
