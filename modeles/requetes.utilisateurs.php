@@ -746,6 +746,7 @@ function resetEmailVerificationToken($bdd,$email, $isValid){
  *
  */
 function logOut($emailUser){
+    session_destroy();
     setcookie("email", "", time());
     setcookie("password","",time());
     header("Location: http://localhost/APP_Info-master/index.php?cible=authentification&fonction=accueil");
