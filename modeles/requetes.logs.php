@@ -58,9 +58,15 @@ function getTramesBatch()
             } else {
 
                 if (count($res2) > $max) {
-                    return $res2;
+                    $r = array();
+                    array_push($r,$res2);
+                    array_push($r,$length);
+                    return $r;
                 } else {
-                    return $res1;
+                    $r = array();
+                    array_push($r,$res1);
+                    array_push($r,$length);
+                    return $r;
                 }
             }
         }
