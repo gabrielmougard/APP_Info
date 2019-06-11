@@ -12,7 +12,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~8192);
 
 ?>
 
-
+<?php include "vues/templates/header.php" ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -139,3 +139,4 @@ $(window).load(function(){
 
 </div>
 </body>
+<?php include "vues/templates/Footer.php" ?>

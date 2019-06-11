@@ -112,6 +112,15 @@
         </div>
     </div>
 
+    <div class="bloc1">
+        <?php
+
+        foreach($composants as $key=>$value) {
+            echo "<a href='http://localhost/APP_Info-master/index.php?cible=rafraichir'><i class='fas fa-redo-alt'></i></a>";
+        }?>
+
+    </div>
+
 </div>
 
 </body>

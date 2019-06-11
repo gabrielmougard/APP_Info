@@ -13,9 +13,9 @@
 <footer>
 
     <img src="public/images/logoWhite.png" alt="logoQuiescisBlanc" /><br />
-    <a href="mentionsLegales.html">Mentions Légales</a><br />
-    <a href="CGU.html">Conditions Générales d'Utilisation</a><br />
-    <a href="contactsDomisep.html">Contacts Domisep</a><br />
+    <a href="index.php?cible=dashboard&fonction=mentionsLegales">Mentions Légales</a><br />
+    <a href="index.php?cible=authentification&fonction=politiqueEntreprise">Conditions Générales d'Utilisation</a><br />
+    <a href="index.php?cible=dashboard&fonction=contact">Contacts Domisep</a><br />
 </footer>
 
 

@@ -335,9 +335,9 @@ switch ($function) {
             $nomCatalogue = recupNomCatalogue($bdd);
             $catalogue = recupCatalogue($bdd);
             $composantsExistant = recupComposantExistant($bdd);
-            $switch = true;
-            $vue = 'GestionStock/GestionStock.php';
-        }
+
+        }   $switch = true;
+        $vue = 'GestionStock/GestionStock.php';
         break;
 
 }
