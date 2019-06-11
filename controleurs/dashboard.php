@@ -101,13 +101,15 @@ switch ($function) {
         }
         if(isset($_GET['idPiece'])){
             $cemac = recupIdCemacs($bdd, $_GET['idPiece']);
+
             if ($cemac!=[]){
                 $composants = recupIdComposants($bdd, $cemac[0]['idCemac']);
                 $infosType = [];
                 $valeurs = [];
                 for ($i = 0; $i < count($composants); $i++) { //Pour chaque composants on va chercher chercher
                     $valeurs[] = recupValHexaCapteur($bdd, $composants[$i]['idComposant']); //Sa valeur en héxa
-                    $infosType[] = recupInfoComplementaire($bdd, $composants[$i][0]); // Ainsi que des information sur le composant(unité/grandeur physique)
+
+                    $infosType[]= recupInfoComplementaire($bdd, $composants[$i][0]); // Ainsi que des information sur le composant(unité/grandeur physique)
                 }
                 if($valeurs!=[]){
                     $valeurs = parcourirValeurs($valeurs, $infosType);

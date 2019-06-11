@@ -82,10 +82,8 @@ function recupIdAppartuser(PDO $bdd, $idUser)
  * @return array
  */
 function recupIdCemacs(PDO $bdd, $idPiece){ // Retourne Toute les ids cemacs d'un appartement
-    $statement = $bdd->prepare('
-    SELECT idCemac FROM cemac
-    INNER JOIN piece ON piece.idPiece=cemac.idPiece
-    WHERE piece.idPiece='.$idPiece);
+    $statement = $bdd->prepare('SELECT DISTINCT idCemac FROM cemac WHERE idPiece=:idPiece');
+    $statement->bindValue(':idPiece',$idPiece);
     $statement->execute();
     return $statement->fetchAll();
 }
@@ -97,10 +95,8 @@ function recupIdCemacs(PDO $bdd, $idPiece){ // Retourne Toute les ids cemacs d'u
  * @return array
  */
 function recupIdComposants(PDO $bdd, $idCemac){ // Retourne Toute les composants d'une Cemac
-    $statement = $bdd->prepare('
-    SELECT idComposant , numComposant FROM composant
-    INNER JOIN cemac ON composant.idCemac=cemac.idCemac
-    WHERE composant.idCemac='. $idCemac);
+    $statement = $bdd->prepare('SELECT DISTINCT idComposant FROM composant WHERE idCemac=:idCemac');
+    $statement->bindValue(':idCemac',$idCemac);
     $statement->execute();
     return $statement->fetchAll();
 }
@@ -170,7 +166,7 @@ function convertir($valeur,$type){
 @type=un array de types de capteur
 */
 /**
- * récupère les valeursde tous les capteurs d'une pièce et les convertit en valeurs décimales cohérentes.
+ * récupère les valeurs de tous les capteurs d'une pièce et les convertit en valeurs décimales cohérentes.
  * @param $valeur
  * @param $type
  * @return mixed
