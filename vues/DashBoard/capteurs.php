@@ -102,6 +102,7 @@ include "vues/templates/Footer.php";
     </script>
 </body>
 
+<?php include "vues/templates/Footer.php" ?>
 <script>
     /* Fonction AJAX qui envoye au controlleur uplink les commandes du moteur
      * @param int idComposant

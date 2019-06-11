@@ -5,12 +5,13 @@
  * Date: 03/06/2019
  * Time: 11:20
  */
-
+include ('connexion.php');
 
 function getTramesBatch()
 {
 
     $raw = recupLogsBrut();
+
     $intermediaire = decoupeLogsBrut($raw);
     $res = array();
 
@@ -74,6 +75,22 @@ function getTramesBatch()
     }
 }
 
+
+function getTramesFromRepere(){
+    $raw = recupLogsBrut();
+    $nouveauRepere=sizeof($raw);
+    $ancienRepere=recupRepere($bdd);
+    $rawRecent=substr($raw,$ancienRepere);
+    $intermediaire= decoupeLogsBrut();
+    $res = array();
+    foreach ($intermediaire as $value) {
+        array_push($res, decodageTrame($value));
+    }
+    foreach($res as $trame){
+        insertTrame($bdd,$trame);
+    }
+
+}
 
 function recupLogsBrut(){
     $data=file_get_contents("http://projets-tomcat.isep.fr:8080/appService/?ACTION=GETLOG&TEAM=007D");
@@ -180,6 +197,13 @@ WHERE typecapteur.valeur=:typeCapteur AND composant.idCemac=:cemac AND composant
     }
 }
 
+function recupRepere($bdd){
+    $sth = $bdd->prepare("SELECT repere FROM cemac WHERE numPiece=:num");
+    $sth->bindValue(':num', $_GET['pieceSelect']);
+    $sth->execute();
+    $result = $sth->fetchAll();
+    return $result;
+}
 
 
 
