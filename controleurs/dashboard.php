@@ -70,19 +70,25 @@ switch ($function) {
         break;
     case 'capteurs':
         $switch=true;
+        $composants=[];
+        $infosType=[];
+        $valeurs=[];
         // On a l'id de la piece en variable
         if (isset ($_GET['sppridComposant'])) {
             supprComposant($bdd, $_GET['sppridComposant']);
         }
         if(isset($_GET['idPiece'])){
             $cemac = recupIdCemacs($bdd, $_GET['idPiece']);
+
             if ($cemac!=[]){
                 $composants = recupIdComposants($bdd, $cemac[0]['idCemac']);
                 $infosType = [];
                 $valeurs = [];
                 for ($i = 0; $i < count($composants); $i++) { //Pour chaque composants on va chercher chercher
                     $valeurs[] = recupValHexaCapteur($bdd, $composants[$i]['idComposant']); //Sa valeur en héxa
-                    $infosType[] = recupInfoComplementaire($bdd, $composants[$i][0]); // Ainsi que des information sur le composant(unité/grandeur physique)
+
+                    $infosType[]= recupInfoComplementaire($bdd, $composants[$i][0]); // Ainsi que des information sur le composant(unité/grandeur physique)
+
                 }
                 if($valeurs!=[]){
                     $valeurs = parcourirValeurs($valeurs, $infosType);
@@ -104,6 +110,7 @@ switch ($function) {
         $numComposant = $_GET['numComposant'];
         $vue = false; // Ne regénère plus de vue
         envoieTrameDansBDD($bdd, $newValue, $numComposant, $capteurId);
+        uplink($newValue);
         break;
     case 'ajouterComposant':
         break;
@@ -271,9 +278,9 @@ switch ($function) {
             $nomCatalogue = recupNomCatalogue($bdd);
             $catalogue = recupCatalogue($bdd);
             $composantsExistant = recupComposantExistant($bdd);
-            $switch = true;
-            $vue = 'GestionStock/GestionStock.php';
-        }
+
+        }   $switch = true;
+        $vue = 'GestionStock/GestionStock.php';
         break;
 
     case 'livechart':

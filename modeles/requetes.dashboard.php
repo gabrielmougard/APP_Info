@@ -82,10 +82,8 @@ function recupIdAppartuser(PDO $bdd, $idUser)
  * @return array
  */
 function recupIdCemacs(PDO $bdd, $idPiece){ // Retourne Toute les ids cemacs d'un appartement
-    $statement = $bdd->prepare('
-    SELECT idCemac FROM cemac
-    INNER JOIN piece ON piece.idPiece=cemac.idPiece
-    WHERE piece.idPiece='.$idPiece);
+    $statement = $bdd->prepare('SELECT DISTINCT idCemac FROM cemac WHERE idPiece=:idPiece');
+    $statement->bindValue(':idPiece',$idPiece);
     $statement->execute();
     return $statement->fetchAll();
 }
@@ -97,10 +95,8 @@ function recupIdCemacs(PDO $bdd, $idPiece){ // Retourne Toute les ids cemacs d'u
  * @return array
  */
 function recupIdComposants(PDO $bdd, $idCemac){ // Retourne Toute les composants d'une Cemac
-    $statement = $bdd->prepare('
-    SELECT idComposant , numComposant FROM composant
-    INNER JOIN cemac ON composant.idCemac=cemac.idCemac
-    WHERE composant.idCemac='. $idCemac);
+    $statement = $bdd->prepare('SELECT DISTINCT idComposant FROM composant WHERE idCemac=:idCemac');
+    $statement->bindValue(':idCemac',$idCemac);
     $statement->execute();
     return $statement->fetchAll();
 }
@@ -170,7 +166,7 @@ function convertir($valeur,$type){
 @type=un array de types de capteur
 */
 /**
- * récupère les valeursde tous les capteurs d'une pièce et les convertit en valeurs décimales cohérentes.
+ * récupère les valeurs de tous les capteurs d'une pièce et les convertit en valeurs décimales cohérentes.
  * @param $valeur
  * @param $type
  * @return mixed
@@ -201,6 +197,41 @@ function envoieTrameDansBDD(PDO $bdd, $ans,$num,$idComposant){
     $statement = $bdd->prepare('INSERT INTO `trameretour` (`idRetour`, `ans`, `req`, `num`, `chk`, `idComposant`) 
     VALUES (NULL,'.$ans.', NULL, '.$num.', NULL,'.$idComposant.')');
     $statement->execute();
+}
+/**
+ * Envoie la command au moteur
+ * @param int $instruction
+ * @return none
+ */
+function uplink($instruction){
+    //TRA =1 (Hex: 1=0x31)
+    //OBJ = 007D Numéro équipe (Hex: 0=0x30, 7=0x37, 0x44)
+    //REQ = 2 en ecriture pour le moteur (Hex: 2=0x32)
+    //TYPE = a code ASCII pour le moteur (Hex: a=0x61)
+    //NUM = 01 (Hex: 0=0x30,1=0x31)
+    //VAL = 0000 POUR SHUTDOWN / 0001 POUR LE SENS HORAIRE / 0002 POUR SENS ANTI HORAIRE (Hex: 0=0x30,1=0x31,0=0x32)
+    //TIM = BABA de base on l'a choisis 0x42=B 0x41=A
+    //CHK= Addition de Tout les code en Hex passé en ASCII: 3C6 pour SHUTDOWN / 3C7 SENS HORAIRE / 3C8 SENS ANTI HORAIRE
+    $command='0000';
+    switch ($instruction){
+        case 30:
+            $command='0000';
+            break;
+        case 32:
+            $command='0002';
+            break;
+        case 31:
+            $command='0001';
+            break;
+    }
+
+    $trame='1007D2a01'.$command.'53';
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL,"http://projets-tomcat.isep.fr:8080/appService?ACTION=COMMAND&TEAM=007D&TRAME".$trame);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_exec($ch);
+    curl_close($ch);
 }
 
 function supprComposant(PDO $bdd, $idComposant){ //Supprime un composant

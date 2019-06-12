@@ -5,12 +5,13 @@
  * Date: 03/06/2019
  * Time: 11:20
  */
-
+include ('connexion.php');
 
 function getTramesBatchv2() {
     $raw = recupLogsBrutShort();
 
-    $intermediaire = decoupeLogsBrut($raw);
+
+    $intermediaire = decoupeLogsBrutShort($raw);
     //var_dump($intermediaire);
     $res = array();
 
@@ -26,7 +27,8 @@ function getTramesBatchv2() {
 
 
 
-function recupLogsBrutShort(){
+function recupLogsBrutShort()
+{
 
     $ch = curl_init();
 
@@ -55,12 +57,48 @@ function recupLogsBrutShort(){
     }
 
     return $reduced;
+}
 
+function getTramesFromRepere($bdd,$pieceSelect){
+    $raw = recupLogsBrut();
+    $nouveauRepere=strlen($raw);
+
+    $ancienRepere=recupRepere($bdd,$pieceSelect);
+    echo("raw=");
+    //var_dump($raw);
+    echo("ancienRepere=");
+    var_dump($ancienRepere);
+    $rawRecent=substr($raw,$ancienRepere);
+    echo ("rawRecent=");
+    var_dump($rawRecent);
+    $intermediaire= decoupeLogsBrut($rawRecent);
+    $res = array();
+    foreach ($intermediaire as $value) {
+        array_push($res, decodageTrame($value));
+    }
+    foreach($res as $trame){
+        insertTrame($bdd,$trame);
+    }
+
+    echo("pieceSelect=");
+    var_dump($pieceSelect);
+    echo("nouveau repere=");
+    var_dump($nouveauRepere);
+    insererRepereDansBDD($bdd,$pieceSelect,$nouveauRepere);
+
+}
+
+function recupLogsBrut()
+{
+    $data = file_get_contents("http://projets-tomcat.isep.fr:8080/appService/?ACTION=GETLOG&TEAM=007D");
+    //echo "Donnée brute:<br />";
+    echo("$data");
+    return $data;
 }
 
 
 
-function decoupeLogsBrut($data){
+function decoupeLogsBrutShort($data){
 
     //usually decoupeLogsBrut is always 1000 in length
     //$data_tab = str_split($data,33);
@@ -75,14 +113,23 @@ function decoupeLogsBrut($data){
     //var_dump(decodageTrame($data_tab[1]) );
     //return $data_tab;
 }
+
+function decodageTrame($trame){
+    return list($typeTrame, $numObjetCemac, $typeRequete, $typeCapteur, $numCapteur, $valeur, $numTrame, $checksum, $year, $month, $day, $hour, $min, $sec) =
+        sscanf($trame,"%1s%4s%1s%1s%2s%4s%4s%2s%4s%2s%2s%2s%2s%2s");
+}
+
 function decodageTrameLiveChart($trame){
     return list($numObjetCemac, $typeRequete, $typeCapteur, $numCapteur, $valeur, $numTrame, $checksum, $year, $month, $day, $hour, $min, $sec) =
         sscanf($trame,"%4s%1s%1s%2s%4s%4s%2s%4s%2s%2s%2s%2s%2s");
 }
+
 function traiterTrame($trameDecode){
 }
+
 function supprTrameDoublons($bdd,$data){
 }
+
 function creerTrameEnvoi($bdd,$val,$tim,$num,$idComposant){
     $statement = $bdd->prepare('INSERT INTO `trameenvoi` (val, tim, num, idComposant) 
                                 VALUES (:val, :tim, :num, :idComposant)');
@@ -134,4 +181,21 @@ WHERE typecapteur.valeur=:typeCapteur AND composant.idCemac=:cemac AND composant
             return false;
         }
     }
+}
+
+
+
+function recupRepere($bdd){
+    $sth = $bdd->prepare("SELECT repere FROM cemac WHERE numPiece=:num");
+    $sth->bindValue(':num', $_GET['pieceSelect']);
+    $sth->execute();
+    $result = $sth->fetchAll();
+    return $result;
+}
+
+function insererRepereDansBDD($bdd,$pieceSelect,$nouveauRepere){
+    $sth = $bdd->prepare("UPDATE cemac SET repere= :nouveauRepere WHERE idPiece= :num");
+    $sth->bindValue(':num',$pieceSelect);
+    $sth->bindValue(':repere',$nouveauRepere);
+    $sth->execute();
 }

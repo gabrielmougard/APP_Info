@@ -21,6 +21,7 @@
         <img src="public/images/CapteurDefaut.jpg" class="maison"> <!--A inclure dans le switch pour avoir une image correspondante-->
 
         <?php
+        var_dump($valeurs);
         switch ($valeurs[$i][0][0]){
             case NULL: //Cas de l'actionneur?>
                 <!--<nav class="liste_valeurs">-->
@@ -32,7 +33,6 @@
                 <!--</nav>-->
                 </label>
                 </div>
-
             <?php
             break;
             default: //Cas du capteur
@@ -60,18 +60,24 @@ include "vues/templates/Footer.php";
     include("ajouterComposantPopUp.php");
      ?>
     <script> //Javascript
+
         <?php
         for ($i = 0; $i < count($composants); $i++) { //Parcourt de la liste de composants
-            if ($valeurs[$i][0][0] !== NULL) { // Si Null on sait que c'est un actionneur et non capteur
-                continue;
-            }
-            ?>
-            var capteurId = <?php echo $composants[$i]['idComposant'];?>;
-            var numComposant = <?php echo $composants[$i]['numComposant'];?>;
+            //if ($valeurs[$i][0][0] !== NULL) { //Si Null on sait que c'est un actionneur et non capteur
+                //continue;
+            //}
+             ?>
+            var capteurId = <?php echo $composants[$i]['idComposant']?>;
+            var numComposant = <?php echo $composants[$i]['numComposant']?>;
+
 
             var a = document.getElementById("flechehaut"+<?php echo $i ?>);
             var b = document.getElementById("pause"+<?php echo $i ?>);
             var c = document.getElementById("flechebas"+<?php echo $i ?>);
+
+
+            console.log(a);
+
 
             var newValeurHaut = 32;
             var newValeurPause = 30;
@@ -101,7 +107,5 @@ include "vues/templates/Footer.php";
 
     </script>
 </body>
-
-
 
 </html>

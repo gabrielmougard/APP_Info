@@ -6,7 +6,7 @@
  * Time: 08:40
  */
 ?>
-
+<?php include "vues/templates/header.php" ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -44,3 +44,4 @@ var_dump($new);
 
 </div>
 </body>
+<?php include "vues/templates/Footer.php" ?>

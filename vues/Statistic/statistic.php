@@ -274,6 +274,17 @@
 
         </div>
     </div>
+
+    <div class="bloc1">
+        <?php
+
+        if($composants) {
+            echo "<a href='http://localhost/APP_Info-master/index.php?cible=rafraichir'><i class='fas fa-redo-alt'></i></a>";
+        }?>
+
+    </div>
+
+
 </div>
 
 <div id="container1" style="width: 1110px; height: 400px; margin: 0 auto;"></div>
