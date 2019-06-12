@@ -70,6 +70,11 @@ WHERE idComposant=:idComposant');
         array_push($result,$array);
     }
 
+
+    //$res = array();
+    //array_push($res, $composant);
+    //array_push($res, $result);
+
     return $result;
 }
 
@@ -81,10 +86,12 @@ WHERE idComposant=:idComposant');
  */
 function recupTrameFromComposant(PDO $bdd, $idComposant){
 
-    $sth = $bdd->prepare('SELECT DISTINCT val,tim FROM trameenvoi 
-INNER JOIN composant ON trameenvoi.idComposant=:idComposant 
+    //var_dump($idComposant);
+
+    $sth = $bdd->prepare('SELECT DISTINCT val,tim FROM trameenvoi WHERE trameenvoi.idComposant= :idComposant 
 ORDER BY tim LIMIT 10');
     $sth->bindValue(':idComposant',$idComposant);
     $sth->execute();
     return $sth->fetchAll();
 }
+
