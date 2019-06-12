@@ -95,6 +95,9 @@ switch ($function) {
 
     case 'capteurs':
         $switch=true;
+        $composants=[];
+        $infosType=[];
+        $valeurs=[];
         // On a l'id de la piece en variable
         if (isset ($_GET['sppridComposant'])) {
             supprComposant($bdd, $_GET['sppridComposant']);
@@ -110,6 +113,7 @@ switch ($function) {
                     $valeurs[] = recupValHexaCapteur($bdd, $composants[$i]['idComposant']); //Sa valeur en héxa
 
                     $infosType[]= recupInfoComplementaire($bdd, $composants[$i][0]); // Ainsi que des information sur le composant(unité/grandeur physique)
+
                 }
                 if($valeurs!=[]){
                     $valeurs = parcourirValeurs($valeurs, $infosType);
@@ -135,6 +139,7 @@ switch ($function) {
         $numComposant = $_GET['numComposant'];
         $vue = false; // Ne regénère plus de vue
         envoieTrameDansBDD($bdd, $newValue, $numComposant, $capteurId);
+        uplink($newValue);
         break;
 
     case 'ajouterComposant':
