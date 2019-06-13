@@ -64,19 +64,14 @@ function getTramesFromRepere($bdd,$pieceSelect){
     $nouveauRepere=strlen($raw);
 
     $ancienRepere=recupRepere($bdd,$pieceSelect);
-    echo("raw=");
-    //var_dump($raw);
-    echo("ancienRepere=");
-    var_dump($ancienRepere);
     $rawRecent=substr($raw,$ancienRepere);
-    echo ("rawRecent=");
-    var_dump($rawRecent);
     $intermediaire= decoupeLogsBrut($rawRecent);
     $res = array();
     foreach ($intermediaire as $value) {
         array_push($res, decodageTrame($value));
     }
     foreach($res as $trame){
+        echo ("trame="+$trame);
         insertTrame($bdd,$trame);
     }
 
@@ -86,32 +81,44 @@ function getTramesFromRepere($bdd,$pieceSelect){
     var_dump($nouveauRepere);
     insererRepereDansBDD($bdd,$pieceSelect,$nouveauRepere);
 
+    echo("pieceSelect=");
+    var_dump($_GET['pieceSelect']);
+    echo("nouveau repere=");
+    var_dump(strval($nouveauRepere));
+    insererRepereDansBDD($bdd,$pieceSelect,$nouveauRepere);
+   // insererRepereDansBDD($bdd,$_GET['pieceSelect'],strval($nouveauRepere));
 }
 
-function recupLogsBrut()
-{
-    $data = file_get_contents("http://projets-tomcat.isep.fr:8080/appService/?ACTION=GETLOG&TEAM=007D");
-    //echo "Donnée brute:<br />";
+function recupLogsBrut(){
+    $data=file_get_contents("http://projets-tomcat.isep.fr:8080/appService/?ACTION=GETLOG&TEAM=007D");
+    echo "Donnée brute:<br />";
     echo("$data");
     return $data;
 }
 
 
 
-function decoupeLogsBrutShort($data){
+    function decoupeLogsBrutShort($data){
 
-    //usually decoupeLogsBrut is always 1000 in length
-    //$data_tab = str_split($data,33);
+        //usually decoupeLogsBrut is always 1000 in length
+        //$data_tab = str_split($data,33);
 
-    //var_dump($data);
-    $rev = strrev($data);
+        //var_dump($data);
+        $rev = strrev($data);
 
 
-    //var_dump(str_split($rev,33));
-    return str_split($rev,33);
-    //echo "Tabular Data:<br />";
-    //var_dump(decodageTrame($data_tab[1]) );
-    //return $data_tab;
+        //var_dump(str_split($rev,33));
+        return str_split($rev,33);
+        //echo "Tabular Data:<br />";
+        //var_dump(decodageTrame($data_tab[1]) );
+        //return $data_tab;
+    }
+
+function decoupeLogsBrut($data){
+    $data_tab = str_split($data,33);
+    echo "Tabular Data:<br />";
+        var_dump(decodageTrame($data_tab[1]) );
+    return $data_tab;
 }
 
 function decodageTrame($trame){
@@ -133,6 +140,14 @@ function supprTrameDoublons($bdd,$data){
 function creerTrameEnvoi($bdd,$val,$tim,$num,$idComposant){
     $statement = $bdd->prepare('INSERT INTO `trameenvoi` (val, tim, num, idComposant) 
                                 VALUES (:val, :tim, :num, :idComposant)');
+    echo("val=");
+    var_dump($val);
+    echo("time=");
+    var_dump($tim);
+    echo ("number=");
+    var_dump($num);
+    echo ("idcomposant=");
+    var_dump($idComposant);
     $statement->bindValue(':val', $val);
     $statement->bindValue(':tim', $tim);
     $statement->bindValue(':num', $num);
@@ -141,7 +156,13 @@ function creerTrameEnvoi($bdd,$val,$tim,$num,$idComposant){
     $statement->commit();
 }
 function insertTrame($bdd,$trame){
+
+
+echo ("phase 1");
+var_dump(sizeof($trame));
     for($i=0;$i<sizeof($trame);$i++) {
+        echo ("phase 2");
+
         $arraytrame = array();
         $arraytrame = decodageTrame($trame[$i]);
         try {
@@ -151,7 +172,16 @@ function insertTrame($bdd,$trame){
             $sth->bindValue(':cemac', $arraytrame[1]);
             $sth->execute();
             $result = $sth->fetchAll();
+
+            //vérifier qu'on a un résultat.
+            //if(isset($result[0]["idCemac"]){
+            // $result[0]["idCemac"]
+        //}
+            //else
+            // null;
             $cemac = isset($result[0]["idCemac"]) ? $result[0]["idCemac"] : null;
+
+//trouver l'id du composant correspondant aux informations de la trame.
             $sth = $bdd->prepare('SELECT DISTINCT idComposant FROM composant 
 INNER JOIN typecapteur ON composant.idTypeCapteur=typecapteur.idTypeCapteur 
 WHERE typecapteur.valeur=:typeCapteur AND composant.idCemac=:cemac AND composant.numComposant=:numComposant');
@@ -161,14 +191,18 @@ WHERE typecapteur.valeur=:typeCapteur AND composant.idCemac=:cemac AND composant
             $sth->execute();
             $result = $sth->fetchAll();
             $idComposant = isset($result[0]["idComposant"]) ? $result[0]["idComposant"] : null;
+
+            //trouver la trame dans la base de donnée dont le champs time correspond à celui dans la trame mis au format de la bdd(SI elle existe)
             $sth = $bdd->prepare("SELECT * FROM trameenvoi WHERE tim=:tim");
             $sth->bindValue(':tim', $tim);
             $sth->execute();
             $result = $sth->fetchAll();
             $trameBdd = isset($result[0]) ? $result[0] : null;
+            //si elle existe alors c'est un doublon.
             if ($trameBdd == null OR empty($trameBdd)) {
                 $isUnique = false;
             }
+            //sinon on crée la trame
             if ($isUnique) {
                 creerTrameEnvoi($bdd, $arraytrame[5], $tim, $arraytrame[4], $idComposant);
                 if($i==sizeof($trame)-1){
@@ -183,19 +217,20 @@ WHERE typecapteur.valeur=:typeCapteur AND composant.idCemac=:cemac AND composant
     }
 }
 
-
-
-function recupRepere($bdd){
-    $sth = $bdd->prepare("SELECT repere FROM cemac WHERE numPiece=:num");
-    $sth->bindValue(':num', $_GET['pieceSelect']);
+function recupRepere($bdd,$pieceSelect){
+    $sth = $bdd->prepare("SELECT repere FROM cemac WHERE idPiece=:num");
+    $sth->bindValue(':num',$pieceSelect);
     $sth->execute();
     $result = $sth->fetchAll();
-    return $result;
+    return intval($result[0][0]);
 }
 
 function insererRepereDansBDD($bdd,$pieceSelect,$nouveauRepere){
     $sth = $bdd->prepare("UPDATE cemac SET repere= :nouveauRepere WHERE idPiece= :num");
     $sth->bindValue(':num',$pieceSelect);
-    $sth->bindValue(':repere',$nouveauRepere);
+    $sth->bindValue(':nouveauRepere',$nouveauRepere);
     $sth->execute();
 }
+
+
+
