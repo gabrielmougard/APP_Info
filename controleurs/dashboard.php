@@ -70,9 +70,9 @@ switch ($function) {
         break;
     case 'capteurs':
         $switch=true;
-        $composants=[];
-        $infosType=[];
-        $valeurs=[];
+        //$composants=[];
+        //$infosType=[];
+        //$valeurs=[];
         // On a l'id de la piece en variable
         if (isset ($_GET['sppridComposant'])) {
             supprComposant($bdd, $_GET['sppridComposant']);
@@ -91,7 +91,7 @@ switch ($function) {
 
                 }
                 if($valeurs!=[]){
-                    $valeurs = parcourirValeurs($valeurs, $infosType);
+                    $valeurs[] = parcourirValeurs($valeurs, $infosType);
                 }
             }
             else{
@@ -105,12 +105,12 @@ switch ($function) {
         break;
     case 'update_database':
         $switch = true;
-        $capteurId = $_GET['capteurId'];
-        $newValue = $_GET['newValue'];
-        $numComposant = $_GET['numComposant'];
+        //$capteurId = $_GET['capteurId'];
+        //$newValue = $_GET['newValue'];
+        //$numComposant = $_GET['numComposant'];
         $vue = false; // Ne regénère plus de vue
-        envoieTrameDansBDD($bdd, $newValue, $numComposant, $capteurId);
-        uplink($newValue);
+        envoieTrameDansBDD($bdd, 1, 1, 1);
+        uplink(1);
         break;
     case 'ajouterComposant':
         break;

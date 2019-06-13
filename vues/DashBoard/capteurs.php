@@ -2,6 +2,8 @@
     <meta charset="UTF-8">
     <title>Capteurs</title>
     <link rel="stylesheet" href="public/css/capteurs.css">
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.js"></script>
 </head>
 
 <?php include "vues/templates/header.php" ?>
@@ -21,21 +23,26 @@
         <img src="public/images/CapteurDefaut.jpg" class="maison"> <!--A inclure dans le switch pour avoir une image correspondante-->
 
         <?php
-        var_dump($valeurs);
-        switch ($valeurs[$i][0][0]){
-            case NULL: //Cas de l'actionneur?>
+        if (empty($valeurs[$i][0][0])){
+            ?>
                 <!--<nav class="liste_valeurs">-->
                 <ul>
-                    <li><i id = "flechehaut<?php echo $i?>" class="fa fa-arrow-up fa-2x" aria-hidden="true"></i><p>En montée</p></li>
-                    <li><i id = "pause<?php echo $i?>" class="fa fa-pause fa-2x" aria-hidden="true"></i><p>A l'arrêt</p></li>
-                    <li><i id = "flechebas<?php echo $i?>" class="fa fa-arrow-down fa-2x" aria-hidden="true"></i><p>En decente</p></li>
+                    <li><i id="flechehaut" class="fa fa-arrow-up fa-2x" aria-hidden="true"></i>
+                        <p>En montée</p>
+                    </li>
+                    <li><i id="pause" class="fa fa-pause fa-2x" aria-hidden="true"></i>
+                        <p>A l'arrêt</p>
+                    </li>
+                    <li><i id="flechebas" class="fa fa-arrow-down fa-2x" aria-hidden="true"></i>
+                        <p>En decente</p>
+                    </li>
                 </ul>
                 <!--</nav>-->
-                </label>
-                </div>
-            <?php
-            break;
-            default: //Cas du capteur
+            </label>
+        </div>
+    <?php
+            }
+            else{//Cas du capteur
                 ?>
                 <nav class="liste_valeurs">
                 <ul class ="liste_valeurs">
@@ -49,7 +56,7 @@
                 </label>
                 </div>
             <?php
-            break;
+
         } //Fin Switch?>
 
         <?php
@@ -59,53 +66,29 @@
 include "vues/templates/Footer.php";
     include("ajouterComposantPopUp.php");
      ?>
-    <script> //Javascript
 
-        <?php
-        for ($i = 0; $i < count($composants); $i++) { //Parcourt de la liste de composants
-            //if ($valeurs[$i][0][0] !== NULL) { //Si Null on sait que c'est un actionneur et non capteur
-                //continue;
-            //}
-             ?>
-            var capteurId = <?php echo $composants[$i]['idComposant']?>;
-            var numComposant = <?php echo $composants[$i]['numComposant']?>;
-
-
-            var a = document.getElementById("flechehaut"+<?php echo $i ?>);
-            var b = document.getElementById("pause"+<?php echo $i ?>);
-            var c = document.getElementById("flechebas"+<?php echo $i ?>);
-
-
-            console.log(a);
-
-
-            var newValeurHaut = 32;
-            var newValeurPause = 30;
-            var newValeurBas = 31;
-
-            a.addEventListener('click', function() {
-                fetch(`./index.php?cible=dashboard&fonction=update_database&capteurId=${capteurId}&newValue=${newValeurHaut}&numComposant=${numComposant}`)
-                    .then(function(response) {
-                        response.text()
-                    });
-            });
-            b.addEventListener('click', function() {
-                fetch(`./index.php?cible=dashboard&fonction=update_database&capteurId=${capteurId}&newValue=${newValeurPause}&numComposant=${numComposant}`)
-                    .then(function(response) {
-                        response.text()
-                    });
-            });
-            c.addEventListener('click', function() {
-                fetch(`./index.php?cible=dashboard&fonction=update_database&capteurId=${capteurId}&newValue=${newValeurBas}&numComposant=${numComposant}`)
-                    .then(function(response) {
-                        response.text()
-                    });
-            });
-        <?php
-        }// Fin boucle for
-        ?>
-
-    </script>
 </body>
+<script>
+    var buttonhaut = document.getElementById('flechehaut');
 
+
+    console.log(buttonhaut);
+    buttonhaut.addEventListener('click',function ()
+    {
+     $.ajax({
+
+         url: "http://localhost/APP_Info-master/index.php?cible=uplink",
+
+         data: {
+             instruction : 1
+         },
+
+         success:function (data) {
+
+             alert(data);
+         }
+     });
+    })
+</script>
 </html>
+
