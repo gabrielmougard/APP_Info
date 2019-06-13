@@ -70,8 +70,9 @@ function getTramesFromRepere($bdd,$pieceSelect){
     foreach ($intermediaire as $value) {
         array_push($res, decodageTrame($value));
     }
+    //res est un array d'array de strings qui correspondent à chaque champ
     foreach($res as $trame){
-        echo ("trame="+$trame);
+        //trame est un array de string qui correspondent aux champs
         insertTrame($bdd,$trame);
     }
 
@@ -96,9 +97,7 @@ function recupLogsBrut(){
     return $data;
 }
 
-
-
-    function decoupeLogsBrutShort($data){
+function decoupeLogsBrutShort($data){
 
         //usually decoupeLogsBrut is always 1000 in length
         //$data_tab = str_split($data,33);
@@ -122,8 +121,8 @@ function decoupeLogsBrut($data){
 }
 
 function decodageTrame($trame){
-    return list($typeTrame, $numObjetCemac, $typeRequete, $typeCapteur, $numCapteur, $valeur, $numTrame, $checksum, $year, $month, $day, $hour, $min, $sec) =
-        sscanf($trame,"%1s%4s%1s%1s%2s%4s%4s%2s%4s%2s%2s%2s%2s%2s");
+    return list($numObjetCemac, $typeRequete, $typeCapteur, $numCapteur, $valeur, $numTrame, $checksum, $year, $month, $day, $hour, $min, $sec) =
+        sscanf($trame,"%4s%1s%1s%2s%4s%4s%2s%4s%2s%2s%2s%2s%2s");
 }
 
 function decodageTrameLiveChart($trame){
@@ -151,28 +150,20 @@ function creerTrameEnvoi($bdd,$val,$tim,$num,$idComposant){
     $statement->bindValue(':val', $val);
     $statement->bindValue(':tim', $tim);
     $statement->bindValue(':num', $num);
-    $statement->bindValue(':iComposant', $idComposant);
+    $statement->bindValue(':idComposant', $idComposant);
     $statement->execute();
-    $statement->commit();
+    //$statement->commit();
 }
 function insertTrame($bdd,$trame){
-
-
 echo ("phase 1");
-var_dump(sizeof($trame));
-    for($i=0;$i<sizeof($trame);$i++) {
-        echo ("phase 2");
-
-        $arraytrame = array();
-        $arraytrame = decodageTrame($trame[$i]);
         try {
             $isUnique = true;
-            $tim = '' . $arraytrame[8] . '-' . $arraytrame[9] . '-' . $arraytrame[10] . ' ' . $arraytrame[11] . ':' . $arraytrame[12] . ':' . $arraytrame[13] . '';
+            $tim = '' . $trame[7] . '-' . $trame[8] . '-' . $trame[9] . ' ' . $trame[10] . ':' . $trame[11] . ':' . $trame[12] . '';
             $sth = $bdd->prepare("SELECT idCemac FROM cemac WHERE numeroSerie=:cemac");
-            $sth->bindValue(':cemac', $arraytrame[1]);
+            $sth->bindValue(':cemac', $trame[1]);
             $sth->execute();
             $result = $sth->fetchAll();
-
+            echo ("format de temps généré");
             //vérifier qu'on a un résultat.
             //if(isset($result[0]["idCemac"]){
             // $result[0]["idCemac"]
@@ -186,35 +177,41 @@ var_dump(sizeof($trame));
 INNER JOIN typecapteur ON composant.idTypeCapteur=typecapteur.idTypeCapteur 
 WHERE typecapteur.valeur=:typeCapteur AND composant.idCemac=:cemac AND composant.numComposant=:numComposant');
             $sth->bindValue(':cemac', $cemac);
-            $sth->bindValue(':typeCapteur', $arraytrame[3]);
-            $sth->bindValue(':numComposant', $arraytrame[4]);
+            $sth->bindValue(':typeCapteur', $trame[3]);
+            $sth->bindValue(':numComposant', $trame[4]);
             $sth->execute();
             $result = $sth->fetchAll();
+
             $idComposant = isset($result[0]["idComposant"]) ? $result[0]["idComposant"] : null;
+            echo("idComposant trouvé ");
 
             //trouver la trame dans la base de donnée dont le champs time correspond à celui dans la trame mis au format de la bdd(SI elle existe)
-            $sth = $bdd->prepare("SELECT * FROM trameenvoi WHERE tim=:tim");
+            $sth = $bdd->prepare("SELECT tim FROM trameenvoi WHERE tim=:tim AND idComposant=:idComp");
             $sth->bindValue(':tim', $tim);
+            $sth->bindValue(':idComp', $idComposant);
             $sth->execute();
             $result = $sth->fetchAll();
+            echo("trameBDD=");
+            var_dump($result[0]);
             $trameBdd = isset($result[0]) ? $result[0] : null;
-            //si elle existe alors c'est un doublon.
-            if ($trameBdd == null OR empty($trameBdd)) {
-                $isUnique = false;
+            //si trameBDD est set alors on a affaire à un doublon
+            if($trameBdd!=null){
+                $isUnique=false;
+            }
+            if($isUnique){
+                creerTrameEnvoi($bdd, $trame[5], $tim, $trame[4], $idComposant);
+                echo ("envoyé");
+                return true;
+
             }
             //sinon on crée la trame
-            if ($isUnique) {
-                creerTrameEnvoi($bdd, $arraytrame[5], $tim, $arraytrame[4], $idComposant);
-                if($i==sizeof($trame)-1){
-                    return true;
-                }
-            } else {
+            else {
+                echo("pas envoyé");
                 return false;
             }
         } catch (Exception $e) {
             return false;
         }
-    }
 }
 
 function recupRepere($bdd,$pieceSelect){

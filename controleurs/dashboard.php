@@ -155,7 +155,12 @@ switch ($function) {
     case 'statistiques':
         $switch=true;
         include('modeles/requetes.statistiques.php');
-
+        if(isset($_GET['pieceSelect'])){
+            $intPieceSelect=intval($_GET['pieceSelect']);
+            echo("pieceSelect=");
+            var_dump($intPieceSelect);
+            getTramesFromRepere($bdd,$intPieceSelect);
+        }
         if(isset($_SESSION['id'])){
             if(!empty($_SESSION['id']) ){
                 $appart=recupAppartementFromId($bdd,$_SESSION['id']);
