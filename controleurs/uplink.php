@@ -25,7 +25,6 @@ $trame='1007D2a01000'.$instruction.'55';
 //TYPE = a code ASCII pour le moteur (Hex: a=0x61)
 //NUM = 01 (Hex: 0=0x30,1=0x31)
 //VAL = 0000 POUR SHUTDOWN / 0001 POUR LE SENS HORAIRE / 0002 POUR SENS ANTI HORAIRE (Hex: 0=0x30,1=0x31,0=0x32)
-//TIM = BABA de base on l'a choisis 0x42=B 0x41=A
 //CHK= Addition de Tout les code en Hex passé en ASCII: 3C6 pour SHUTDOWN / 3C7 SENS HORAIRE / 3C8 SENS ANTI HORAIRE
 
 $ch = curl_init();

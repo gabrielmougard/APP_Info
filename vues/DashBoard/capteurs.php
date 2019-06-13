@@ -89,6 +89,48 @@ include "vues/templates/Footer.php";
          }
      });
     })
+
+    var buttonstop = document.getElementById('pause');
+
+    console.log(buttonstop);
+    buttonstop.addEventListener('click',function ()
+    {
+        $.ajax({
+
+            url: "http://localhost/APP_Info-master/index.php?cible=uplink",
+
+            data: {
+                instruction : 0
+            },
+
+            success:function (data) {
+
+                alert(data);
+            }
+        });
+    })
+
+
+
+    var buttonbas = document.getElementById('flechebas');
+
+    console.log(buttonbas);
+    buttonbas.addEventListener('click',function ()
+    {
+        $.ajax({
+
+            url: "http://localhost/APP_Info-master/index.php?cible=uplink",
+
+            data: {
+                instruction : 2
+            },
+
+            success:function (data) {
+
+                alert(data);
+            }
+        });
+    })
 </script>
 </html>
 
