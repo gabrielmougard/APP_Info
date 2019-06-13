@@ -212,8 +212,8 @@ function uplink($instruction){
     //VAL = 0000 POUR SHUTDOWN / 0001 POUR LE SENS HORAIRE / 0002 POUR SENS ANTI HORAIRE (Hex: 0=0x30,1=0x31,0=0x32)
     //TIM = BABA de base on l'a choisis 0x42=B 0x41=A
     //CHK= Addition de Tout les code en Hex passé en ASCII: 3C6 pour SHUTDOWN / 3C7 SENS HORAIRE / 3C8 SENS ANTI HORAIRE
-    $command='0000';
-    switch ($instruction){
+    $command='0001';
+    /*switch ($instruction){
         case 30:
             $command='0000';
             break;
@@ -224,7 +224,7 @@ function uplink($instruction){
             $command='0001';
             break;
     }
-
+*/
     $trame='1007D2a01'.$command.'53';
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL,"http://projets-tomcat.isep.fr:8080/appService?ACTION=COMMAND&TEAM=007D&TRAME".$trame);
