@@ -79,7 +79,7 @@
             Nom de la piece:<br>
             <input type="text" name="nom"><br>
             Numéro de série Cemac:<br>
-            <input type="number" name="numSerie" min="0"><br>
+            <input type="text" name="numSerie" min="0"><br>
             <!--<input type="hidden" name="idAppartement" value="<?php // echo($appartement[$i]['idAppartement']);?>">-->
             <input type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'une pièce ?')">
         </form>

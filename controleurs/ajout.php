@@ -23,7 +23,8 @@ if(isset($_GET['numero_serie']) and !empty($_GET['numero_serie'])) {
     if ($rep === 2) {
         echo "
         <div class='Composant'>";?>
-        <a href="index.php?cible=dashboard&fonction=capteurs&idPiece=<?php echo $_GET['idPiece']?>&sppridComposant=<?php echo $idComposant ?>"><button class=\"croix\">X</button></a>
+        <a href="index.php?cible=dashboard&fonction=capteurs&idPiec
+        e=<?php echo $_GET['idPiece']?>&sppridComposant=<?php echo $idComposant ?>"><button class=\"croix\">X</button></a>
         <?php echo"
         <input id=" . $idAfficher . " type='checkbox'>
         <label for=" . $idAfficher . ">
