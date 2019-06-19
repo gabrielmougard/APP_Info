@@ -279,7 +279,8 @@
         <?php
 
         if($composants) {
-            echo "<a href='http://localhost/APP_Info-master/index.php?cible=rafraichir'><i class='fas fa-redo-alt'></i></a>";
+            echo "<a href='http://localhost/APP_Info-master/index.php?cible=dashboard&fonction=statistiques&appartSelect="
+                .$_GET['appartSelect']."&pieceSelect=".$_GET['pieceSelect']."'><i class='fas fa-redo-alt'></i></a>";
         }?>
 
     </div>

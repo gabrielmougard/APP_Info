@@ -80,7 +80,7 @@
         </select>
         <form action="index.php?cible=dashboard&fonction=gestionStock" method="post" id="Composant">
             Numéro de série du composant:<br>
-            <input type="number" name="numComposant" min="0"><br>
+            <input type="text" name="numComposant"><br>
             <input class="bouton" type="submit" value="Valider" onclick="javascript:return confirm('Confirmez vous l\'ajout d\'un composant ?')">
         </form>
 

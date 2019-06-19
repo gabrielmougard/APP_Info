@@ -124,8 +124,8 @@ function recupValHexaCapteur(PDO $bdd, $idComposant){ //Retourne la valeur Hexad
  */
 function recupInfoComplementaire(PDO $bdd, $idComposant){ //Retourne le nom, clé/valeur et l'unité de la grandeur physique
     $statement = $bdd->prepare('
-    SELECT nom,grandeurPhysique,valeur FROM composant
-    INNER JOIN typecapteur ON typecapteur.idTypeCapteur=composant.idTypeCapteur
+    SELECT nom,grandeurPhysique,valeur FROM typecapteur
+    INNER JOIN composant ON typecapteur.idTypeCapteur=composant.idTypeCapteur
     WHERE composant.idComposant='. $idComposant);
     $statement->execute();
     return $statement->fetchAll();
