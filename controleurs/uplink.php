@@ -17,7 +17,7 @@ switch ($instruction){
         break;
 }
 */
-$trame='1007D2a01000'.$instruction.'55';
+$trame='1997D2a01000'.$instruction.'55';
 
 //TRA =1 (Hex: 1=0x31)
 //OBJ = 007D Numéro équipe (Hex: 0=0x30, 7=0x37, 0x44)

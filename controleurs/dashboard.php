@@ -157,8 +157,8 @@ switch ($function) {
         include('modeles/requetes.statistiques.php');
         if(isset($_GET['pieceSelect'])){
             $intPieceSelect=intval($_GET['pieceSelect']);
-            echo("pieceSelect=");
-            var_dump($intPieceSelect);
+            //echo("pieceSelect=");
+            //var_dump($intPieceSelect);
             getTramesFromRepere($bdd,$intPieceSelect);
         }
         if(isset($_SESSION['id'])){

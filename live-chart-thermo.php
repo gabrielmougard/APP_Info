@@ -21,11 +21,14 @@ $lastRes = getTramesBatchv2(); //retourne 29 trames completes (les dernières)
 //var_dump($lastRes);
 
 
+
+
+
 //choose the right trame (iterate through $lastRes)
 
 foreach ($lastRes as $trame) {
     if ($trame[2] == $typeCapteur) {
-        $y = hexdec($trame[4]);
+        $y = 70*hexdec($trame[4])/1023;
         break;
     }
 }

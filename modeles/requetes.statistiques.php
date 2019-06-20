@@ -89,7 +89,7 @@ function recupTrameFromComposant(PDO $bdd, $idComposant){
     //var_dump($idComposant);
 
     $sth = $bdd->prepare('SELECT DISTINCT val,tim FROM trameenvoi WHERE trameenvoi.idComposant= :idComposant 
-ORDER BY tim LIMIT 10');
+ORDER BY tim DESC LIMIT 50');
     $sth->bindValue(':idComposant',$idComposant);
     $sth->execute();
     return $sth->fetchAll();

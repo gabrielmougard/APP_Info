@@ -44,6 +44,19 @@ function timeGraph(arrayJs) {
 
 
 function changer(composant) {
+    var unite;
+    switch (composant) {
+        case "capteur luminosite":
+            unite='lux';
+            break;
+        case "capteur temperature":
+            unite='°C';
+            break;
+        case "capteur infrarouge":
+            unite='mètre';
+            break;
+
+    }
     console.log(composant);
     trameGraph=trameComposant(tram,composant);
     val=valGraph(trameGraph);
@@ -69,7 +82,7 @@ function changer(composant) {
         },
         yaxis:{
             title:{
-                text: '',
+                text: unite,
                 font: {
                     family: 'Lato',
                     size: 18,
